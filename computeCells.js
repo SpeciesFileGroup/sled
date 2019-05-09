@@ -3,19 +3,19 @@ var sled = {
   width: 1024,                       // horizontal extent of image in pixels
   height: 768,                        // vertical extent of image
   hlines: [500, 100, 200, 700, 450],  // y pixel coord of line
-  vlines: [50, 150, 760],             // x pixel coord of line
+  vlines: [760, 150, 50 ],             // x pixel coord of line
   // rows: 0,                    // count/length of rows - derived
   // columns: 0,                 // count/length of columns - derived
   cells: []                      // pixel coord of upper left, lower right - derived [[0, 0], [0, 0]]
 };                                 // cell[row, column] = cell[row*columns + column]
 sled = computeCells(sled);
-alert(JSON.stringify(sled));
+alert(JSON.stringify(sled));    // currently
 
 function computeCells(sled) {
   var width = sled.width;
   var height = sled.height;
   // order hlines and vlines
-  if((hlines.length > 1) && vlines.length > 1) {
+  if((sled.hlines.length > 1) && sled.vlines.length > 1) {
     sled.hlines = sled.hlines.sort(function(a, b){return a - b;});
     sled.vlines = sled.vlines.sort(function(a, b){return a - b;});
     // compute intersections
@@ -33,6 +33,6 @@ function computeCells(sled) {
       }
     }
   }
-  return sled.cells;
+  return sled;
 };
 
