@@ -1,23 +1,38 @@
-function computeCells (sled, hlines, vlines) {
-  let width = sled.image.width
-  let height = sled.image.height
+
+var sled = {
+  width: 1024,                       // horizontal extent of image in pixels
+  height: 768,                        // vertical extent of image
+  hlines: [500, 100, 200, 700, 450],  // y pixel coord of line
+  vlines: [50, 150, 760],             // x pixel coord of line
+  // rows: 0,                    // count/length of rows - derived
+  // columns: 0,                 // count/length of columns - derived
+  cells: []                      // pixel coord of upper left, lower right - derived [[0, 0], [0, 0]]
+};                                 // cell[row, column] = cell[row*columns + column]
+sled = computeCells(sled);
+alert(JSON.stringify(sled));
+
+function computeCells(sled) {
+  var width = sled.width;
+  var height = sled.height;
   // order hlines and vlines
-  if ((hlines.length > 1) && vlines.length > 1) {
-    let hLines = (hlines, 0)
-    sled.hlines = sled.hlines.sort(function (a, b) { return a - b })
-    sled.vlines = sled.vlines.sort(function (a, b) { return a - b })
+  if((hlines.length > 1) && vlines.length > 1) {
+    sled.hlines = sled.hlines.sort(function(a, b){return a - b;});
+    sled.vlines = sled.vlines.sort(function(a, b){return a - b;});
     // compute intersections
-    let i = 0 // horizontal (column) index
-    let j = 0 // vertical (row) index
-    let ul, lr // upper left, lower right corners of cell
-    let cellIndex = 0; let hRows = sled.hlines.length - 1; let vCols = sled.vlines.length - 1 // one less row/column than lines
-    for (j = 0; j < hRows; j++) {
-      for (i = 0; i < vCols; i++) {
-        cellIndex = hRows * i + j
-        ul = [sled.vlines[i], sled.hlines[j]]
-        lr = [sled.vlines[i + 1], sled.hlines[j + 1]]
-        sled.cells[cellIndex] = [ul, lr]
+    var i = 0;    // horizontal (column) index
+    var j = 0;    // vertical (row) index
+    var ul, lr;   //upper left, lower right corners of cell
+    var cellIndex = 0, hRows = sled.hlines.length - 1, vCols = sled.vlines.length - 1; // one less row/column than lines
+    for(j = 0; j < hRows; j++) {
+      for(i = 0; i < vCols; i++) {
+        cellIndex = hRows * i + j;
+        ul = [sled.vlines[i], sled.hlines[j]];
+        lr = [sled.vlines[i + 1], sled.hlines[j + 1]];
+        // sled.cells[cellIndex] = [ul, lr];
+        sled.cells.push([ul, lr]);
       }
     }
   }
+  return sled.cells;
 };
+
