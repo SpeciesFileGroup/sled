@@ -4,15 +4,11 @@ import vueShortkey from 'vue-shortkey'
 
 var SLED = SLED || {};
 SLED.views = SLED.views || {};
-SLED.views.tasks = SLED.views.tasks || {};
-SLED.views.tasks.collecting_events = SLED.views.tasks.collecting_events || {};
-SLED.views.tasks.collecting_events.search_locality = SLED.views.tasks.collecting_events.search_locality || {};
+SLED.views.sled_test = SLED.views.sled_test || {};
+// SLED.views.tasks.collecting_events = SLED.views.tasks.collecting_events || {};
+// SLED.views.tasks.collecting_events.search_locality = SLED.views.tasks.collecting_events.search_locality || {};
 
-// import Vue from 'vue'
-// import vueResource from 'vue-resource'
-import L from 'leaflet'
-
-Object.assign(SLED.views.tasks.collecting_events.search_locality, {
+Object.assign(SLED.views.sled_test, {
 
   init: function () {
     Vue.use(vueResource)
@@ -35,6 +31,6 @@ Object.assign(SLED.views.tasks.collecting_events.search_locality, {
 
 $(document).on('turbolinks:load', function () {
   if ($('#sled_test').length) {
-    SLED.views.tasks.collecting_events.search_locality.init();
+    SLED.views.sled_test.init();
   }
 });
