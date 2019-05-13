@@ -3,9 +3,7 @@ var sled = {
     height: 0, // vertical extent of image
     hlines: [0], // y pixel coord of line
     vlines: [0], // x pixel coord of line
-    rows: 0, // count/length of rows - derived
-    columns: 0, // count/length of columns - derived
-    cells: [[[0, 0], [0, 0]]] // pixel coord of upper left, lower right - derived
+    cells: [] // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
   }; // cell[row, column] = cell[row*columns + column]
 
 /*
