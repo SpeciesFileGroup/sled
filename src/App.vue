@@ -1,28 +1,32 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="sled_test">
+    <hi>SLED test page</hi>
+    <div class="line-inputs">
+      <new-hline />
+      <new-vline />
+    </div>
   </div>
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import NewHline from './components/newHline'
+import NewVline from './components/newVline'
 
 export default {
-  name: 'app',
   components: {
-    HelloWorld
+    NewHline,
+    NewVline
+  },
+  data () {
+    return {}
+  },
+  methods: {
+    addNewHline () {
+      //
+    },
+    addNewVline () {
+      //
+    }
   }
 }
 </script>
-
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
