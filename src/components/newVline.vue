@@ -16,10 +16,10 @@
     },
     methods: {
       setValue(){
-        x = $event
+        this.x = $event
       },
       addLine() {
-        this.$emit("newLine", x)
+        this.$emit("newLine", this.x)
       }
     }
   }
