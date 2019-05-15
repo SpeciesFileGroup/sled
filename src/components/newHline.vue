@@ -1,7 +1,7 @@
 <template><div>
   Add new horizontal line
-  <input type="number"  onchange="setValue" />
-  <input type="button" value="Add" onclick="addLine" />
+  <input v-model.number="y" type="number"  onchange="setValue()" />
+  <input type="button" value="Add" onclick="addLine()" />
 </div>
 </template>
 <script>

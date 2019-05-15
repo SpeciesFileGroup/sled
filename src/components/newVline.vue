@@ -1,8 +1,8 @@
 <template>
   <div>
   Add new vertical line
-  <input type="number"  onchange="setValue" />
-  <input type="button" value="Add" onclick="addLine" />
+  <input v-model.number="x" type="number"  onchange="setValue()" />
+  <input type="button" value="Add" onclick="addLine()" />
 </div>
 </template>
 <script>
