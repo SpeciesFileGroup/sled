@@ -9,14 +9,28 @@
       <input type="number" v-model.number="height" />
     </div>
     <div class="line-inputs">
-      <new-hline @newLine="addNewHline($event)" />
-      <new-vline  @newLine="addNewVline($event)" />
+      <div><new-hline @newLine="addNewHline($event)" />
+      <input type="button" value="RESET" :click="resetHlines()" />
+      </div>
+      <div>><new-vline @newLine="addNewVline($event)" />
+      <input type="button" value="RESET" :click="resetVlines()" />
+      </div>
     </div>
     <div class="cells">
-      <table></table>
+      <table>
+        <tr v-for="hline in hlines">
+          <template v-if="hline">
+            <td v-html="hline"></td>
+            <template v-for="vline in vlines">
+              <td v-if="vline" v-html="cells[hlines.length*hline + vline]"></td>
+            </template>
+          </template>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
+
 <script>
 
 import NewHline from './components/newHline'
@@ -31,19 +45,25 @@ export default {
     return {
       width: 1000, // horizontal extent of image in pixels
       height: 750, // vertical extent of image
-      hlines: [],  // y pixel coord of line
-      vlines: [],  // x pixel coord of line
+      hlines: [100, 200, 300],  // y pixel coord of line
+      vlines: [100, 200],  // x pixel coord of line
       cells: []    // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
     }
   },
   methods: {
     addNewHline (y) {
       this.hlines.push(y);
-      this.computeCells()
+      this.computeCells();
+    },
+    resetHlines() {
+      this.hlines = []
     },
     addNewVline (x) {
-      this.vlines.push(x)
-      this.computeCells()
+      this.vlines.push(x);
+      this.computeCells();
+    },
+    resetVlines() {
+      this.vlines = []
     },
     computeCells() {
       if((this.hlines.length > 1) && this.vlines.length > 1) {
