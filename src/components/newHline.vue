@@ -1,7 +1,7 @@
 <template><div>
   Add new horizontal line
-  <input v-model.number="y" type="number"  onchange="setValue()" />
-  <input type="button" value="Add" onclick="addLine()" />
+  <input v-model.number="y" type="number" />
+  <input type="button" value="Add" :click="addLine()" />
 </div>
 </template>
 <script>
@@ -10,13 +10,10 @@
       //
     },
     data() { return {
-        y: 0
+        y: undefined
       }
     },
     methods: {
-      setValue(){
-        this.y = $event
-      },
       addLine() {
         this.$emit("newLine", this.y)
       }

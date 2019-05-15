@@ -1,12 +1,19 @@
 <template>
   <div id="sled_test">
     <h1>SLED test page</h1>
+    <div class="image-inputs">
+      Enter image width
+      <input type="number" v-model.number="width" />
+      <br>
+      Enter image height
+      <input type="number" v-model.number="height" />
+    </div>
     <div class="line-inputs">
       <new-hline @newLine="addNewHline($event)" />
       <new-vline  @newLine="addNewVline($event)" />
     </div>
     <div class="cells">
-      <table
+      <table></table>
     </div>
   </div>
 </template>
@@ -24,9 +31,9 @@ export default {
     return {
       width: 1000, // horizontal extent of image in pixels
       height: 750, // vertical extent of image
-      hlines: [0], // y pixel coord of line
-      vlines: [0], // x pixel coord of line
-      cells: [] // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
+      hlines: [],  // y pixel coord of line
+      vlines: [],  // x pixel coord of line
+      cells: []    // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
     }
   },
   methods: {
@@ -43,6 +50,7 @@ export default {
         this.hlines = this.hlines.sort(function(a, b){return a - b;});
         this.vlines = this.vlines.sort(function(a, b){return a - b;});
         // compute intersections
+        this.cells=[];
         let i = 0;    // horizontal (column) index
         let j = 0;    // vertical (row) index
         let ul, lr;   //upper left, lower right corners of cell
