@@ -29,7 +29,12 @@
       </div>
     </div>
     <div class="cells">
-
+      <table>
+        <tr v-for="(hline, hindex) in hlines">
+            <td v-html="hline"></td>
+            <td v-for="(vline, vindex) in vlines" v-html="cells[hlines.length*hindex + vindex]"></td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
