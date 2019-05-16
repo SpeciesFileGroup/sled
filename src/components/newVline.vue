@@ -1,23 +1,30 @@
 <template>
   <div>
-  Add new vertical line
-  <input v-model.number="x" type="number" />
-  <input type="button" value="Add" :click="addLine()" />
-</div>
+    <label>
+      Add new vertical line
+    </label>
+    <input
+      v-model.number="x"
+      type="number" />
+    <input
+      type="button"
+      value="Add"
+      @click="addLine()" />
+  </div>
 </template>
 <script>
-  export default {
-    props: {
-      //
-    },
-    data() { return {
-        x: undefined
-      }
-    },
-    methods: {
-      addLine() {
-        this.$emit("newLine", this.x)
+export default {
+  data () {
+    return {
+      x: undefined
+    }
+  },
+  methods: {
+    addLine () {
+      if (this.x) {
+        this.$emit('newLine', this.x)
       }
     }
   }
+}
 </script>
