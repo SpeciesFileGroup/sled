@@ -64,10 +64,10 @@ export default {
   },
   data () {
     return {
-      width: 1000, // horizontal extent of image in pixels
-      height: 750, // vertical extent of image
-      hlines: [100, 200, 300], // y pixel coord of line
-      vlines: [50, 250], // x pixel coord of line
+      width: 0, // horizontal extent of image in pixels
+      height: 0, // vertical extent of image
+      hlines: [], // y pixel coord of line
+      vlines: [], // x pixel coord of line
       cells: [] // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
     }
   },
