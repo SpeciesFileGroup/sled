@@ -45,9 +45,9 @@
             <td v-html="hline"></td>
             <template v-for="(vline, vindex) in vlines">
               <td v-if="cells[(vlines.length*hindex) + vindex]">
-                <input type="button" value="-100" v-on:click="vlines[vindex] -= 100;" />
+                <input type="button" value="-100" v-on:click="vlines[vindex] -= 100; computeCells()" />
                 {{ cells[(vlines.length*hindex) + vindex]}}
-                <input type="button" value="+100" v-on:click="vlines[vindex] += 100;" />
+                <input type="button" value="+100" v-on:click="vlines[vindex] += 100; computeCells()" />
               </td>
               <td v-else/>
             </template>
