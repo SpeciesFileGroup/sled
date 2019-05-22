@@ -45,9 +45,9 @@
             <td v-html="hline"></td>
             <template v-for="(vline, vindex) in vlines">
               <td v-if="cells[(vlines.length*hindex) + vindex]">
-                <input type="button" value="-100" v-on:click="vlines[vindex] -= 100; computeCells()" />
+                <input type="button" value="-100" v-on:click="$set(vlines,vindex, vlines[vindex] - 100)" />
                 {{ cells[(vlines.length*hindex) + vindex]}}
-                <input type="button" value="+100" v-on:click="vlines[vindex] += 100; computeCells()" />
+                <input type="button" value="+100" v-on:click="$set(vlines,vindex, vlines[vindex] + 100)" />
               </td>
               <td v-else/>
             </template>
@@ -60,17 +60,25 @@
 
 <script>
 
-  import imageWidth from './components/imageWidth'
-  import imageHeight from './components/imageHeight'
-  import NewHline from './components/newHline'
+import ImageWidth from './components/imageWidth'
+import ImageHeight from './components/imageHeight'
+import NewHline from './components/newHline'
 import NewVline from './components/newVline'
 
 export default {
   components: {
-    imageWidth,
-    imageHeight,
+    ImageWidth,
+    ImageHeight,
     NewHline,
     NewVline
+  },
+  computed: {
+    vlinesInOrder() {
+      return this.vlines.sort(function (a, b) { return a - b })
+    },
+    hlinesInOrder() {
+      return this.hlines.sort(function (a, b) { return a - b })
+    }
   },
   data () {
     return {
@@ -84,20 +92,32 @@ export default {
       old_height: 0,
     }
   },
+  watch: {
+    hlines: {
+      handler () {
+        this.computeCells()
+      },
+      deep: true
+    },
+    vlines: {
+      handler () {
+        this.computeCells()
+      },
+      deep: true
+    }
+  },
   mounted () {
     this.computeCells()
   },
   methods: {
     addNewHline (y) {
       this.hlines.push(y)
-      this.computeCells()
     },
     resetHlines () {
       this.hlines = []
     },
     addNewVline (x) {
       this.vlines.push(x)
-      this.computeCells()
     },
     resetVlines () {
       this.vlines = []
@@ -108,22 +128,21 @@ export default {
       alert();//[this.width, this.height]);
     },
     computeCells () {
-      if ((this.hlines.length > 0) && this.vlines.length > 0) {
-        this.hlines = this.hlines.sort(function (a, b) { return a - b })
-        this.vlines = this.vlines.sort(function (a, b) { return a - b })
+      if ((this.hlinesInOrder.length > 0) && this.vlinesInOrder.length > 0) {
+
         // compute intersections
         this.cells = []
         let i = 0 // horizontal (column) index
         let j = 0 // vertical (row) index
         let ul, lr // upper left, lower right corners of cell
         let cellIndex = 0
-        let hRows = this.hlines.length
-        let vCols = this.vlines.length // one less row/column than lines
+        let hRows = this.vlinesInOrder.length
+        let vCols = this.vlinesInOrder.length // one less row/column than lines
         for (j = 0; j < hRows; j++) {
           for (i = 0; i < vCols; i++) {
             cellIndex = (vCols * j) + i
-            ul = [this.vlines[i], this.hlines[j]]
-            lr = [this.vlines[i + 1], this.hlines[j + 1]]
+            ul = [this.vlinesInOrder[i], this.hlinesInOrder[j]]
+            lr = [this.vlinesInOrder[i + 1], this.hlinesInOrder[j + 1]]
             if (lr[0] !== undefined && lr[1] !== undefined) {
               this.cells[cellIndex] = [ul, lr]
             }
