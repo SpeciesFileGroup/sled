@@ -37,7 +37,11 @@
         <thead>
           <tr>
             <th></th>
-            <th v-for="(index) in vlines"> {{ index }} </th>
+            <th v-for="(index) in vlines">
+              <input type="button" value="-100" v-on:click="$set(vlines,index, vlines[index] - 100)" />
+              {{ index }}
+              <input type="button" value="+100" v-on:click="$set(vlines,index, vlines[index] + 100)" />
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -45,9 +49,7 @@
             <td v-html="hline"></td>
             <template v-for="(vline, vindex) in vlines">
               <td v-if="cells[(vlines.length*hindex) + vindex]">
-                <input type="button" value="-100" v-on:click="$set(vlines,vindex, vlines[vindex] - 100)" />
-                {{ cells[(vlines.length*hindex) + vindex]}}
-                <input type="button" value="+100" v-on:click="$set(vlines,vindex, vlines[vindex] + 100)" />
+                {{ cells[(vlines.length*hindex) + vindex] }}
               </td>
               <td v-else/>
             </template>
@@ -125,7 +127,7 @@ export default {
     resizeImage () {  // if image size changes, recompute lines and cells
       this.old_width = this.width;
       this.old_height = this.height;
-      alert();//[this.width, this.height]);
+      // alert();//[this.width, this.height]);
     },
     computeCells () {
       if ((this.hlinesInOrder.length > 0) && this.vlinesInOrder.length > 0) {
