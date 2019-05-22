@@ -5,12 +5,16 @@
       <label>Enter image width</label>
       <input
         type="number"
-        v-model.number="width" />
+        v-model.number="width" v-on:change="resizeImage" />
+      <input type="button" value="+ 100" v-on:click="width+=100" />
+      <input type="button" value="- 100" v-on:click="width-=100" />
       <br>
       <label>Enter image height</label>
       <input
         type="number"
-        v-model.number="height" />
+        v-model.number="height"  v-on:change="resizeImage" />
+      <input type="button" value="+ 100" v-on:click="height+=100" />
+      <input type="button" value="- 100" v-on:click="height-=100" />
     </div>
     <div class="line-inputs">
       <div>
@@ -41,7 +45,9 @@
             <td v-html="hline"></td>
             <template v-for="(vline, vindex) in vlines">
               <td v-if="cells[(vlines.length*hindex) + vindex]">
+                <input type="button" value="-100" v-on:click="vlines[vindex] -= 100;" />
                 {{ cells[(vlines.length*hindex) + vindex]}}
+                <input type="button" value="+100" v-on:click="vlines[vindex] += 100;" />
               </td>
               <td v-else/>
             </template>
@@ -54,11 +60,15 @@
 
 <script>
 
-import NewHline from './components/newHline'
+  import imageWidth from './components/imageWidth'
+  import imageHeight from './components/imageHeight'
+  import NewHline from './components/newHline'
 import NewVline from './components/newVline'
 
 export default {
   components: {
+    imageWidth,
+    imageHeight,
     NewHline,
     NewVline
   },
@@ -68,7 +78,10 @@ export default {
       height: 0, // vertical extent of image
       hlines: [], // y pixel coord of line
       vlines: [], // x pixel coord of line
-      cells: [] // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
+      cells: [], // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
+      line_thickness: 1,
+      old_width:  0,
+      old_height: 0,
     }
   },
   mounted () {
@@ -88,6 +101,11 @@ export default {
     },
     resetVlines () {
       this.vlines = []
+    },
+    resizeImage () {  // if image size changes, recompute lines and cells
+      this.old_width = this.width;
+      this.old_height = this.height;
+      alert();//[this.width, this.height]);
     },
     computeCells () {
       if ((this.hlines.length > 0) && this.vlines.length > 0) {
@@ -118,7 +136,7 @@ export default {
 </script>
 <style>
   td {
-    width: 220px;
+    width: 330px;
     font-size: 12px;
     border: 1px solid gray;
   }
