@@ -37,9 +37,9 @@
         <thead>
           <tr>
             <th></th>
-            <th v-for="(index) in vlines">
+            <th v-for="(vline, index) in vlines">
               <input type="button" value="-100" v-on:click="$set(vlines,index, vlines[index] - 100)" />
-              {{ index }}
+              {{ vline }}
               <input type="button" value="+100" v-on:click="$set(vlines,index, vlines[index] + 100)" />
             </th>
           </tr>
