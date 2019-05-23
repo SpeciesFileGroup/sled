@@ -6,15 +6,15 @@
       <input
         type="number"
         v-model.number="width" v-on:change="resizeImage" />
-      <input type="button" value="+ 100" v-on:click="width+=100" />
       <input type="button" value="- 100" v-on:click="width-=100" />
+      <input type="button" value="+ 100" v-on:click="width+=100" />
       <br>
       <label>Enter image height</label>
       <input
         type="number"
         v-model.number="height"  v-on:change="resizeImage" />
-      <input type="button" value="+ 100" v-on:click="height+=100" />
       <input type="button" value="- 100" v-on:click="height-=100" />
+      <input type="button" value="+ 100" v-on:click="height+=100" />
     </div>
     <div class="line-inputs">
       <div>
@@ -135,7 +135,6 @@ export default {
     },
     computeCells () {
       if ((this.hlinesInOrder.length > 0) && this.vlinesInOrder.length > 0) {
-
         // compute intersections
         this.cells = []
         let i = 0 // horizontal (column) index
@@ -143,7 +142,7 @@ export default {
         let ul, lr // upper left, lower right corners of cell
         let cellIndex = 0
         let hRows = this.vlinesInOrder.length
-        let vCols = this.vlinesInOrder.length // one less row/column than lines
+        let vCols = this.vlinesInOrder.length // one less populated row/column than lines
         for (j = 0; j < hRows; j++) {
           for (i = 0; i < vCols; i++) {
             cellIndex = (vCols * j) + i
