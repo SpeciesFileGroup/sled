@@ -46,7 +46,11 @@
         </thead>
         <tbody>
           <tr v-for="(hline, hindex) in hlines">
-            <td v-html="hline"></td>
+            <td>
+              <input type="button" value="-100" v-on:click="$set(hlines,hindex, hlines[hindex] - 100)" />
+              {{ hline }}
+              <input type="button" value="+100" v-on:click="$set(hlines,hindex, hlines[hindex] + 100)" />
+            </td>
             <template v-for="(vline, vindex) in vlines">
               <td v-if="cells[(vlines.length*hindex) + vindex]">
                 {{ cells[(vlines.length*hindex) + vindex] }}
