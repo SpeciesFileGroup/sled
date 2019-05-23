@@ -129,9 +129,21 @@ export default {
       this.vlines = []
     },
     resizeImage () {  // if image size changes, recompute lines and cells
+      if(this.old_width > 1) {    // a previous presumably valid width
+        let hScale = this.width / this.old_width;
+        let h = 0;
+        let n = this.vlines.length;
+        for(h=0; h<n; h++) {this.$set(this.vlines, h, this.vlines[h] * hScale)}
+      }
+      if(this.old_height > 1) {    // a previous presumably valid height
+        let vScale = this.height / this.old_height;
+        let v = 0;
+        let m = this.hlines.length;
+        for(v=0; v<m; v++) {this.$set(this.hlines, v, this.hlines[v] * vScale)}
+      }
       this.old_width = this.width;
       this.old_height = this.height;
-      // alert();//[this.width, this.height]);
+      this.computeCells()
     },
     computeCells () {
       if ((this.hlinesInOrder.length > 0) && this.vlinesInOrder.length > 0) {
