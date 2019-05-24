@@ -38,6 +38,7 @@
           <tr>
             <th></th>
             <th v-for="(vline, index) in vlines">
+              <input type="button" value="X" v-on:click="removeColumn(index)" />
               <input type="button" value="-100" v-on:click="$set(vlines,index, vlines[index] - 100)" />
               {{ vline }}
               <input type="button" value="+100" v-on:click="$set(vlines,index, vlines[index] + 100)" />
@@ -47,6 +48,7 @@
         <tbody>
           <tr v-for="(hline, hindex) in hlines">
             <td>
+              <input type="button" value="X" v-on:click="removeRow(hindex)" />
               <input type="button" value="-100" v-on:click="$set(hlines,hindex, hlines[hindex] - 100)" />
               {{ hline }}
               <input type="button" value="+100" v-on:click="$set(hlines,hindex, hlines[hindex] + 100)" />
@@ -144,6 +146,13 @@ export default {
       this.old_width = this.width;
       this.old_height = this.height;
       this.computeCells()
+    },
+    removeRow(index) {
+      this.$delete(this.hlines, index)
+    },
+
+    removeColumn(index) {
+      this.$delete(this.vlines, index)
     },
     computeCells () {
       if ((this.hlinesInOrder.length > 0) && this.vlinesInOrder.length > 0) {
