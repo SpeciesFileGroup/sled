@@ -153,14 +153,14 @@ export default {
         let j = 0 // vertical (row) index
         let ul, lr // upper left, lower right corners of cell
         let cellIndex = 0
-        let hRows = this.vlinesInOrder.length
+        let hRows = this.vlinesInOrder.length // now enumerate extra row and column to represent empty border cells
         let vCols = this.vlinesInOrder.length // one less populated row/column than lines
         for (j = 0; j < hRows; j++) {
           for (i = 0; i < vCols; i++) {
             cellIndex = (vCols * j) + i
             ul = [this.vlinesInOrder[i], this.hlinesInOrder[j]]
             lr = [this.vlinesInOrder[i + 1], this.hlinesInOrder[j + 1]]
-            if (lr[0] !== undefined && lr[1] !== undefined) {
+            if (lr[0] !== undefined && lr[1] !== undefined) {   // non-empty cell test
               this.cells[cellIndex] = [ul, lr]
             }
           }
