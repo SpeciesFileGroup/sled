@@ -1,6 +1,7 @@
 <template>
   <div id="sled_test">
     <h1>SLED test page</h1>
+    <input type="file" v-on:change="getImage"/>
     <div class="image-inputs">
       <label>Enter image width</label>
       <input
@@ -63,7 +64,7 @@
         </tbody>
       </table>
     </div>
-    <img src="./assets/images/image_1.jpg"/>
+    <img id=image />
   </div>
 </template>
 
@@ -184,8 +185,23 @@
             }
           }
         }
+      },
+      getImage(event) {
+        let image = document.getElementById('image');
+        let files = event.target.files;
+        // FileReader support
+        if (FileReader && files && files.length) {
+          let file_reader = new FileReader();
+          file_reader.onload = function () {
+            image.src = file_reader.result;
+          };
+          file_reader.readAsDataURL(files[0]);
+        }
+          this.width = image.width;
+          this.height = image.height;
+          image.style = "width: 50%; height: 50%"
       }
-    }
+    },
   }
 </script>
 <style>
