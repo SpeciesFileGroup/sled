@@ -188,6 +188,9 @@
       },
       getImage(event) {
         let image = document.getElementById('image');
+        image.removeAttribute('width');
+        image.removeAttribute('height');
+        image.removeAttribute('style');
         let files = event.target.files;
         // FileReader support
         if (FileReader && files && files.length) {
