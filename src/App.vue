@@ -63,6 +63,7 @@
         </tbody>
       </table>
     </div>
+    <img src="./assets/images/image_1.jpg"/>
   </div>
 </template>
 
@@ -134,8 +135,8 @@
       resetVlines() {
         this.vLines = []
       },
-      resizeImage() {  // if image size changes, recompute lines and cells
-        if (this.old_width > 1) {    // a previous presumably valid width
+      resizeImage() {               // if image size changes, recompute lines and cells
+        if (this.old_width > 1) {   // a previous presumably valid width
           let hScale = this.width / this.old_width;
           let h = 0;
           let n = this.vLines.length;
