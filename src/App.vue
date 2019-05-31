@@ -64,9 +64,9 @@
         </tbody>
       </table>
     </div>
-    <div id="svg_container">
-      <img id=image />
-      <svg id="svgLayer"></svg>
+    <div id="svg_container" style="height: 50%; width: 50%">
+      <img id=image style="position:inherit" />
+      <svg id="svgLayer" style="position:inherit"></svg>
     </div>
 
   </div>
@@ -108,6 +108,7 @@
         line_thickness: 1,
         old_width: 0,
         old_height: 0,
+        xlt:  undefined,
       }
     },
     watch: {
