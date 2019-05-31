@@ -64,7 +64,11 @@
         </tbody>
       </table>
     </div>
-    <img id=image />
+    <div id="svg_container" style="overflow: hidden; left: 50px; top: 175px; position: inherit;" >
+      <img id=image />
+      <svg id="svglayer"></svg>
+    </div>
+
   </div>
 </template>
 
@@ -179,11 +183,12 @@
               cellIndex = (vCols * j) + i
               ul = [this.vLinesInOrder[i], this.hLinesInOrder[j]]
               lr = [this.vLinesInOrder[i + 1], this.hLinesInOrder[j + 1]]
-              if (lr[0] !== undefined && lr[1] !== undefined) {   // non-empty cell test
+              // if (lr[0] !== undefined && lr[1] !== undefined) {   // non-empty cell test
                 this.cells[cellIndex] = [ul, lr]
-              }
+              // }
             }
           }
+          this.generateSVG();
         }
       },
       getImage(event) {
@@ -205,6 +210,24 @@
           image.style = "width: 50%; height: 50%"
       }
     },
+    generateSVG() {
+      let h, v;
+      let hl = this.hLines.length;
+      let vl = this.vLines.length;
+      if((vl < 2) || (hl < 2)) return;
+      let svgHTML = '<svg>';
+      for(h=0; h<hl;h++) {
+        svgHTML = svgHTML + this.makeLine(this.vLines[0], this.hLines[h], this.vLines[vl - 1], this.hLines[h])
+      }
+      for(v=0; hv<vl;v++) {
+        svgHTML = svgHTML + this.makeLine(this.vLines[v], this.hLines[0], this.vLines[v], this.hLines[hl - 1])
+      }
+      svgHTML = svgHTML + '</svg>'
+      document.getElementById('svgLayer').innerText = svgHTML;
+    },
+    makeLine(x1, y1, x2, y2) {
+      return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 +'" style="stroke:rgb(255,0,0);stroke-width:4" />'
+    }
   }
 </script>
 <style>
