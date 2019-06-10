@@ -64,7 +64,7 @@
         </tbody>
       </table>
     </div>
-    <div id="svg_container" style="height: 50%; width: 50%">
+    <div id="svg_container" style="height: auto; width: 80%">
       <img id=image style="position:absolute" />
       <svg id="svgLayer" style="position:absolute"></svg>
     </div>
