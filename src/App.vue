@@ -65,8 +65,8 @@
       </table>
     </div>
     <div id="svg_container" style="height: 50%; width: 50%">
-      <img id=image style="position:inherit" />
-      <svg id="svgLayer" style="position:inherit"></svg>
+      <img id=image style="position:absolute" />
+      <svg id="svgLayer" style="position:absolute"></svg>
     </div>
 
   </div>

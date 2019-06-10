@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     addLine () {
-      if (this.y) {
+      if (this.y >= 0) {
         this.$emit('newLine', this.y)
       }
     }
