@@ -66,7 +66,7 @@
     </div>
     <div id="svg_container" style="height: auto; width: 80%">
       <img id=image style="position:absolute" />
-      <svg id="svgLayer" style="position:absolute"></svg>
+      <svg id="svgLayer" style="position:absolute; height:80%; width: 80%"></svg>
     </div>
 
   </div>
