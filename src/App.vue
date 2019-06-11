@@ -109,7 +109,9 @@ export default {
       line_thickness: 1,
       old_width: 0,
       old_height: 0,
-      xlt: undefined
+      xlt: undefined,
+      svgImageSrc: undefined,
+      svgImageType: 'jpeg',
     }
   },
   watch: {
@@ -203,6 +205,8 @@ export default {
         fileReader.onload = function (images) {
           let newImage = new Image()
           newImage.src = fileReader.result
+          this.svgImageSrc = fileReader.result
+          this.svgImageType = files[0].type
           newImage.onload = function () {
             that.width = newImage.width
             that.height = newImage.height
@@ -223,7 +227,7 @@ export default {
       let hl = this.hLines.length
       let vl = this.vLines.length
       if ((vl < 2) || (hl < 2)) return
-      let svgHTML = ''
+      let svgHTML = '<image'
       for (h = 0; h < hl; h++) {
         svgHTML = svgHTML + this.makeLine(this.vLines[0], this.hLines[h], this.vLines[vl - 1], this.hLines[h])
       }
