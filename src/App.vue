@@ -200,10 +200,14 @@ export default {
       // FileReader support
       if (FileReader && files && files.length) {
         let fileReader = new FileReader()
-        fileReader.onload = function () {
+        fileReader.onload = function (images) {
+          let newImage = new Image()
+          newImage.src = fileReader.result
+          newImage.onload = function () {
+            that.width = newImage.width
+            that.height = newImage.height
+          }
           image.src = fileReader.result
-          that.width = image.width
-          that.height = image.height
         }
         fileReader.readAsDataURL(files[0])
       }
@@ -243,7 +247,7 @@ export default {
   }
   #svg-container {
     display: flex;
-    max-width: 80%;
+    //max-width: 80%;
     position: relative;
   }
   #image {
