@@ -39,7 +39,7 @@
         <tr>
           <th></th>
           <th
-            v-for="(vline, index) in vLines"
+            v-for="(vline, index) in vLinesInOrder"
             :key="index">
             <input type="button" value="X" v-on:click="removeColumn(index)"/>
             <input type="button" value="-100" v-on:click="$set(vLines,index, vLines[index] - 100)"/>
@@ -50,7 +50,7 @@
         </thead>
         <tbody>
         <tr
-          v-for="(hline, hindex) in hLines"
+          v-for="(hline, hindex) in hLinesInOrder"
           :key="hindex">
           <td>
             <input type="button" value="X" v-on:click="removeRow(hindex)"/>
