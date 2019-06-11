@@ -89,12 +89,12 @@ export default {
   },
   computed: {
     vLinesInOrder () {
-      return this.vLines.slice().sort(function (a, b) {
+      return this.vLines.sort(function (a, b) {
         return a - b
       })
     },
     hLinesInOrder () {
-      return this.hLines.slice().sort(function (a, b) {
+      return this.hLines.sort(function (a, b) {
         return a - b
       })
     }
