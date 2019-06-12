@@ -78,7 +78,7 @@
 </template>
 
 <script>
-
+var saveImageData
 import newHline from './components/newHline'
 import newVline from './components/newVline'
 
@@ -207,6 +207,7 @@ export default {
           newImage.src = fileReader.result
           this.svgImageSrc = fileReader.result
           this.svgImageType = files[0].type
+          saveImageData = fileReader.result
           newImage.onload = function () {
             that.width = newImage.width
             that.height = newImage.height
@@ -227,7 +228,9 @@ export default {
       let hl = this.hLines.length
       let vl = this.vLines.length
       if ((vl < 2) || (hl < 2)) return
-      let svgHTML = '<image'
+      let svgHTML = '<image xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"' +
+        ' xlink:href="' + saveImageData + '" />'
+      // let svgHTML=''
       for (h = 0; h < hl; h++) {
         svgHTML = svgHTML + this.makeLine(this.vLines[0], this.hLines[h], this.vLines[vl - 1], this.hLines[h])
       }
