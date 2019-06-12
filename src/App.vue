@@ -109,7 +109,7 @@ export default {
       old_width: 0,
       old_height: 0,
       xlt: undefined,
-      scale: 1.0,
+      scale: 5.0,
     }
   },
   watch: {
@@ -225,7 +225,7 @@ export default {
       let hl = this.hLines.length
       let vl = this.vLines.length
       // if ((vl < 2) || (hl < 2)) return
-      let svgHTML = `<image xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${this.width}" height="${this.height}" xlink:href="${this.saveImageData}" />`
+      let svgHTML = `<image xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${this.width/this.scale}" height="${this.height/this.scale}" xlink:href="${this.saveImageData}" />`
 
       for (h = 0; h < hl; h++) {
         svgHTML = svgHTML + this.makeLine(this.vLines[0], this.hLines[h], this.vLines[vl - 1], this.hLines[h])
