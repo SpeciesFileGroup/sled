@@ -110,8 +110,7 @@ export default {
       old_width: 0,
       old_height: 0,
       xlt: undefined,
-      svgImageSrc: undefined,
-      svgImageType: 'jpeg',
+      scale: 1.0,
     }
   },
   watch: {
@@ -192,8 +191,8 @@ export default {
             // }
           }
         }
-        this.generateSVG()
       }
+      this.generateSVG()
     },
     getImage (event) {
       let image = document.getElementById('image')
@@ -205,10 +204,10 @@ export default {
         fileReader.onload = function (images) {
           let newImage = new Image()
           newImage.src = fileReader.result
-          this.svgImageSrc = fileReader.result
-          this.svgImageType = files[0].type
           saveImageData = fileReader.result
           newImage.onload = function () {
+            that.old_width = that.width         // shuffle the dimensions
+            that.old_height = that.height       // from the previous size
             that.width = newImage.width
             that.height = newImage.height
           }
@@ -227,20 +226,21 @@ export default {
       let h, v
       let hl = this.hLines.length
       let vl = this.vLines.length
-      if ((vl < 2) || (hl < 2)) return
+      // if ((vl < 2) || (hl < 2)) return
       let svgHTML = '<image xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"' +
-        ' xlink:href="' + saveImageData + '" />'
-      // let svgHTML=''
+        'width="1000" height="1200" xlink:href="' + saveImageData + '" />'
+
       for (h = 0; h < hl; h++) {
         svgHTML = svgHTML + this.makeLine(this.vLines[0], this.hLines[h], this.vLines[vl - 1], this.hLines[h])
       }
       for (v = 0; v < vl; v++) {
         svgHTML = svgHTML + this.makeLine(this.vLines[v], this.hLines[0], this.vLines[v], this.hLines[hl - 1])
       }
-      // svgHTML = svgHTML + '</svg>'
+
       document.getElementById('svg-layer').innerHTML = svgHTML
     },
     makeLine (x1, y1, x2, y2) {
+      if((x1 == undefined) || (x2 == undefined) || (y1 == undefined) || (y2 == undefined)) return ''
       return "<line x1='" + x1 + "' y1='" + y1 + "' x2='" + x2 + "' y2='" + y2 + "' style='stroke:rgb(255,0,0);stroke-width:4' />"
     }
   }
