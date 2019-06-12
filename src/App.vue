@@ -7,15 +7,22 @@
       <input
         type="number"
         v-model.number="width" v-on:change="resizeImage"/>
-      <input type="button" value="- 100" v-on:click="width-=100"/>
-      <input type="button" value="+ 100" v-on:click="width+=100"/>
+<!--      <input type="button" value="- 100" v-on:click="width-=100"/>-->
+<!--      <input type="button" value="+ 100" v-on:click="width+=100"/>-->
       <br>
       <label>Enter image height</label>
       <input
         type="number"
         v-model.number="height" v-on:change="resizeImage"/>
-      <input type="button" value="- 100" v-on:click="height-=100"/>
-      <input type="button" value="+ 100" v-on:click="height+=100"/>
+<!--      <input type="button" value="- 100" v-on:click="height-=100"/>-->
+<!--      <input type="button" value="+ 100" v-on:click="height+=100"/>-->
+      <br>
+      <label>Set image divisor</label>
+      <input
+        type="number"
+        v-model.number="scale" v-on:change="resizeImage"/>
+<!--      <input type="button" value="- 1" v-on:click="scale-=1"/>-->
+<!--      <input type="button" value="+ 1" v-on:click="scale+=1"/>-->
     </div>
     <div class="line-inputs">
       <div>
@@ -208,6 +215,7 @@ export default {
             that.old_height = that.height       // from the previous size
             that.width = newImage.width
             that.height = newImage.height
+            that.resizeImage()
             that.generateSVG()
           }
         }
