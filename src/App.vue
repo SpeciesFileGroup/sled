@@ -70,15 +70,13 @@
       </table>
     </div>
     <div id="svg-container">
-      <img id="image"/>
-      <svg id="svg-layer"></svg>
+      <svg id="svg-layer" :width="width" :height="height"></svg>
     </div>
 
   </div>
 </template>
 
 <script>
-var saveImageData
 import newHline from './components/newHline'
 import newVline from './components/newVline'
 
@@ -107,6 +105,7 @@ export default {
       vLines: [], // x pixel coord of line
       cells: [], // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
       line_thickness: 1,
+      saveImageData: undefined,
       old_width: 0,
       old_height: 0,
       xlt: undefined,
@@ -195,7 +194,6 @@ export default {
       this.generateSVG()
     },
     getImage (event) {
-      let image = document.getElementById('image')
       let files = event.target.files
       let that = this
       // FileReader support
@@ -204,14 +202,14 @@ export default {
         fileReader.onload = function (images) {
           let newImage = new Image()
           newImage.src = fileReader.result
-          saveImageData = fileReader.result
+          that.saveImageData = fileReader.result
           newImage.onload = function () {
             that.old_width = that.width         // shuffle the dimensions
             that.old_height = that.height       // from the previous size
             that.width = newImage.width
             that.height = newImage.height
+            that.generateSVG()
           }
-          image.src = fileReader.result
         }
         fileReader.readAsDataURL(files[0])
       }
@@ -227,8 +225,7 @@ export default {
       let hl = this.hLines.length
       let vl = this.vLines.length
       // if ((vl < 2) || (hl < 2)) return
-      let svgHTML = '<image xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"' +
-        'width="1000" height="1200" xlink:href="' + saveImageData + '" />'
+      let svgHTML = `<image xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${this.width}" height="${this.height}" xlink:href="${this.saveImageData}" />`
 
       for (h = 0; h < hl; h++) {
         svgHTML = svgHTML + this.makeLine(this.vLines[0], this.hLines[h], this.vLines[vl - 1], this.hLines[h])
@@ -264,8 +261,8 @@ export default {
   }
   #svg-layer {
     z-index: 2;
-    height:100%;
-    width:100%;
+    //height:100%;
+    //width:100%;
     position: absolute;
   }
 </style>
