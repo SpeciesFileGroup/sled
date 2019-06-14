@@ -49,9 +49,13 @@
             v-for="(vline, index) in vLinesInOrder"
             :key="index">
             <input type="button" value="X" v-on:click="removeColumn(index)"/>
-            <input type="button" value="-100" v-on:click="$set(vLines,index, vLines[index] - 100)"/>
+            <input type="button" value="-C" v-on:click="$set(vLines,index, vLines[index] - 100)"/>
+            <input type="button" value="-25" v-on:click="$set(vLines,index, vLines[index] - 25)"/>
+            <input type="button" value="-1" v-on:click="$set(vLines,index, vLines[index] - 1)"/>
             {{ vline }}
-            <input type="button" value="+100" v-on:click="$set(vLines,index, vLines[index] + 100)"/>
+            <input type="button" value="+1" v-on:click="$set(vLines,index, vLines[index] + 1)"/>
+            <input type="button" value="+25" v-on:click="$set(vLines,index, vLines[index] + 25)"/>
+            <input type="button" value="+C" v-on:click="$set(vLines,index, vLines[index] + 100)"/>
           </th>
         </tr>
         </thead>
@@ -61,9 +65,13 @@
           :key="hindex">
           <td>
             <input type="button" value="X" v-on:click="removeRow(hindex)"/>
-            <input type="button" value="-100" v-on:click="$set(hLines,hindex, hLines[hindex] - 100)"/>
+            <input type="button" value="-C" v-on:click="$set(hLines,hindex, hLines[hindex] - 100)"/>
+            <input type="button" value="-25" v-on:click="$set(hLines,hindex, hLines[hindex] - 25)"/>
+            <input type="button" value="-1" v-on:click="$set(hLines,hindex, hLines[hindex] - 1)"/>
             {{ hline }}
-            <input type="button" value="+100" v-on:click="$set(hLines,hindex, hLines[hindex] + 100)"/>
+            <input type="button" value="+1" v-on:click="$set(hLines,hindex, hLines[hindex] + 1)"/>
+            <input type="button" value="+25" v-on:click="$set(hLines,hindex, hLines[hindex] + 25)"/>
+            <input type="button" value="+C" v-on:click="$set(hLines,hindex, hLines[hindex] + 100)"/>
           </td>
           <td
             v-for="(vline, vindex) in vLines"
@@ -246,7 +254,7 @@ export default {
     },
     makeLine (x1, y1, x2, y2) {
       if((x1 == undefined) || (x2 == undefined) || (y1 == undefined) || (y2 == undefined)) return ''
-      return "<line x1='" + x1 + "' y1='" + y1 + "' x2='" + x2 + "' y2='" + y2 + "' style='stroke:rgb(255,0,0);stroke-width:4' />"
+      return "<line x1='" + x1 / this.scale + "' y1='" + y1 / this.scale + "' x2='" + x2 / this.scale + "' y2='" + y2 / this.scale + "' style='stroke:rgb(255,0,0);stroke-width:4' />"
     }
   }
 }
