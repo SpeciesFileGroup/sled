@@ -50,32 +50,32 @@
             <input type="button" value="-25" v-on:click="moveX(-25)"/>
             <input type="button" value="-1" v-on:click="moveX(-1)"/>
             <br>
-            <input type="button" value="+100" v-on:click="moveX(100)"/>
-            <input type="button" value="+25" v-on:click="moveX(25)"/>
             <input type="button" value="+1" v-on:click="moveX(1)"/>
+            <input type="button" value="+25" v-on:click="moveX(25)"/>
+            <input type="button" value="+100" v-on:click="moveX(100)"/>
             <br>
             Move grid Y:
             <input type="button" value="-100" v-on:click="moveY(-100)"/>
             <input type="button" value="-25" v-on:click="moveY(-25)"/>
             <input type="button" value="-1" v-on:click="moveY(-1)"/>
             <br>
-            <input type="button" value="+100" v-on:click="moveY(100)"/>
+              <input type="button" value="+1" v-on:click="moveY(1)"/>
             <input type="button" value="+25" v-on:click="moveY(25)"/>
-            <input type="button" value="+1" v-on:click="moveY(1)"/>
+            <input type="button" value="+100" v-on:click="moveY(100)"/>
           </th>
           <th
             v-for="(vline, index) in vLinesInOrder"
             :key="index">
-            <input type="button" value="-100" v-on:click="$set(vLines,index, vLines[index] - 100)"/>
-            <input type="button" value="-25" v-on:click="$set(vLines,index, vLines[index] - 25)"/>
-            <input type="button" value="-1" v-on:click="$set(vLines,index, vLines[index] - 1)"/>
+            <input type="button" value="-100" v-on:click="moveV(index, -100)"/>
+            <input type="button" value="-25" v-on:click="moveV(index, -25)"/>
+            <input type="button" value="-1" v-on:click="moveV(index, -1)"/>
             <br>
             <input type="button" value="X" v-on:click="removeColumn(index)"/>
             {{ vline }}
             <br>
-            <input type="button" value="+1" v-on:click="$set(vLines,index, vLines[index] + 1)"/>
-            <input type="button" value="+25" v-on:click="$set(vLines,index, vLines[index] + 25)"/>
-            <input type="button" value="+100" v-on:click="$set(vLines,index, vLines[index] + 100)"/>
+            <input type="button" value="+1" v-on:click="moveV(index, 1)"/>
+            <input type="button" value="+25" v-on:click="moveV(index, 25)"/>
+            <input type="button" value="+100" v-on:click="moveV(index, 100)"/>
           </th>
         </tr>
         </thead>
@@ -84,16 +84,16 @@
           v-for="(hline, hindex) in hLinesInOrder"
           :key="hindex">
           <td>
-            <input type="button" value="-100" v-on:click="$set(hLines,hindex, hLines[hindex] - 100)"/>
-            <input type="button" value="-25" v-on:click="$set(hLines,hindex, hLines[hindex] - 25)"/>
-            <input type="button" value="-1" v-on:click="$set(hLines,hindex, hLines[hindex] - 1)"/>
+            <input type="button" value="-100" v-on:click="moveH(hindex, -100)"/>
+            <input type="button" value="-25" v-on:click="moveH(hindex, -25)"/>
+            <input type="button" value="-1" v-on:click="moveH(hindex, -1)"/>
             <br>
             <input type="button" value="X" v-on:click="removeRow(hindex)"/>
             {{ hline }}
             <br>
-            <input type="button" value="+1" v-on:click="$set(hLines,hindex, hLines[hindex] + 1)"/>
-            <input type="button" value="+25" v-on:click="$set(hLines,hindex, hLines[hindex] + 25)"/>
-            <input type="button" value="+100" v-on:click="$set(hLines,hindex, hLines[hindex] + 100)"/>
+            <input type="button" value="+1" v-on:click="moveH(hindex, 1)"/>
+            <input type="button" value="+25" v-on:click="moveH(hindex, 25)"/>
+            <input type="button" value="+100" v-on:click="moveH(hindex, 100)"/>
           </td>
           <td
             v-for="(vline, vindex) in vLines"
@@ -188,6 +188,12 @@ export default {
       for(let i=0;i<this.hLines.length;i++){
         this.$set(this.hLines,i, this.hLines[i] + offset)
       }
+    },
+    moveV(index, offset) {
+      this.$set(this.vLines,index, this.vLines[index] + offset)
+    },
+    moveH(index, offset) {
+      this.$set(this.hLines,index, this.hLines[index] + offset)
     },
     resizeImage () { // if image size changes, recompute lines and cells
       if (this.old_width > 1) { // a previous presumably valid width
