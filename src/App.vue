@@ -46,27 +46,27 @@
         <tr>
           <th>
             Move grid X: 
-            <input type="button" value="-C" v-on:click="moveX(-100)"/>
+            <input type="button" value="-100" v-on:click="moveX(-100)"/>
             <input type="button" value="-25" v-on:click="moveX(-25)"/>
             <input type="button" value="-1" v-on:click="moveX(-1)"/>
             <br>
-            <input type="button" value="+C" v-on:click="moveX(100)"/>
+            <input type="button" value="+100" v-on:click="moveX(100)"/>
             <input type="button" value="+25" v-on:click="moveX(25)"/>
             <input type="button" value="+1" v-on:click="moveX(1)"/>
             <br>
             Move grid Y:
-            <input type="button" value="-C" v-on:click="moveY(-100)"/>
+            <input type="button" value="-100" v-on:click="moveY(-100)"/>
             <input type="button" value="-25" v-on:click="moveY(-25)"/>
             <input type="button" value="-1" v-on:click="moveY(-1)"/>
             <br>
-            <input type="button" value="+C" v-on:click="moveY(100)"/>
+            <input type="button" value="+100" v-on:click="moveY(100)"/>
             <input type="button" value="+25" v-on:click="moveY(25)"/>
             <input type="button" value="+1" v-on:click="moveY(1)"/>
           </th>
           <th
             v-for="(vline, index) in vLinesInOrder"
             :key="index">
-            <input type="button" value="-C" v-on:click="$set(vLines,index, vLines[index] - 100)"/>
+            <input type="button" value="-100" v-on:click="$set(vLines,index, vLines[index] - 100)"/>
             <input type="button" value="-25" v-on:click="$set(vLines,index, vLines[index] - 25)"/>
             <input type="button" value="-1" v-on:click="$set(vLines,index, vLines[index] - 1)"/>
             <br>
@@ -75,7 +75,7 @@
             <br>
             <input type="button" value="+1" v-on:click="$set(vLines,index, vLines[index] + 1)"/>
             <input type="button" value="+25" v-on:click="$set(vLines,index, vLines[index] + 25)"/>
-            <input type="button" value="+C" v-on:click="$set(vLines,index, vLines[index] + 100)"/>
+            <input type="button" value="+100" v-on:click="$set(vLines,index, vLines[index] + 100)"/>
           </th>
         </tr>
         </thead>
@@ -84,7 +84,7 @@
           v-for="(hline, hindex) in hLinesInOrder"
           :key="hindex">
           <td>
-            <input type="button" value="-C" v-on:click="$set(hLines,hindex, hLines[hindex] - 100)"/>
+            <input type="button" value="-100" v-on:click="$set(hLines,hindex, hLines[hindex] - 100)"/>
             <input type="button" value="-25" v-on:click="$set(hLines,hindex, hLines[hindex] - 25)"/>
             <input type="button" value="-1" v-on:click="$set(hLines,hindex, hLines[hindex] - 1)"/>
             <br>
@@ -93,7 +93,7 @@
             <br>
             <input type="button" value="+1" v-on:click="$set(hLines,hindex, hLines[hindex] + 1)"/>
             <input type="button" value="+25" v-on:click="$set(hLines,hindex, hLines[hindex] + 25)"/>
-            <input type="button" value="+C" v-on:click="$set(hLines,hindex, hLines[hindex] + 100)"/>
+            <input type="button" value="+100" v-on:click="$set(hLines,hindex, hLines[hindex] + 100)"/>
           </td>
           <td
             v-for="(vline, vindex) in vLines"
@@ -195,7 +195,7 @@ export default {
         let h = 0
         let n = this.vLines.length
         for (h = 0; h < n; h++) {
-          this.$set(this.vLines, h, this.vLines[h] * hScale)
+          this.$set(this.vLines, h, Math.round(this.vLines[h] * hScale))
         }
       }
       if (this.old_height > 1) { // a previous presumably valid height
@@ -203,7 +203,7 @@ export default {
         let v = 0
         let m = this.hLines.length
         for (v = 0; v < m; v++) {
-          this.$set(this.hLines, v, this.hLines[v] * vScale)
+          this.$set(this.hLines, v, Math.round(this.hLines[v] * vScale))
         }
       }
       this.old_width = this.width
