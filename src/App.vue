@@ -26,18 +26,18 @@
     </div>
     <div class="line-inputs">
       <div>
-        <new-hline @newLine="addNewHline"/>
-        <input
-          type="button"
-          value="RESET"
-          @click="resetHlines()"/>
-      </div>
-      <div>
         <new-vline @newLine="addNewVline"/>
         <input
           type="button"
           value="RESET"
           @click="resetVlines()"/>
+      </div>
+      <div>
+        <new-hline @newLine="addNewHline"/>
+        <input
+          type="button"
+          value="RESET"
+          @click="resetHlines()"/>
       </div>
     </div>
     <div class="cells">
