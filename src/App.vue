@@ -44,15 +44,35 @@
       <table>
         <thead>
         <tr>
-          <th></th>
+          <th>
+            Move grid X: 
+            <input type="button" value="-C" v-on:click="moveX(-100)"/>
+            <input type="button" value="-25" v-on:click="moveX(-25)"/>
+            <input type="button" value="-1" v-on:click="moveX(-1)"/>
+            <br>
+            <input type="button" value="+C" v-on:click="moveX(100)"/>
+            <input type="button" value="+25" v-on:click="moveX(25)"/>
+            <input type="button" value="+1" v-on:click="moveX(1)"/>
+            <br>
+            Move grid Y:
+            <input type="button" value="-C" v-on:click="moveY(-100)"/>
+            <input type="button" value="-25" v-on:click="moveY(-25)"/>
+            <input type="button" value="-1" v-on:click="moveY(-1)"/>
+            <br>
+            <input type="button" value="+C" v-on:click="moveY(100)"/>
+            <input type="button" value="+25" v-on:click="moveY(25)"/>
+            <input type="button" value="+1" v-on:click="moveY(1)"/>
+          </th>
           <th
             v-for="(vline, index) in vLinesInOrder"
             :key="index">
-            <input type="button" value="X" v-on:click="removeColumn(index)"/>
             <input type="button" value="-C" v-on:click="$set(vLines,index, vLines[index] - 100)"/>
             <input type="button" value="-25" v-on:click="$set(vLines,index, vLines[index] - 25)"/>
             <input type="button" value="-1" v-on:click="$set(vLines,index, vLines[index] - 1)"/>
+            <br>
+            <input type="button" value="X" v-on:click="removeColumn(index)"/>
             {{ vline }}
+            <br>
             <input type="button" value="+1" v-on:click="$set(vLines,index, vLines[index] + 1)"/>
             <input type="button" value="+25" v-on:click="$set(vLines,index, vLines[index] + 25)"/>
             <input type="button" value="+C" v-on:click="$set(vLines,index, vLines[index] + 100)"/>
@@ -64,11 +84,13 @@
           v-for="(hline, hindex) in hLinesInOrder"
           :key="hindex">
           <td>
-            <input type="button" value="X" v-on:click="removeRow(hindex)"/>
             <input type="button" value="-C" v-on:click="$set(hLines,hindex, hLines[hindex] - 100)"/>
             <input type="button" value="-25" v-on:click="$set(hLines,hindex, hLines[hindex] - 25)"/>
             <input type="button" value="-1" v-on:click="$set(hLines,hindex, hLines[hindex] - 1)"/>
+            <br>
+            <input type="button" value="X" v-on:click="removeRow(hindex)"/>
             {{ hline }}
+            <br>
             <input type="button" value="+1" v-on:click="$set(hLines,hindex, hLines[hindex] + 1)"/>
             <input type="button" value="+25" v-on:click="$set(hLines,hindex, hLines[hindex] + 25)"/>
             <input type="button" value="+C" v-on:click="$set(hLines,hindex, hLines[hindex] + 100)"/>
@@ -124,7 +146,7 @@ export default {
       old_width: 0,
       old_height: 0,
       xlt: undefined,
-      scale: 5.0,
+      scale: 8.0,
     }
   },
   watch: {
@@ -156,6 +178,16 @@ export default {
     },
     resetVlines () {
       this.vLines = []
+    },
+    moveX(offset) {
+      for(let i=0;i<this.vLines.length;i++){
+        this.$set(this.vLines,i, this.vLines[i] + offset)
+      }
+    },
+    moveY(offset) {
+      for(let i=0;i<this.hLines.length;i++){
+        this.$set(this.hLines,i, this.hLines[i] + offset)
+      }
     },
     resizeImage () { // if image size changes, recompute lines and cells
       if (this.old_width > 1) { // a previous presumably valid width
