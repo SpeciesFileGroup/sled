@@ -275,20 +275,38 @@ export default {
       for (v = 0; v < vl; v++) {
         svgHTML = svgHTML + this.makeLine(this.vLines[v], this.hLines[0], this.vLines[v], this.hLines[hl - 1])
       }
-
+      if((this.vLines[0] >= 0) && this.hLines[0] >= 0) {
+        svgHTML = svgHTML + '<circle cx=' + this.vLines[0]/ this.scale +' cy=' + this.hLines[0]/ this.scale + ' r=' + 50/this.scale + ' style="stroke:rgb(0,255,0);stroke-width:2;opacity:0.7;fill-opacity:0" />'
+      }
+      let vLast = this.vLines.length - 1
+      let hLast = this.hLines.length - 1
+      if((vLast > 0) && hLast > 0) {
+        svgHTML = svgHTML + this.makeCircle(vLast, hLast)
+      }
       document.getElementById('svg-layer').innerHTML = svgHTML
     },
     makeLine (x1, y1, x2, y2) {
       if((x1 == undefined) || (x2 == undefined) || (y1 == undefined) || (y2 == undefined)) return ''
       return "<line x1='" + x1 / this.scale + "' y1='" + y1 / this.scale + "' x2='" + x2 / this.scale + "' y2='" + y2 / this.scale + "' style='stroke:rgb(255,0,0);stroke-width:4' />"
+    },
+    makeCircle(ix, iy) {
+      // return "<circle cx=" + this.vLines[ix]/ this.scale + " cy=" + this.hLines[iy]/ this.scale + " r=" + 50/this.scale + " style='stroke:rgb(0,255,0);stroke-width:2;opacity:0.7;fill-opacity:0' />"
+      return '<circle cx=' + this.vLines[ix]/ this.scale +' cy=' + this.hLines[iy]/ this.scale + ' r=' + 50/this.scale + ' style="stroke:rgb(0,255,0);stroke-width:2;opacity:0.7;fill-opacity:0" />'
     }
   }
 }
 </script>
 <style lang="scss">
+  input {
+    font-size: 8px;
+  }
+  th {
+    width: 400px;
+    font-size: 10px;
+  }
   td {
-    width: 330px;
-    font-size: 12px;
+    width: 400px;
+    font-size: 10px;
     border: 1px solid gray;
   }
   #svg-container {
