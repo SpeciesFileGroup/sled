@@ -7,22 +7,16 @@
       <input
         type="number"
         v-model.number="width" v-on:change="resizeImage"/>
-<!--      <input type="button" value="- 100" v-on:click="width-=100"/>-->
-<!--      <input type="button" value="+ 100" v-on:click="width+=100"/>-->
       <br>
       <label>Enter image height</label>
       <input
         type="number"
         v-model.number="height" v-on:change="resizeImage"/>
-<!--      <input type="button" value="- 100" v-on:click="height-=100"/>-->
-<!--      <input type="button" value="+ 100" v-on:click="height+=100"/>-->
       <br>
       <label>Set image divisor</label>
       <input
         type="number"
         v-model.number="scale" v-on:change="resizeImage"/>
-<!--      <input type="button" value="- 1" v-on:click="scale-=1"/>-->
-<!--      <input type="button" value="+ 1" v-on:click="scale+=1"/>-->
     </div>
     <div class="line-inputs">
       <div>
@@ -46,19 +40,17 @@
         <tr>
           <th>
             Move grid X: 
-            <input type="button" value="-100" v-on:click="moveX(-100)"/>
-            <input type="button" value="-25" v-on:click="moveX(-25)"/>
-            <input type="button" value="-1" v-on:click="moveX(-1)"/>
-            <br>
-            <input type="button" value="+1" v-on:click="moveX(1)"/>
-            <input type="button" value="+25" v-on:click="moveX(25)"/>
-            <input type="button" value="+100" v-on:click="moveX(100)"/>
+            <input type="button" value="-100" size="4" v-on:click="moveX(-100)"/>
+            <input type="button" value="-25" size="4" v-on:click="moveX(-25)"/>
+            <input type="button" value="-1" size="4" v-on:click="moveX(-1)"/>
+            <input type="button" value="+1" size="4" v-on:click="moveX(1)"/>
+            <input type="button" value="+25" size="4" v-on:click="moveX(25)"/>
+            <input type="button" value="+100" size="4" v-on:click="moveX(100)"/>
             <br>
             Move grid Y:
             <input type="button" value="-100" v-on:click="moveY(-100)"/>
             <input type="button" value="-25" v-on:click="moveY(-25)"/>
             <input type="button" value="-1" v-on:click="moveY(-1)"/>
-            <br>
               <input type="button" value="+1" v-on:click="moveY(1)"/>
             <input type="button" value="+25" v-on:click="moveY(25)"/>
             <input type="button" value="+100" v-on:click="moveY(100)"/>
@@ -69,10 +61,8 @@
             <input type="button" value="-100" v-on:click="moveV(index, -100)"/>
             <input type="button" value="-25" v-on:click="moveV(index, -25)"/>
             <input type="button" value="-1" v-on:click="moveV(index, -1)"/>
-            <br>
             <input type="button" value="X" v-on:click="removeColumn(index)"/>
             {{ vline }}
-            <br>
             <input type="button" value="+1" v-on:click="moveV(index, 1)"/>
             <input type="button" value="+25" v-on:click="moveV(index, 25)"/>
             <input type="button" value="+100" v-on:click="moveV(index, 100)"/>
@@ -87,10 +77,8 @@
             <input type="button" value="-100" v-on:click="moveH(hindex, -100)"/>
             <input type="button" value="-25" v-on:click="moveH(hindex, -25)"/>
             <input type="button" value="-1" v-on:click="moveH(hindex, -1)"/>
-            <br>
             <input type="button" value="X" v-on:click="removeRow(hindex)"/>
             {{ hline }}
-            <br>
             <input type="button" value="+1" v-on:click="moveH(hindex, 1)"/>
             <input type="button" value="+25" v-on:click="moveH(hindex, 25)"/>
             <input type="button" value="+100" v-on:click="moveH(hindex, 100)"/>
