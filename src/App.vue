@@ -290,7 +290,7 @@ export default {
       return "<line x1='" + x1 / this.scale + "' y1='" + y1 / this.scale + "' x2='" + x2 / this.scale + "' y2='" + y2 / this.scale + "' style='stroke:rgb(255,0,0);stroke-width:4' />"
     },
     makeCircle(ix, iy) {
-      return '<circle cx=' + this.vLines[ix]/ this.scale +' cy=' + this.hLines[iy]/ this.scale + ' r=' + 50/this.scale + ' style="stroke:rgb(0,255,0);stroke-width:2;opacity:0.7;fill-opacity:0" />'
+      return '<circle cx=' + this.vLines[ix]/ this.scale +' cy=' + this.hLines[iy]/ this.scale + ' r=' + 50/this.scale + ' style="stroke:rgb(0,255,0);stroke-width:2;opacity:0.7;fill-opacity:0" onmouseover="this.moveX(200)"/>'
     }
   }
 }
