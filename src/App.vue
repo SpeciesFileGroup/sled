@@ -112,10 +112,10 @@
 
 import newHline from './components/newHline'
 import newVline from './components/newVline'
-import SvgCircle from "./components/svgCircle";
+import svgCircle from "./components/svgCircle";
 export default {
   components: {
-    SvgCircle,
+    svgCircle,
     newHline,
     newVline
   },
