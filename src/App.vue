@@ -94,19 +94,28 @@
         </tbody>
       </table>
     </div>
-    <div id="svg-container">
-      <svg id="svg-layer" :width="width" :height="height"></svg>
+    <div id="svg_container">
+      <svg id="svg_layer" :width="width" :height="height">
+        <svg-circle
+          :ix=0 :iy=0 :h-lines=hLines :v-lines=vLines :scale=scale
+          @mousedown="alert();this.moveX(200);this.moveY(200)"
+        />
+        <svg-circle v-if="(hLines.length > 1) && (vLines.length > 1)"
+                    :ix=vLines.length - 1 :iy=hLines.length - 1 :h-lines=hLines :v-lines=vLines :scale=scale @mousedown="alert();this.moveX(200);this.moveY(200)" />
+      </svg>
     </div>
 
   </div>
 </template>
 
 <script>
+
 import newHline from './components/newHline'
 import newVline from './components/newVline'
-
+import SvgCircle from "./components/svgCircle";
 export default {
   components: {
+    SvgCircle,
     newHline,
     newVline
   },
@@ -283,15 +292,16 @@ export default {
       if((vLast > 0) && hLast > 0) {
         svgHTML = svgHTML + this.makeCircle(vLast, hLast)
       }
-      document.getElementById('svg-layer').innerHTML = svgHTML
+      document.getElementById('svg_layer').innerHTML = svgHTML
     },
     makeLine (x1, y1, x2, y2) {
       if((x1 == undefined) || (x2 == undefined) || (y1 == undefined) || (y2 == undefined)) return ''
       return "<line x1='" + x1 / this.scale + "' y1='" + y1 / this.scale + "' x2='" + x2 / this.scale + "' y2='" + y2 / this.scale + "' style='stroke:rgb(255,0,0);stroke-width:4' />"
     },
     makeCircle(ix, iy) {
-      return '<circle cx=' + this.vLines[ix]/ this.scale +' cy=' + this.hLines[iy]/ this.scale + ' r=' + 50/this.scale + ' style="stroke:rgb(0,255,0);stroke-width:2;opacity:0.7;fill-opacity:0" onmouseover="this.moveX(200)"/>'
-    }
+      return '<circle cx=' + this.vLines[ix]/ this.scale +' cy=' + this.hLines[iy]/ this.scale + ' r=' + 50/this.scale + ' style="stroke:rgb(0,255,0);stroke-width:2;opacity:0.7;fill-opacity:0" onmouseup="moveXX(200)"/>'
+      // was previously onmouseover="this.moveX(200)
+    },
   }
 }
 </script>
@@ -308,7 +318,7 @@ export default {
     font-size: 10px;
     border: 1px solid gray;
   }
-  #svg-container {
+  #svg_container {
     display: flex;
     //max-width: 80%;
     position: relative;
@@ -318,7 +328,7 @@ export default {
     width: 100%;
     position: relative;
   }
-  #svg-layer {
+  #svg_layer {
     z-index: 2;
     //height:100%;
     //width:100%;
