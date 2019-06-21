@@ -95,16 +95,16 @@
       </table>
     </div>
     <div id="svg_container">
-      <svg id="svg_layer" :width="width" :height="height">
-        <svg-circle
-          :ix=0 :iy=0 :h-lines=hLines :v-lines=vLines :scale=scale
-          @mousedown="alert();this.moveX(200);this.moveY(200)"
-        />
-        <svg-circle v-if="(hLines.length > 1) && (vLines.length > 1)"
-                    :ix=vLines.length - 1 :iy=hLines.length - 1 :h-lines=hLines :v-lines=vLines :scale=scale @mousedown="alert();this.moveX(200);this.moveY(200)" />
-      </svg>
+      <svg-component
+        v-if="saveImageData"
+        :image-width="width"
+        :image-height="height"
+        :image-data="saveImageData"
+        :h-lines="hLines"
+        :v-lines="vLines"
+        @circleClicked="moveX(200); moveY(200)"
+        :scale="scale"/>
     </div>
-
   </div>
 </template>
 
@@ -112,10 +112,11 @@
 
 import newHline from './components/newHline'
 import newVline from './components/newVline'
-import svgCircle from "./components/svgCircle";
+import SvgComponent from './components/svgComponent'
+
 export default {
   components: {
-    svgCircle,
+    SvgComponent,
     newHline,
     newVline
   },
@@ -241,7 +242,6 @@ export default {
           }
         }
       }
-      this.generateSVG()
     },
     getImage (event) {
       let files = event.target.files
@@ -252,56 +252,18 @@ export default {
         fileReader.onload = function (images) {
           let newImage = new Image()
           newImage.src = fileReader.result
-          that.saveImageData = fileReader.result
           newImage.onload = function () {
             that.old_width = that.width         // shuffle the dimensions
             that.old_height = that.height       // from the previous size
             that.width = newImage.width
             that.height = newImage.height
+            that.saveImageData = fileReader.result
             that.resizeImage()
-            that.generateSVG()
           }
         }
         fileReader.readAsDataURL(files[0])
       }
-
-      // Rich, you have to move this line inside the onload function, because you have to wait to get the width and the height
-      // to set it in the case you want to use this one. But as side note, you should bind width and height property you have
-      // declared in data section in the case you want to modify the size, i already set the image value there
-
-      // image.style = 'width: 50%; height: 50%'
-    },
-    generateSVG () {
-      let h, v
-      let hl = this.hLines.length
-      let vl = this.vLines.length
-      // if ((vl < 2) || (hl < 2)) return
-      let svgHTML = `<image xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${this.width/this.scale}" height="${this.height/this.scale}" xlink:href="${this.saveImageData}" />`
-
-      for (h = 0; h < hl; h++) {
-        svgHTML = svgHTML + this.makeLine(this.vLines[0], this.hLines[h], this.vLines[vl - 1], this.hLines[h])
-      }
-      for (v = 0; v < vl; v++) {
-        svgHTML = svgHTML + this.makeLine(this.vLines[v], this.hLines[0], this.vLines[v], this.hLines[hl - 1])
-      }
-      if((this.vLines[0] >= 0) && this.hLines[0] >= 0) {
-        svgHTML = svgHTML + this.makeCircle(0,0)
-      }
-      let vLast = this.vLines.length - 1
-      let hLast = this.hLines.length - 1
-      if((vLast > 0) && hLast > 0) {
-        svgHTML = svgHTML + this.makeCircle(vLast, hLast)
-      }
-      document.getElementById('svg_layer').innerHTML = svgHTML
-    },
-    makeLine (x1, y1, x2, y2) {
-      if((x1 == undefined) || (x2 == undefined) || (y1 == undefined) || (y2 == undefined)) return ''
-      return "<line x1='" + x1 / this.scale + "' y1='" + y1 / this.scale + "' x2='" + x2 / this.scale + "' y2='" + y2 / this.scale + "' style='stroke:rgb(255,0,0);stroke-width:4' />"
-    },
-    makeCircle(ix, iy) {
-      return '<circle cx=' + this.vLines[ix]/ this.scale +' cy=' + this.hLines[iy]/ this.scale + ' r=' + 50/this.scale + ' style="stroke:rgb(0,255,0);stroke-width:2;opacity:0.7;fill-opacity:0" onmouseup="moveXX(200)"/>'
-      // was previously onmouseover="this.moveX(200)
-    },
+    }
   }
 }
 </script>
