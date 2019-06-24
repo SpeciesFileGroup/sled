@@ -102,7 +102,7 @@
         :image-data="saveImageData"
         :h-lines="hLines"
         :v-lines="vLines"
-        @circleUL="moveX(200); moveY(200)"
+        @circleUL="moveGrid(200, 200)"
         @circleLR="stretchGrid(150, 300)"
         :scale="scale"/>
     </div>
@@ -265,24 +265,28 @@ export default {
         fileReader.readAsDataURL(files[0])
       }
     },
-  stretchGrid(dx, dy) {   // compand the grid by the lower right corner change
-    let vLast = this.vLines.length - 1    // number of cells
-    let hLast = this.hLines.length - 1
-    let old_height = this.hLines[hLast] - this.hLines[0]
-    let old_width = this.vLines[vLast] - this.vLines[0]
-    let new_width = old_width + dx
-    let new_height = old_height + dy
-    let hScale = old_height / new_height
-    let vscale = old_width / new_width
-    let h = 0
-    let v = 0
-    for(h=1; h<this.vLines.length;h++) {
-      this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / hLast))
+    stretchGrid(dx, dy) {   // compand the grid by the lower right corner change
+      let vLast = this.vLines.length - 1    // number of cells
+      let hLast = this.hLines.length - 1
+      let old_height = this.hLines[hLast] - this.hLines[0]
+      let old_width = this.vLines[vLast] - this.vLines[0]
+      let new_width = old_width + dx
+      let new_height = old_height + dy
+      let hScale = old_height / new_height
+      let vscale = old_width / new_width
+      let h = 0
+      let v = 0
+      for(h=1; h<this.vLines.length;h++) {
+        this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / hLast))
+      }
+      for(v=1; v<this.hLines.length;v++) {
+        this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy /vLast))
+      }
+    },
+    moveGrid(dx, dy) {
+      this.moveX(dx)
+      this.moveY(dy)
     }
-    for(v=1; v<this.hLines.length;v++) {
-      this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy /vLast))
-    }
-  },
   }
 }
 </script>
