@@ -29,14 +29,14 @@
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
-        @mousedown="sendEvent"
+        @mousedown="sendEventUL"
       />
       <svg-circle
         :ix="vLines.length - 1"
         :iy="hLines.length - 1"
         :h-lines="hLines"
         :v-lines="vLines"
-        @mousedown="sendEvent"
+        @mousedown="sendEventLR"
         :scale="scale"/>
     </template>
   </svg>
@@ -79,8 +79,11 @@ export default {
     }
   },
   methods: {
-    sendEvent() {
-      this.$emit('circleClicked', true)
+    sendEventUL() {
+      this.$emit('circleUL', true)
+    },
+    sendEventLR() {
+      this.$emit('circleLR', true)
     }
   }
 }
