@@ -286,7 +286,7 @@ export default {
     moveGrid(dx, dy) {
       this.moveX(dx)
       this.moveY(dy)
-    }
+    },
   }
 }
 </script>

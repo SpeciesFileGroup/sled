@@ -30,14 +30,17 @@
         :v-lines="vLines"
         :scale="scale"
         @mousedown="sendEventUL"
+        @mousemove="dragUL"
       />
       <svg-circle
         :ix="vLines.length - 1"
         :iy="hLines.length - 1"
         :h-lines="hLines"
         :v-lines="vLines"
+        :scale="scale"
         @mousedown="sendEventLR"
-        :scale="scale"/>
+        @mousemove="dragLR"
+      />
     </template>
   </svg>
 </template>
@@ -84,6 +87,12 @@ export default {
     },
     sendEventLR() {
       this.$emit('circleLR', true)
+    },
+    dragUL(event) {
+      this.$emit('dragUL', [event.pageX, event.pageY])
+    },
+    dragLR(event) {
+      this.$emit('dragLR', [event.pageX, event.pageY])
     }
   }
 }
