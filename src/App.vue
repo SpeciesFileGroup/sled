@@ -102,8 +102,8 @@
         :image-data="saveImageData"
         :h-lines="hLines"
         :v-lines="vLines"
-        @circleUL="moveGrid(200, 200)"
-        @circleLR="stretchGrid(150, 300)"
+        @dragUL="moveGrid($event)"
+        @dragLR="stretchGrid($event)"
         :scale="scale"/>
     </div>
   </div>
@@ -265,7 +265,9 @@ export default {
         fileReader.readAsDataURL(files[0])
       }
     },
-    stretchGrid(dx, dy) {   // compand the grid by the lower right corner change
+    stretchGrid(deltas) {   // compand the grid by the lower right corner change
+      let dx = deltas[0]
+      let dy = deltas[1]
       let vLast = this.vLines.length - 1    // number of cells
       let hLast = this.hLines.length - 1
       let old_height = this.hLines[hLast] - this.hLines[0]
@@ -280,10 +282,12 @@ export default {
         this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / hLast))
       }
       for(v=1; v<this.hLines.length;v++) {
-        this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy /vLast))
+        this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / vLast))
       }
     },
-    moveGrid(dx, dy) {
+    moveGrid(deltas) {
+      let dx = deltas[0]
+      let dy = deltas[1]
       this.moveX(dx)
       this.moveY(dy)
     },
