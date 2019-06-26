@@ -51,7 +51,7 @@
             <input type="button" value="-100" v-on:click="moveY(-100)"/>
             <input type="button" value="-25" v-on:click="moveY(-25)"/>
             <input type="button" value="-1" v-on:click="moveY(-1)"/>
-              <input type="button" value="+1" v-on:click="moveY(1)"/>
+            <input type="button" value="+1" v-on:click="moveY(1)"/>
             <input type="button" value="+25" v-on:click="moveY(25)"/>
             <input type="button" value="+100" v-on:click="moveY(100)"/>
           </th>

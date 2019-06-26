@@ -14,6 +14,7 @@
         :x2="vLines[vLines.length - 1]"
         :y2="hLines[index]"
         :scale="scale"
+        @mouseover="showHbubble($event)"
       />
       <svg-line
         v-for="(item, index) in vLines"
@@ -39,6 +40,15 @@
         :scale="scale"
         @mousemove="dragLR($event)"
       />
+      <h-circle
+        v-if="hBubbleLine >= 0"
+        :ix="0"
+        :iy="0"
+        :h-lines="hLines"
+        :v-lines="vLines"
+        :scale="scale"
+        @mousemove="dragHline($event)"
+      />
     </template>
   </svg>
 </template>
@@ -47,6 +57,7 @@
 
 import SvgLine from './svgLine'
 import SvgCircle from './svgCircle'
+import hCircle from './hCircle'
 
 export default {
   components: {
@@ -77,6 +88,12 @@ export default {
     vLines: {
       type: Array,
       required: true
+    },
+   },
+  data () {
+    return {
+      vBubbleLine: -1,
+      hBubbleLine: -1,
     }
   },
   methods: {
@@ -91,6 +108,18 @@ export default {
     },
     dragLR(deltas) {
       this.$emit('dragLR', deltas)
+    },
+    showHbubble(location) {
+      this.hBubbleLine = 1
+    },
+    showVbubble(location) {
+      this.vBubbleLine = 1
+    },
+    dragHline(deltas) {
+      this.$emit('dragHline', deltas)
+    },
+    dragVline(deltas) {
+      this.$emit('dragVline', deltas)
     }
   }
 }
