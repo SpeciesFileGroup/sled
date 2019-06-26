@@ -43,11 +43,20 @@
       <h-circle
         v-if="hBubbleLine >= 0"
         :ix="0"
-        :iy="0"
+        :iy="hBubbleLine"
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
         @mousemove="dragHline($event)"
+      />
+      <v-circle
+        v-if="vBubbleLine >= 0"
+        :ix="vBubbleLine"
+        :iy="0"
+        :h-lines="hLines"
+        :v-lines="vLines"
+        :scale="scale"
+        @mousemove="dragVline($event)"
       />
     </template>
   </svg>
@@ -58,11 +67,14 @@
 import SvgLine from './svgLine'
 import SvgCircle from './svgCircle'
 import hCircle from './hCircle'
+import vCircle from './vCircle'
 
 export default {
   components: {
     SvgLine,
-    SvgCircle
+    SvgCircle,
+    hCircle,
+    vCircle
   },
   props: {
     imageData: {
@@ -111,9 +123,11 @@ export default {
     },
     showHbubble(location) {
       this.hBubbleLine = 1
+      this.$emit('hBubbleLine', hBubbleLine)
     },
     showVbubble(location) {
       this.vBubbleLine = 1
+      this.$emit('vBubbleLine', vBubbleLine)
     },
     dragHline(deltas) {
       this.$emit('dragHline', deltas)
