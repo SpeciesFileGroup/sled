@@ -1,5 +1,5 @@
 <template>
-  <line :x1="x1 / scale" :y1="y1 / scale" :x2="x2 / scale" :y2="y2 / scale" style="stroke:rgb(255,0,0);stroke-width:4" @mouseover="showBubble" />
+  <line :x1="x1 / scale" :y1="y1 / scale" :x2="x2 / scale" :y2="y2 / scale" style="stroke:rgb(255,0,0);stroke-width:4" @mouseover="showBubble" @mouseout="removeBubble"/>
 </template>
 
 <script>
@@ -34,6 +34,9 @@ export default {
       }
       if (this.y1 == this.y2)
       this.$emit('hBubble', [0.3 * (this.x2 - this.x1), 0.3 * (this.y2 - this.y1)])
+    },
+    removeBubble() {
+      this.$emit('removeBubble')
     }
   }
 }

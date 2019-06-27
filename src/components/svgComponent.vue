@@ -14,7 +14,8 @@
         :x2="vLines[vLines.length - 1]"
         :y2="hLines[index]"
         :scale="scale"
-        @mouseover="showHbubble($event)"
+        @hBubble="showHbubble($event)"
+        @removeBubble="removeBubble"
       />
       <svg-line
         v-for="(item, index) in vLines"
@@ -23,6 +24,8 @@
         :x2="vLines[index]"
         :y2="hLines[hLines.length - 1]"
         :scale="scale"
+        @vBubble="showVbubble($event)"
+        @removeBubble="removeBubble"
       />
       <svg-circle
         :ix="0"
@@ -123,17 +126,21 @@ export default {
     },
     showHbubble(location) {
       this.hBubbleLine = 1
-      this.$emit('hBubbleLine', hBubbleLine)
+      this.$emit('hBubbleLine', this.hBubbleLine)
     },
     showVbubble(location) {
       this.vBubbleLine = 1
-      this.$emit('vBubbleLine', vBubbleLine)
+      this.$emit('vBubbleLine', this.vBubbleLine)
     },
     dragHline(deltas) {
       this.$emit('dragHline', deltas)
     },
     dragVline(deltas) {
       this.$emit('dragVline', deltas)
+    },
+    removeBubble() {
+      this.vBubbleLine = -1
+      this.hBubbleLine = -1
     }
   }
 }

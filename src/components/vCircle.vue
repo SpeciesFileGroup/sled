@@ -1,6 +1,6 @@
 <template>
   <circle
-    :cx="0.3 * (vLines[vLines.length-1] - vLines[0]) / scale" :cy="hLines[iy] / scale" :r="50/scale" style="stroke:rgb(0,255,0);stroke-width:2;opacity:0.7;fill-opacity:0"
+    :cy="0.3 * (hLines[hLines.length-1] - hLines[0]) / scale" :cx="vLines[ix] / scale" :r="50/scale" style="stroke:rgb(0,255,0);stroke-width:2;opacity:0.7;fill-opacity:0"
     @mousedown="dragging=true" @mousemove="dragCircle" @mouseup="endDrag"/>
 </template>
 <script>
