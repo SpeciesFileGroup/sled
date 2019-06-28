@@ -295,13 +295,13 @@ export default {
       this.moveY(dy)
     },
     moveHline(deltas) {
-      let iy = deltas[0]
-      let dy = deltas[2]
-      this.moveH(iy, dy)
+      let dy = deltas[1]
+      let iy = deltas[2]
+      this.moveH(iy, dy)      // effect line change through common function
     },
     moveVline(deltas) {
-      let ix = deltas[0]
-      let dx = deltas[1]
+      let dx = deltas[0]
+      let ix = deltas[2]
       this.moveV(ix, dx)
     },
   }

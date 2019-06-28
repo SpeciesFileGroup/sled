@@ -120,7 +120,13 @@ export default {
     dragLR(deltas) {
       this.$emit('dragLR', deltas)
     },
-    // showHbubble(location) {
+    dragHline(deltas) {
+      this.$emit('dragHline', deltas)
+    },
+    dragVline(deltas) {
+      this.$emit('dragVline', deltas)
+    },
+    // showHbubble(location) {    ///// removed due to complexity of mouseout/mouseover interaction
     //   this.hBubbleLine = 1
     //   this.$emit('hBubbleLine', this.hBubbleLine)
     // },
@@ -128,16 +134,10 @@ export default {
     //   this.vBubbleLine = 1
     //   this.$emit('vBubbleLine', this.vBubbleLine)
     // },
-    dragHline(deltas) {
-      this.$emit('dragHline', deltas)
-    },
-    dragVline(deltas) {
-      this.$emit('dragVline', deltas)
-    },
     // removeBubble() {
     //   this.vBubbleLine = -1
     //   this.hBubbleLine = -1
-    // }
+    // },                         /////
   }
 }
 </script>

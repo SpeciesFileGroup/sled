@@ -1,6 +1,6 @@
 <template>
   <circle
-    :cx="vLines[ix]/scale" :cy="0.3*(hLines[hLines.length-1] - hLines[0])/scale" :r="50/scale" style="stroke:rgb(0,150,150);stroke-width:2;opacity:0.7;fill-opacity:0"
+    :cx="vLines[ix]/scale" :cy="0.3*(hLines[hLines.length-1] - hLines[0])/scale" :r="50/scale" style="stroke:rgb(0,0,0);stroke-width:2;opacity:0.7;fill-opacity:0"
     @mousedown="dragging=true" @mousemove="dragCircle" @mouseup="endDrag"/>
 </template>
 <script>
@@ -41,7 +41,7 @@
         if (this.dragging) {
           let dx = event.layerX * this.scale - this.vLines[this.ix]
           let dy = event.layerY * this.scale - this.hLines[this.iy]
-          this.$emit('mousemove', [this.ix, dx, dy])
+          this.$emit('mousemove', [dx, dy, this.ix])
         }
       },
       endDrag() {
