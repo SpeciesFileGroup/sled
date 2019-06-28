@@ -14,8 +14,6 @@
         :x2="vLines[vLines.length - 1]"
         :y2="hLines[index]"
         :scale="scale"
-        @hBubble="showHbubble($event)"
-        @removeBubble="removeBubble"
       />
       <svg-line
         v-for="(item, index) in vLines"
@@ -24,8 +22,6 @@
         :x2="vLines[index]"
         :y2="hLines[hLines.length - 1]"
         :scale="scale"
-        @vBubble="showVbubble($event)"
-        @removeBubble="removeBubble"
       />
       <svg-circle
         :ix="0"
@@ -44,17 +40,17 @@
         @mousemove="dragLR($event)"
       />
       <h-circle
-        v-if="hBubbleLine >= 0"
+        v-for="(hline, index) in hLines"
         :ix="0"
-        :iy="hBubbleLine"
+        :iy="index"
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
         @mousemove="dragHline($event)"
       />
       <v-circle
-        v-if="vBubbleLine >= 0"
-        :ix="vBubbleLine"
+        v-for="(vline, index) in vLines"
+        :ix="index"
         :iy="0"
         :h-lines="hLines"
         :v-lines="vLines"
@@ -107,8 +103,8 @@ export default {
    },
   data () {
     return {
-      vBubbleLine: -1,
-      hBubbleLine: -1,
+      hBubble: [0, 0, -1],
+      vBubble: [0, 0, -1]     // x, y, line index
     }
   },
   methods: {
@@ -124,24 +120,24 @@ export default {
     dragLR(deltas) {
       this.$emit('dragLR', deltas)
     },
-    showHbubble(location) {
-      this.hBubbleLine = 1
-      this.$emit('hBubbleLine', this.hBubbleLine)
-    },
-    showVbubble(location) {
-      this.vBubbleLine = 1
-      this.$emit('vBubbleLine', this.vBubbleLine)
-    },
+    // showHbubble(location) {
+    //   this.hBubbleLine = 1
+    //   this.$emit('hBubbleLine', this.hBubbleLine)
+    // },
+    // showVbubble(location) {
+    //   this.vBubbleLine = 1
+    //   this.$emit('vBubbleLine', this.vBubbleLine)
+    // },
     dragHline(deltas) {
       this.$emit('dragHline', deltas)
     },
     dragVline(deltas) {
       this.$emit('dragVline', deltas)
     },
-    removeBubble() {
-      this.vBubbleLine = -1
-      this.hBubbleLine = -1
-    }
+    // removeBubble() {
+    //   this.vBubbleLine = -1
+    //   this.hBubbleLine = -1
+    // }
   }
 }
 </script>

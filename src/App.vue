@@ -104,7 +104,10 @@
         :v-lines="vLines"
         @dragUL="moveGrid($event)"
         @dragLR="stretchGrid($event)"
-        :scale="scale"/>
+        :scale="scale"
+        @dragHline="moveHline($event)"
+        @dragVline="moveVline($event)"
+      />
     </div>
   </div>
 </template>
@@ -290,6 +293,16 @@ export default {
       let dy = deltas[1]
       this.moveX(dx)
       this.moveY(dy)
+    },
+    moveHline(deltas) {
+      let iy = deltas[0]
+      let dy = deltas[2]
+      this.moveH(iy, dy)
+    },
+    moveVline(deltas) {
+      let ix = deltas[0]
+      let dx = deltas[1]
+      this.moveV(ix, dx)
     },
   }
 }

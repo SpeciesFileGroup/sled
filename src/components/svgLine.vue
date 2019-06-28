@@ -30,10 +30,10 @@ export default {
   methods: {
     showBubble() {
       if (this.x1 == this.x2) {
-        this.$emit('vBubble', [0.3 * (this.x2 - this.x1), 0.3 * (this.y2 - this.y1)])
+        this.$emit('vBubble', [this.x2, 0.3 * (this.y2 - this.y1), 1])
       }
       if (this.y1 == this.y2)
-      this.$emit('hBubble', [0.3 * (this.x2 - this.x1), 0.3 * (this.y2 - this.y1)])
+      this.$emit('hBubble', [0.3 * (this.x2 - this.x1), this.y2, 1])
     },
     removeBubble() {
       this.$emit('removeBubble')

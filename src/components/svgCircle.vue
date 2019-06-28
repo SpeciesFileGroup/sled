@@ -29,7 +29,7 @@ export default {
   },
   data()  {
     return {
-      dragging: false
+      dragging: false,
     }
   },
   methods: {
