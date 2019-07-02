@@ -240,10 +240,10 @@ export default {
         let hSize = (this.hLines[hRows] - this.hLines[0]) / hRows
         let vSize = (this.vLines[vCols] - this.vLines[0]) / vCols
         for (j = 0; j < hRows; j++) {
-          this.$set(this.hLines, j, this.hLines[0] + j * hSize)
+          this.$set(this.hLines, j, Math.round(this.hLines[0] + j * hSize))
         }
         for (i = 0; i < vCols; i++) {
-          this.$set(this.vLines, i, this.vLines[0] + i * vSize)
+          this.$set(this.vLines, i, Math.round(this.vLines[0] + i * vSize))
           }
         this.computeCells()
         }

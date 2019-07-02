@@ -38,9 +38,9 @@ export default {
     removeBubble() {
       let that = this
       setTimeout(function() {
+        this.$emit('removeBubble')
         return false
       }, 10000)
-      this.$emit('removeBubble')
     }
   }
 }
