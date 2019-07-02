@@ -33,6 +33,9 @@
           value="RESET"
           @click="resetHlines()"/>
       </div>
+      <div>
+        <input type="button" value="Equalize cells" @click="equalizeLines" />
+      </div>
     </div>
     <div class="cells">
       <table>
@@ -221,10 +224,30 @@ export default {
     removeRow (index) {
       this.$delete(this.hLines, index)
     },
-
     removeColumn (index) {
       this.$delete(this.vLines, index)
     },
+    equalizeLines() {
+      if ((this.hLines.length > 1) && this.vLines.length > 1) {
+        // compute intersections
+        this.cells = []
+        let i = 0 // horizontal (column) index
+        let j = 0 // vertical (row) index
+        let ul, lr // upper left, lower right corners of cell
+        let cellIndex = 0
+        let hRows = this.hLinesInOrder.length - 1 // only enumerate non-empty cells BETWEEN lines
+        let vCols = this.vLinesInOrder.length - 1 // one less populated row/column than lines
+        let hSize = (this.hLines[hRows] - this.hLines[0]) / hRows
+        let vSize = (this.vLines[vCols] - this.vLines[0]) / vCols
+        for (j = 0; j < hRows; j++) {
+          this.$set(this.hLines, j, this.hLines[0] + j * hSize)
+        }
+        for (i = 0; i < vCols; i++) {
+          this.$set(this.vLines, i, this.vLines[0] + i * vSize)
+          }
+        this.computeCells()
+        }
+      },
     computeCells () {
       if ((this.hLines.length > 1) && this.vLines.length > 1) {
         // compute intersections
