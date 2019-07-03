@@ -1,5 +1,5 @@
 <template>
-  <line :x1="x1 / scale" :y1="y1 / scale" :x2="x2 / scale" :y2="y2 / scale" style="stroke:rgb(255,0,0);stroke-width:4" @mouseover="showBubble" @mouseout="removeBubble"/>
+  <line :x1="x1 / scale" :y1="y1 / scale" :x2="x2 / scale" :y2="y2 / scale" :index="index" style="stroke:rgb(255,0,0);stroke-width:4" @mouseover="showBubble" @mouseout="removeBubble"/>
 </template>
 
 <script>
@@ -24,16 +24,20 @@ export default {
     scale: {
       type: [Number, String],
       required: true
+    },
+    index: {
+      type: [Number, String],
+      required: true
     }
   },
   // on mouseover, signal to add a bubble ?
   methods: {
     showBubble() {
       if (this.x1 == this.x2) {
-        this.$emit('vBubble', [this.x2, 0.7 * (this.y2 - this.y1), 1])
+        this.$emit('vBubble', [this.x2, 0.7 * (this.y2 - this.y1), this.index])
       }
       if (this.y1 == this.y2)
-      this.$emit('hBubble', [0.7 * (this.x2 - this.x1), this.y2, 1])
+      this.$emit('hBubble', [0.7 * (this.x2 - this.x1), this.y2, this.index])
     },
     removeBubble() {
       let that = this

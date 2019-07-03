@@ -14,6 +14,9 @@
         :x2="vLines[vLines.length - 1]"
         :y2="hLines[index]"
         :scale="scale"
+        :index="index"
+        @hBubble="showHbubble($event)"
+        @vBubble="showVbubble($event)"
       />
       <svg-line
         v-for="(item, index) in vLines"
@@ -22,6 +25,9 @@
         :x2="vLines[index]"
         :y2="hLines[hLines.length - 1]"
         :scale="scale"
+        :index="index"
+        @hBubble="showHbubble($event)"
+        @vBubble="showVbubble($event)"
       />
       <svg-circle
         :ix="0"
@@ -57,6 +63,10 @@
         :scale="scale"
         @mousemove="dragVline($event)"
       />
+      <circle v-if="hBubble[2] >= 0"
+              :cx="hBubble[0]" :cy="hBubble[1]" :r="12" />
+      <circle v-if="vBubble[2] >= 0"
+              :cx="vBubble[0]" :cy="vBubble[1]" :r="12" />
     </template>
   </svg>
 </template>
@@ -126,18 +136,20 @@ export default {
     dragVline(deltas) {
       this.$emit('dragVline', deltas)
     },
-    // showHbubble(location) {    ///// removed due to complexity of mouseout/mouseover interaction
-    //   this.hBubbleLine = 1
-    //   this.$emit('hBubbleLine', this.hBubbleLine)
-    // },
-    // showVbubble(location) {
-    //   this.vBubbleLine = 1
-    //   this.$emit('vBubbleLine', this.vBubbleLine)
-    // },
-    // removeBubble() {
-    //   this.vBubbleLine = -1
-    //   this.hBubbleLine = -1
-    // },                         /////
+    showHbubble(location) {    ///// removed due to complexity of mouseout/mouseover interaction
+      this.hBubble = location
+      this.hBubbleLine = location[2]
+      this.$emit('hBubbleLine', this.hBubbleLine)
+    },
+    showVbubble(location) {
+      this.vBubble = location
+      this.vBubbleLine = location[2]
+      this.$emit('vBubbleLine', this.vBubbleLine)
+    },
+    removeBubble() {
+      this.vBubbleLine = -1
+      this.hBubbleLine = -1
+    },                         /////
   }
 }
 </script>
