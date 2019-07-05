@@ -28,6 +28,7 @@
         :index="index"
         @hBubble="showHbubble($event)"
         @vBubble="showVbubble($event)"
+        @removeBubble="removeBubble"
       />
       <svg-circle
         :ix="0"
@@ -45,7 +46,7 @@
         :scale="scale"
         @mousemove="dragLR($event)"
       />
-      <h-circle
+      <h-circle v-if="hBubble[2]>=0"
         v-for="(hline, index) in hLines"
         :ix="0"
         :iy="index"
@@ -54,7 +55,7 @@
         :scale="scale"
         @mousemove="dragHline($event)"
       />
-      <v-circle
+      <v-circle v-if="vBubble[2]>=0"
         v-for="(vline, index) in vLines"
         :ix="index"
         :iy="0"
@@ -63,10 +64,6 @@
         :scale="scale"
         @mousemove="dragVline($event)"
       />
-      <circle v-if="hBubble[2] >= 0"
-              :cx="hBubble[0]" :cy="hBubble[1]" :r="12" />
-      <circle v-if="vBubble[2] >= 0"
-              :cx="vBubble[0]" :cy="vBubble[1]" :r="12" />
     </template>
   </svg>
 </template>
@@ -147,8 +144,8 @@ export default {
       this.$emit('vBubbleLine', this.vBubbleLine)
     },
     removeBubble() {
-      this.vBubbleLine = -1
-      this.hBubbleLine = -1
+      this.vBubble = [0, 0, -1]
+      this.hBubble = [0, 0, -1]
     },                         /////
   }
 }
