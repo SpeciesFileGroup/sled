@@ -17,6 +17,7 @@
         :index="index"
         @hBubble="showHbubble($event)"
         @vBubble="showVbubble($event)"
+        @removeBubble="removeBubble"
       />
       <svg-line
         v-for="(item, index) in vLines"
@@ -47,17 +48,15 @@
         @mousemove="dragLR($event)"
       />
       <h-circle v-if="hBubble[2]>=0"
-        v-for="(hline, index) in hLines"
         :ix="0"
-        :iy="index"
+        :iy="hBubble[2]"
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
         @mousemove="dragHline($event)"
       />
       <v-circle v-if="vBubble[2]>=0"
-        v-for="(vline, index) in vLines"
-        :ix="index"
+        :ix="vBubble[2]"
         :iy="0"
         :h-lines="hLines"
         :v-lines="vLines"
@@ -133,20 +132,18 @@ export default {
     dragVline(deltas) {
       this.$emit('dragVline', deltas)
     },
-    showHbubble(location) {    ///// removed due to complexity of mouseout/mouseover interaction
-      this.hBubble = location
-      this.hBubbleLine = location[2]
-      this.$emit('hBubbleLine', this.hBubbleLine)
+    showHbubble(location) {
+      this.hBubble = location     // set the drag bubble for this line
+      this.vBubble = [0, 0, -1]
     },
     showVbubble(location) {
       this.vBubble = location
-      this.vBubbleLine = location[2]
-      this.$emit('vBubbleLine', this.vBubbleLine)
+      this.hBubble = [0, 0, -1]   // clear the other axis bubble
     },
-    removeBubble() {
+    removeBubble() {              // clear both axes' bubbles
       this.vBubble = [0, 0, -1]
       this.hBubble = [0, 0, -1]
-    },                         /////
+    },
   }
 }
 </script>
