@@ -15,6 +15,7 @@
         :y2="hLines[index]"
         :scale="scale"
         :index="index"
+        :dragging="dragging"
         @hBubble="showHbubble($event)"
         @vBubble="showVbubble($event)"
         @removeBubble="removeBubble"
@@ -27,6 +28,7 @@
         :y2="hLines[hLines.length - 1]"
         :scale="scale"
         :index="index"
+        :dragging="dragging"
         @hBubble="showHbubble($event)"
         @vBubble="showVbubble($event)"
         @removeBubble="removeBubble"
@@ -53,6 +55,7 @@
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
+        @dragging="dragging=$event"
         @mousemove="dragHline($event)"
       />
       <v-circle v-if="vBubble[2]>=0"
@@ -61,6 +64,7 @@
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
+        @dragging="dragging=$event"
         @mousemove="dragVline($event)"
       />
     </template>
@@ -106,11 +110,16 @@ export default {
       type: Array,
       required: true
     },
+    // dragging: {
+    //   type: Boolean,
+    //   required: true
+    // }
    },
   data () {
     return {
       hBubble: [0, 0, -1],
-      vBubble: [0, 0, -1]     // x, y, line index
+      vBubble: [0, 0, -1],     // x, y, line index
+      dragging: false
     }
   },
   methods: {
@@ -141,8 +150,10 @@ export default {
       this.hBubble = [0, 0, -1]   // clear the other axis bubble
     },
     removeBubble() {              // clear both axes' bubbles
-      this.vBubble = [0, 0, -1]
-      this.hBubble = [0, 0, -1]
+      // if(!this.dragging) {
+        this.vBubble = [0, 0, -1]
+        this.hBubble = [0, 0, -1]
+      // }
     },
   }
 }

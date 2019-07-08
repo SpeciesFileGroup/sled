@@ -36,8 +36,9 @@
       sendEvent () {
         // this.$emit('mousedown', true)
         this.dragging = true
+        this.$emit('dragging', this.dragging)
       },
-      dragCircle() {
+      dragCircle(event) {
         if (this.dragging) {
           let dx = event.layerX * this.scale - this.vLines[this.ix]
           let dy = event.layerY * this.scale - this.hLines[this.iy]
@@ -46,6 +47,7 @@
       },
       endDrag() {
         this.dragging = false
+        this.$emit('dragging', this.dragging)
       }
     }
 

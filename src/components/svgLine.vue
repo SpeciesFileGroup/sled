@@ -28,6 +28,10 @@ export default {
     index: {
       type: [Number, String],
       required: true
+    },
+    dragging: {
+      type: Boolean,
+      required: true
     }
   },
   // on mouseover, signal to add a bubble ?
@@ -42,8 +46,8 @@ export default {
     removeBubble() {
       let that = this
       setTimeout(function() {
-        that.$emit('removeBubble')
-      }, 2000)
+        if(this.dragging) {that.$emit('removeBubble')}      // should be !this.dragging to remove bubble
+    }, 3000)
     }
   }
 }

@@ -36,6 +36,7 @@
       sendEvent () {
         // this.$emit('mousedown', true)
         this.dragging = true
+        this.$emit('dragging', this.dragging)
       },
       dragCircle(event) {
         if (this.dragging) {
@@ -46,6 +47,7 @@
       },
       endDrag() {
         this.dragging = false
+        this.$emit('dragging', this.dragging)
       }
     }
 

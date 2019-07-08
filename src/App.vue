@@ -184,20 +184,22 @@ export default {
     resetVlines () {
       this.vLines = []
     },
-    moveX(offset) {
+    moveX(offset) {    // move all vertical lines by x-offset
       for(let i=0;i<this.vLines.length;i++){
-        this.$set(this.vLines,i, this.vLines[i] + offset)
+        // this.$set(this.vLines,i, this.vLines[i] + offset)
+        this.moveV(i, offset)
       }
     },
-    moveY(offset) {
+    moveY(offset) {    // move all horizontal lines by y-offset
       for(let i=0;i<this.hLines.length;i++){
-        this.$set(this.hLines,i, this.hLines[i] + offset)
+        // this.$set(this.hLines,i, this.hLines[i] + offset)
+        this.moveH(i, offset)
       }
     },
-    moveV(index, offset) {
+    moveV(index, offset) {    // move a single vertical line by x-offset
       this.$set(this.vLines,index, this.vLines[index] + offset)
     },
-    moveH(index, offset) {
+    moveH(index, offset) {    // move a single horizontal line by y-offset
       this.$set(this.hLines,index, this.hLines[index] + offset)
     },
     resizeImage () { // if image size changes, recompute lines and cells
