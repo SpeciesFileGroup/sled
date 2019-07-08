@@ -110,6 +110,9 @@ export default {
       type: Array,
       required: true
     },
+    lineThickness: {
+      type: Number
+    }
     // dragging: {
     //   type: Boolean,
     //   required: true

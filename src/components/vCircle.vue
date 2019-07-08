@@ -1,7 +1,7 @@
 <template>
   <circle
-    :cx="vLines[ix]/scale" :cy="0.3*(hLines[hLines.length-1] - hLines[0])/scale" :r="50/scale" style="stroke:rgb(0,0,0);stroke-width:2;opacity:0.7;fill-opacity:0"
-    @mousedown="dragging=true" @mousemove="dragCircle($event)" @mouseup="endDrag"/>
+    :cx="vLines[ix]/scale" :cy="bubble" :r="50/scale" style="stroke:rgb(0,0,0);stroke-width:2;opacity:0.7;fill-opacity:0"
+    @mousedown="sendEvent" @mousemove="dragCircle($event)" @mouseup="endDrag"/>
 </template>
 <script>
   export default {
@@ -48,6 +48,12 @@
       endDrag() {
         this.dragging = false
         this.$emit('dragging', this.dragging)
+      }
+    },
+    computed: {
+      bubble () {
+        // return (this.hLines[0] + 0.3*(this.hLines[this.hLines.length-1] - this.hLines[0]))/this.scale
+        return (0.7*this.hLines[0] + 0.3*this.hLines[this.hLines.length-1])/this.scale
       }
     }
 

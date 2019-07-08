@@ -110,6 +110,7 @@
         :scale="scale"
         @dragHline="moveHline($event)"
         @dragVline="moveVline($event)"
+        :line-thickness="line_thickness"
       />
     </div>
   </div>
@@ -186,13 +187,11 @@ export default {
     },
     moveX(offset) {    // move all vertical lines by x-offset
       for(let i=0;i<this.vLines.length;i++){
-        // this.$set(this.vLines,i, this.vLines[i] + offset)
         this.moveV(i, offset)
       }
     },
     moveY(offset) {    // move all horizontal lines by y-offset
       for(let i=0;i<this.hLines.length;i++){
-        // this.$set(this.hLines,i, this.hLines[i] + offset)
         this.moveH(i, offset)
       }
     },

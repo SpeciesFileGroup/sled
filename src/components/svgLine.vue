@@ -32,6 +32,9 @@ export default {
     dragging: {
       type: Boolean,
       required: true
+    },
+    lineThickness: {
+      type: [Number, String]
     }
   },
   // on mouseover, signal to add a bubble ?
