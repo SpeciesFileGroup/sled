@@ -17,6 +17,11 @@
       <input
         type="number"
         v-model.number="scale" v-on:change="resizeImage"/>
+      <br>
+      <label>Set line thickness</label>
+      <input
+        type="number"
+        v-model.number="lineThickness" v-on:change="resizeImage"/>
     </div>
     <div class="line-inputs">
       <div>
@@ -110,7 +115,7 @@
         :scale="scale"
         @dragHline="moveHline($event)"
         @dragVline="moveVline($event)"
-        :line-thickness="line_thickness"
+        :line-thickness="lineThickness"
       />
     </div>
   </div>
@@ -147,7 +152,7 @@ export default {
       hLines: [], // y pixel coord of line
       vLines: [], // x pixel coord of line
       cells: [], // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
-      line_thickness: 1,
+      lineThickness: 4,
       saveImageData: undefined,
       old_width: 0,
       old_height: 0,

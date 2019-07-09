@@ -1,5 +1,5 @@
 <template>
-  <line :x1="x1 / scale" :y1="y1 / scale" :x2="x2 / scale" :y2="y2 / scale" :index="index" style="stroke:rgb(255,0,0);stroke-width:4" @mouseover="showBubble" @mouseout="removeBubble"/>
+  <line :x1="x1 / scale" :y1="y1 / scale" :x2="x2 / scale" :y2="y2 / scale" :index="index" :style="style" @mouseover="showBubble" @mouseout="removeBubble"/>
 </template>
 
 <script>
@@ -50,7 +50,12 @@ export default {
       let that = this
       setTimeout(function() {
         if(this.dragging) {that.$emit('removeBubble')}      // should be !this.dragging to remove bubble
-    }, 3000)
+      }, 3000)
+    },
+  },
+  computed: {
+    style(){
+      return "stroke:rgb(255,0,0);stroke-width:" + this.lineThickness
     }
   }
 }
