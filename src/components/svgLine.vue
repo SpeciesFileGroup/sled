@@ -55,6 +55,7 @@ export default {
   },
   computed: {
     style(){
+      if(this.lineThickness == "") {this.lineThickness = 1}
       return "stroke:rgb(255,0,0);stroke-width:" + this.lineThickness
     }
   }
