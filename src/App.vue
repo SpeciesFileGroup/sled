@@ -105,7 +105,7 @@
     <div>
       <input type="button" @click="generateJSON()" value="Emit JSON"/>
       <pre>
-        {{ cellsJSON }}
+        "{{ cellsJSON }}"
       </pre>
     </div>
     <div id="svg_container">
