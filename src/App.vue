@@ -102,6 +102,12 @@
         </tbody>
       </table>
     </div>
+    <div>
+      <input type="button" @click="generateJSON()" value="Emit JSON"/>
+      <pre>
+        {{ cellsJSON }}
+      </pre>
+    </div>
     <div id="svg_container">
       <svg-component
         v-if="saveImageData"
@@ -158,6 +164,7 @@ export default {
       old_height: 0,
       xlt: undefined,
       scale: 8.0,
+      cellsJSON: "",
     }
   },
   watch: {
@@ -275,6 +282,9 @@ export default {
           }
         }
       }
+    },
+    generateJSON() {
+      this.cellsJSON = JSON.stringify(this.cells)
     },
     getImage (event) {
       let files = event.target.files
