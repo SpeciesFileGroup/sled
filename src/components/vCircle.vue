@@ -1,7 +1,10 @@
 <template>
   <circle
-    :cx="vLines[ix]/scale" :cy="bubble" :r="50/scale" style="stroke:rgb(0,0,0);stroke-width:2;opacity:0.7;fill-opacity:0"
-    @mousedown="sendEvent" @mousemove="dragCircle($event)" @mouseup="endDrag"/>
+    :cx="vLines[ix]/scale"
+    :cy="bubble"
+    :r="50/scale"
+    style="stroke:rgb(0,0,0);stroke-width:2;opacity:0.7;fill-opacity:0"
+    @mousedown="sendIndex"/>
 </template>
 <script>
   export default {
@@ -25,30 +28,12 @@
       iy: {
         type: Number,
         default: 0
-      }
-    },
-    data()  {
-      return {
-        dragging: false,
-      }
+      },
     },
     methods: {
-      sendEvent () {
-        // this.$emit('mousedown', true)
-        this.dragging = true
-        this.$emit('dragging', this.dragging)
+      sendIndex () {
+        this.$emit('dragging', [this.ix, this.iy])
       },
-      dragCircle(event) {
-        if (this.dragging) {
-          let dx = event.layerX * this.scale - this.vLines[this.ix]
-          let dy = event.layerY * this.scale - this.hLines[this.iy]
-          this.$emit('mousemove', [dx, dy, this.ix])
-        }
-      },
-      endDrag() {
-        this.dragging = false
-        this.$emit('dragging', this.dragging)
-      }
     },
     computed: {
       bubble () {

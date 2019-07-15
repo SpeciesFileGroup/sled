@@ -1,7 +1,10 @@
 <template>
   <circle
-    :cx="bubble" :cy="hLines[iy] / scale" :r="50/scale" style="stroke:rgb(0,0,0);stroke-width:2;opacity:0.7;fill-opacity:0"
-    @mousedown="sendEvent" @mousemove="dragCircle" @mouseup="endDrag"/>
+    :cx="bubble"
+    :cy="hLines[iy] / scale"
+    :r="50/scale"
+    style="stroke:rgb(0,0,0);stroke-width:2;opacity:0.7;fill-opacity:0"
+    @mousedown="sendIndex"/>
 </template>
 <script>
   export default {
@@ -27,32 +30,13 @@
         default: 0
       }
     },
-    data()  {
-      return {
-        dragging: false
-      }
-    },
     methods: {
-      sendEvent () {
-        // this.$emit('mousedown', true)
-        this.dragging = true
-        this.$emit('dragging', this.dragging)
-      },
-      dragCircle(event) {
-        if (this.dragging) {
-          let dx = event.layerX * this.scale - this.vLines[this.ix]
-          let dy = event.layerY * this.scale - this.hLines[this.iy]
-          this.$emit('mousemove', [dx, dy, this.iy])
-        }
-      },
-      endDrag() {
-        this.dragging = false
-        this.$emit('dragging', this.dragging)
-      },
+      sendIndex () {
+        this.$emit('dragging', [this.ix, this.iy])
+      }
     },
     computed: {
       bubble () {
-        // return (this.vLines[0] + 0.3*(this.vLines[this.vLines.length-1] - this.vLines[0]))/this.scale
         return (0.7*this.vLines[0] + 0.3*this.vLines[this.vLines.length-1])/this.scale
       }
     }

@@ -1,5 +1,9 @@
 <template>
-  <svg id="svg_layer" :width="imageWidth" :height="imageHeight">
+  <svg id="svg_layer"
+    :width="imageWidth"
+    :height="imageHeight"
+    @mouseup="dragging = false; draggingCorner = undefined"
+    @mousemove="mouseMove">
     <image
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -41,7 +45,7 @@
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
-        @mousemove="dragUL($event)"
+        @dragging="dragging = true; draggingCorner = 'dragUL'; dragIndex = $event"
       />
       <svg-circle
         :ix="vLines.length - 1"
@@ -49,7 +53,7 @@
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
-        @mousemove="dragLR($event)"
+        @dragging="dragging = true; draggingCorner = 'dragLR'; dragIndex = $event"
       />
       <h-circle v-if="hBubble[2]>=0"
         :ix="0"
@@ -57,8 +61,8 @@
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
-        @dragging="dragging=$event"
-        @mousemove="dragHline($event)"
+        @dragging="dragging = true; verticalLine = false; dragIndex = $event"
+        @mousemove="deltas = $event"
       />
       <v-circle v-if="vBubble[2]>=0"
         :ix="vBubble[2]"
@@ -66,8 +70,8 @@
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
-        @dragging="dragging=$event"
-        @mousemove="dragVline($event)"
+        @dragging="dragging = true; verticalLine = true; dragIndex = $event"
+        @mousemove="deltas = $event"
       />
     </template>
   </svg>
@@ -115,16 +119,16 @@ export default {
     lineThickness: {
       type: Number
     }
-    // dragging: {
-    //   type: Boolean,
-    //   required: true
-    // }
    },
   data () {
     return {
       hBubble: [0, 0, -1],
       vBubble: [0, 0, -1],     // x, y, line index
-      dragging: false
+      dragging: false,
+      deltas: undefined,
+      dragIndex: [],
+      verticalLine: false,
+      draggingCorner: undefined
     }
   },
   methods: {
@@ -135,16 +139,31 @@ export default {
       this.$emit('circleLR', true)
     },
     dragUL(deltas) {
-      this.$emit('dragUL', deltas)
+      let dx = event.layerX * this.scale - this.vLines[deltas[0]]
+      let dy = event.layerY * this.scale - this.hLines[deltas[1]]
+      this.$emit('dragUL', [dx, dy])
     },
     dragLR(deltas) {
-      this.$emit('dragLR', deltas)
+      let dx = event.layerX * this.scale - this.vLines[deltas[0]]
+      let dy = event.layerY * this.scale - this.hLines[deltas[1]]
+      this.$emit('dragLR', [dx, dy])
     },
-    dragHline(deltas) {
-      this.$emit('dragHline', deltas)
-    },
-    dragVline(deltas) {
-      this.$emit('dragVline', deltas)
+    mouseMove(event) {
+      if (this.dragging) {
+        let dx = event.layerX * this.scale - this.vLines[this.dragIndex[0]]
+        let dy = event.layerY * this.scale - this.hLines[this.dragIndex[1]]
+        if(this.draggingCorner) {
+          this.$emit(this.draggingCorner, [dx, dy])
+        }
+        else {
+          if (this.verticalLine) {
+            this.$emit('dragVline', [dx, dy, this.dragIndex[0]])
+          }
+          else {
+            this.$emit('dragHline', [dx, dy, this.dragIndex[1]])
+          }
+        }
+      }
     },
     showHbubble(location) {
       this.hBubble = location     // set the drag bubble for this line

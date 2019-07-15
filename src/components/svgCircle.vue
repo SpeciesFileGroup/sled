@@ -1,7 +1,7 @@
 <template>
     <circle
       :cx="vLines[ix] / scale" :cy="hLines[iy] / scale" :r="50/scale" style="stroke:rgb(255,0,0);stroke-width:2;opacity:0.7;fill-opacity:0"
-      @mousedown="dragging=true" @mousemove="dragCircle" @mouseup="endDrag"/>
+      @mousedown="sendIndex"/>
 </template>
 <script>
 export default {
@@ -27,25 +27,9 @@ export default {
       default: 0
     }
   },
-  data()  {
-    return {
-      dragging: false,
-    }
-  },
   methods: {
-    sendEvent () {
-      // this.$emit('mousedown', true)
-      this.dragging = true
-    },
-    dragCircle() {
-      if (this.dragging) {
-        let dx = event.layerX * this.scale - this.vLines[this.ix]
-        let dy = event.layerY * this.scale - this.hLines[this.iy]
-        this.$emit('mousemove', [dx, dy])
-      }
-    },
-    endDrag() {
-      this.dragging = false
+    sendIndex () {
+      this.$emit('dragging', [this.ix, this.iy])
     }
   }
 
