@@ -55,8 +55,8 @@
         :scale="scale"
         @dragging="dragging = true; draggingCorner = 'dragLR'; dragIndex = $event"
       />
-      <h-circle v-if="hBubble[2]>=0"
-        :ix="0"
+      <hv-circle v-if="hBubble[2]>=0"
+        :ix="-1"
         :iy="hBubble[2]"
         :h-lines="hLines"
         :v-lines="vLines"
@@ -64,9 +64,9 @@
         @dragging="dragging = true; verticalLine = false; dragIndex = $event"
         @mousemove="deltas = $event"
       />
-      <v-circle v-if="vBubble[2]>=0"
+      <hv-circle v-if="vBubble[2]>=0"
         :ix="vBubble[2]"
-        :iy="0"
+        :iy="-1"
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
@@ -81,15 +81,17 @@
 
 import SvgLine from './svgLine'
 import SvgCircle from './svgCircle'
-import hCircle from './hCircle'
-import vCircle from './vCircle'
+// import hCircle from './hCircle'
+// import vCircle from './vCircle'
+import hvCircle from './hvCircle'
 
 export default {
   components: {
     SvgLine,
     SvgCircle,
-    hCircle,
-    vCircle
+    // hCircle,
+    // vCircle,
+    hvCircle,
   },
   props: {
     imageData: {
