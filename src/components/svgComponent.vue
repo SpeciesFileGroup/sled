@@ -39,7 +39,7 @@
         @vBubble="showVbubble($event)"
         @removeBubble="removeBubble"
       />
-      <svg-circle
+      <hv-circle
         :ix="0"
         :iy="0"
         :h-lines="hLines"
@@ -47,7 +47,7 @@
         :scale="scale"
         @dragging="dragging = true; draggingCorner = 'dragUL'; dragIndex = $event"
       />
-      <svg-circle
+      <hv-circle
         :ix="vLines.length - 1"
         :iy="hLines.length - 1"
         :h-lines="hLines"
@@ -88,7 +88,7 @@ import hvCircle from './hvCircle'
 export default {
   components: {
     SvgLine,
-    SvgCircle,
+    // SvgCircle,
     // hCircle,
     // vCircle,
     hvCircle,
