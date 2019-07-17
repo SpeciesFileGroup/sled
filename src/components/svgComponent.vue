@@ -63,7 +63,7 @@
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
-        @dragging="dragging = true; verticalLine = false; dragIndex = $event"
+        @dragging="dragging = true; dragIndex = $event"
         @mousemove="deltas = $event"
       />
       <svg-circle v-if="vBubble[2]>=0"
@@ -72,7 +72,7 @@
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
-        @dragging="dragging = true; verticalLine = true; dragIndex = $event"
+        @dragging="dragging = true; dragIndex = $event"
         @mousemove="deltas = $event"
       />
     </template>
@@ -125,7 +125,6 @@ export default {
       dragging: false,
       deltas: undefined,
       dragIndex: [],
-      verticalLine: false,
       draggingCorner: undefined
     }
   },
@@ -153,8 +152,8 @@ export default {
         if(this.draggingCorner) {
           this.$emit(this.draggingCorner, [dx, dy])
         }
-        else {
-          if (this.verticalLine) {
+        else {      // dragging either vertical or horzontal line
+          if (this.dragIndex[0] >= 0) {   // so only one of the indices is semipositive
             this.$emit('dragVline', [dx, dy, this.dragIndex[0]])
           }
           else {
