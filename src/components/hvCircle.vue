@@ -3,7 +3,7 @@
     :cx="vBubble"
     :cy="hBubble"
     :r="50/scale"
-    style="stroke:rgb(0,0,0);stroke-width:2;opacity:0.7;fill-opacity:0"
+    :style="style"
     @mousedown="sendIndex"/>
 </template>
 <script>
@@ -29,6 +29,10 @@
         type: Number,
         default: 0
       },
+      strokeColor: {
+        type: String,
+        default: "black"
+      },
     },
     methods: {
       sendIndex () {
@@ -52,6 +56,9 @@
           return this.hLines[this.iy]/this.scale
         }
       },
+      style () {
+        return "stroke:" + this.strokeColor + ";stroke-width:2;stroke-opacity=0.7;fill-opacity:0"
+      }
   }
 
   }

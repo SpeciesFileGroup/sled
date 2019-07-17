@@ -2,7 +2,7 @@
   <svg id="svg_layer"
     :width="imageWidth"
     :height="imageHeight"
-    @mouseup="dragging = false; draggingCorner = undefined"
+    @mouseup="dragging = false; draggingCorner = undefined;removeBubble"
     @mousemove="mouseMove">
     <image
       xmlns="http://www.w3.org/2000/svg"
@@ -83,17 +83,11 @@
 
 import SvgLine from './svgLine'
 import SvgCircle from './svgCircle'
-// import hCircle from './hCircle'
-// import vCircle from './vCircle'
-// import hvCircle from './hvCircle'
 
 export default {
   components: {
     SvgLine,
     SvgCircle,
-    // hCircle,
-    // vCircle,
-    // hvCircle,
   },
   props: {
     imageData: {
