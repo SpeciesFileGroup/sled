@@ -39,23 +39,25 @@
         @vBubble="showVbubble($event)"
         @removeBubble="removeBubble"
       />
-      <hv-circle
+      <svg-circle
         :ix="0"
         :iy="0"
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
+        stroke-color="red"
         @dragging="dragging = true; draggingCorner = 'dragUL'; dragIndex = $event"
       />
-      <hv-circle
+      <svg-circle
         :ix="vLines.length - 1"
         :iy="hLines.length - 1"
         :h-lines="hLines"
         :v-lines="vLines"
         :scale="scale"
+        stroke-color="red"
         @dragging="dragging = true; draggingCorner = 'dragLR'; dragIndex = $event"
       />
-      <hv-circle v-if="hBubble[2]>=0"
+      <svg-circle v-if="hBubble[2]>=0"
         :ix="-1"
         :iy="hBubble[2]"
         :h-lines="hLines"
@@ -64,7 +66,7 @@
         @dragging="dragging = true; verticalLine = false; dragIndex = $event"
         @mousemove="deltas = $event"
       />
-      <hv-circle v-if="vBubble[2]>=0"
+      <svg-circle v-if="vBubble[2]>=0"
         :ix="vBubble[2]"
         :iy="-1"
         :h-lines="hLines"
@@ -83,15 +85,15 @@ import SvgLine from './svgLine'
 import SvgCircle from './svgCircle'
 // import hCircle from './hCircle'
 // import vCircle from './vCircle'
-import hvCircle from './hvCircle'
+// import hvCircle from './hvCircle'
 
 export default {
   components: {
     SvgLine,
-    // SvgCircle,
+    SvgCircle,
     // hCircle,
     // vCircle,
-    hvCircle,
+    // hvCircle,
   },
   props: {
     imageData: {
