@@ -1,8 +1,24 @@
 <template>
   <div id="sled_test">
     <h1>SLED test page</h1>
+    <fieldset>
+      <legend>Image</legend>
     <input type="file" v-on:change="getImage"/>
     <div class="image-inputs">
+      <br>
+      <label>Width</label>
+      <input
+        type="number"
+        disabled="true"
+        v-model.number="width"/>
+      <br>
+      <label>Height</label>
+      <input
+        type="number"
+        disabled="true"
+        v-model.number="height"/>
+            </div>
+    </fieldset>
       <br>
       <label>Set image divisor</label>
       <input
@@ -13,21 +29,27 @@
       <input
         type="number"
         v-model.number="lineWeigth"/>
-    </div>
+
     <div class="line-inputs">
       <div>
-        <new-vline @newLine="addNewVline"/>
-        <input
+        <new-line
+          label="Add new vertical line"
+          @newLine="addNewVline"/>
+        <button
           type="button"
-          value="RESET"
-          @click="resetVlines()"/>
+          @click="resetVlines()">
+          Reset
+        </button>
       </div>
       <div>
-        <new-hline @newLine="addNewHline"/>
-        <input
+        <new-line
+          label="Add new horizontal line"
+          @newLine="addNewHline"/>
+        <button
           type="button"
-          value="RESET"
-          @click="resetHlines()"/>
+          @click="resetHlines()">
+          Reset
+        </button>
       </div>
       <div>
         <input type="button" value="Equalize cells" @click="$refs.sled.equalizeLines()" />
@@ -38,7 +60,7 @@
         <thead>
         <tr>
           <th>
-            Move grid X: 
+            Move grid X:
             <input type="button" value="-100" size="4" v-on:click="$refs.sled.moveX(-100)"/>
             <input type="button" value="-25" size="4" v-on:click="$refs.sled.moveX(-25)"/>
             <input type="button" value="-1" size="4" v-on:click="$refs.sled.moveX(-1)"/>
@@ -100,7 +122,7 @@
       :image-width="width"
       :image-height="height"
       :line-weight="lineWeigth"
-      :scale="scale"
+      :scale="scaleForScreen"
       :file-image="fileImage"
       @onComputeCells="cells = $event"/>
   </div>
@@ -109,23 +131,21 @@
 <script>
 
 import SledComponent from './components/sled.vue'
-import newHline from './components/newHline'
-import newVline from './components/newVline'
+import NewLine from './components/newLine'
 
 export default {
   components: {
     SledComponent,
-    newHline,
-    newVline
+    NewLine
   },
   name: 'sled',
   data () {
     return {
       width: 0, // horizontal extent of image in pixels
       height: 0, // vertical extent of image
-      scale: 7.70,
-      vlines: [34, 400],
-      hlines: [100, 500],
+      scale: 1,
+      vlines: [],
+      hlines: [],
       lineWeigth: 4,
       fileImage: undefined,
       cells: []
@@ -137,6 +157,12 @@ export default {
     },
     hLinesInOrder () {
       return this.hlines
+    },
+    scaleForScreen () {
+      let scaleHeight = window.outerHeight < this.height ? this.height / window.outerHeight : 1
+      let scaleWidth = window.outerWidth < this.width ? this.width / window.outerWidth : 1
+
+      return scaleHeight > scaleWidth ? scaleHeight : scaleWidth
     }
   },
   methods: {
@@ -191,19 +217,5 @@ export default {
     width: 400px;
     font-size: 10px;
     border: 1px solid gray;
-  }
-  #svg_container {
-    display: flex;
-    max-width: 100%;
-    position: relative;
-  }
-  #image {
-    height: 100%;
-    width: 100%;
-    position: relative;
-  }
-  #svg_layer {
-    z-index: 2;
-    position: absolute;
   }
 </style>
