@@ -39,24 +39,26 @@ export default {
   },
   // on mouseover, signal to add a bubble ?
   methods: {
-    showBubble() {
-      if (this.x1 == this.x2) {
+    showBubble () {
+      if (this.x1 === this.x2) {
         this.$emit('vBubble', [this.x2, 0.7 * (this.y2 - this.y1), this.index])
       }
-      if (this.y1 == this.y2)
-      this.$emit('hBubble', [0.7 * (this.x2 - this.x1), this.y2, this.index])
+      if (this.y1 === this.y2) {
+        this.$emit('hBubble', [0.7 * (this.x2 - this.x1), this.y2, this.index])
+      }
     },
-    removeBubble() {
+    removeBubble () {
       let that = this
-      setTimeout(function() {
-        if(this.dragging) {that.$emit('removeBubble')}      // should be !this.dragging to remove bubble
+      setTimeout(() => {
+        if (that.dragging) {
+          that.$emit('removeBubble')
+        } // should be !this.dragging to remove bubble
       }, 3000)
-    },
+    }
   },
   computed: {
-    style(){
-      if(this.lineThickness == "") {this.lineThickness = 1}
-      return "stroke:rgb(255,0,0);stroke-width:" + this.lineThickness
+    style () {
+      return `stroke:rgb(255,0,0);stroke-width:${this.lineThickness}`
     }
   }
 }

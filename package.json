@@ -1,13 +1,22 @@
 {
-  "name": "sled",
+  "name": "vue-sled",
   "version": "0.1.0",
   "private": true,
+  "main": "./dist/sled.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:library": "vue-cli-service build --target lib --name sled src/components/sled.vue",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ],
   "dependencies": {
     "core-js": "^2.6.5",
     "vue": "^2.6.10"

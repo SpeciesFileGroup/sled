@@ -1,7 +1,7 @@
 <template>
   <svg id="svg_layer"
-    :width="imageWidth"
-    :height="imageHeight"
+    :width="imageWidth/scale"
+    :height="imageHeight/scale"
     @mouseup="dragging = false; draggingCorner = undefined;removeBubble"
     @mousemove="mouseMove">
     <image
@@ -13,6 +13,7 @@
     <template v-if="(hLines.length > 1) && (vLines.length > 1)">
       <svg-line
         v-for="(item, index) in hLines"
+        :key="generateRandomKey(index)"
         :x1="vLines[0]"
         :y1="hLines[index]"
         :x2="vLines[vLines.length - 1]"
@@ -27,6 +28,7 @@
       />
       <svg-line
         v-for="(item, index) in vLines"
+        :key="generateRandomKey(index)"
         :x1="vLines[index]"
         :y1="hLines[0]"
         :x2="vLines[index]"
@@ -87,7 +89,7 @@ import SvgCircle from './svgCircle'
 export default {
   components: {
     SvgLine,
-    SvgCircle,
+    SvgCircle
   },
   props: {
     imageData: {
@@ -117,11 +119,11 @@ export default {
     lineThickness: {
       type: Number
     }
-   },
+  },
   data () {
     return {
       hBubble: [0, 0, -1],
-      vBubble: [0, 0, -1],     // x, y, line index
+      vBubble: [0, 0, -1], // x, y, line index
       dragging: false,
       deltas: undefined,
       dragIndex: [],
@@ -129,53 +131,52 @@ export default {
     }
   },
   methods: {
-    sendEventUL() {
+    generateRandomKey (index = 0) {
+      return Math.random().toString(16).substr(2, 8) + index
+    },
+    sendEventUL () {
       this.$emit('circleUL', true)
     },
-    sendEventLR() {
+    sendEventLR () {
       this.$emit('circleLR', true)
     },
-    dragUL(deltas) {
+    dragUL (deltas) {
       let dx = event.layerX * this.scale - this.vLines[deltas[0]]
       let dy = event.layerY * this.scale - this.hLines[deltas[1]]
       this.$emit('dragUL', [dx, dy])
     },
-    dragLR(deltas) {
+    dragLR (deltas) {
       let dx = event.layerX * this.scale - this.vLines[deltas[0]]
       let dy = event.layerY * this.scale - this.hLines[deltas[1]]
       this.$emit('dragLR', [dx, dy])
     },
-    mouseMove(event) {
+    mouseMove (event) {
       if (this.dragging) {
         let dx = event.layerX * this.scale - this.vLines[this.dragIndex[0]]
         let dy = event.layerY * this.scale - this.hLines[this.dragIndex[1]]
-        if(this.draggingCorner) {
+        if (this.draggingCorner) {
           this.$emit(this.draggingCorner, [dx, dy])
-        }
-        else {      // dragging either vertical or horzontal line
-          if (this.dragIndex[0] >= 0) {   // so only one of the indices is semipositive
+        } else { // dragging either vertical or horzontal line
+          if (this.dragIndex[0] >= 0) { // so only one of the indices is semipositive
             this.$emit('dragVline', [dx, dy, this.dragIndex[0]])
-          }
-          else {
+          } else {
             this.$emit('dragHline', [dx, dy, this.dragIndex[1]])
           }
         }
       }
     },
-    showHbubble(location) {
-      this.hBubble = location     // set the drag bubble for this line
+    showHbubble (location) {
+      this.hBubble = location // set the drag bubble for this line
       this.vBubble = [0, 0, -1]
     },
-    showVbubble(location) {
+    showVbubble (location) {
       this.vBubble = location
-      this.hBubble = [0, 0, -1]   // clear the other axis bubble
+      this.hBubble = [0, 0, -1] // clear the other axis bubble
     },
-    removeBubble() {              // clear both axes' bubbles
-      // if(!this.dragging) {
-        this.vBubble = [0, 0, -1]
-        this.hBubble = [0, 0, -1]
-      // }
-    },
+    removeBubble () { // clear both axes' bubbles
+      this.vBubble = [0, 0, -1]
+      this.hBubble = [0, 0, -1]
+    }
   }
 }
 </script>

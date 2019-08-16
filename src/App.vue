@@ -3,25 +3,16 @@
     <h1>SLED test page</h1>
     <input type="file" v-on:change="getImage"/>
     <div class="image-inputs">
-      <label>Enter image width</label>
-      <input
-        type="number"
-        v-model.number="width" v-on:change="resizeImage"/>
-      <br>
-      <label>Enter image height</label>
-      <input
-        type="number"
-        v-model.number="height" v-on:change="resizeImage"/>
       <br>
       <label>Set image divisor</label>
       <input
         type="number"
-        v-model.number="scale" v-on:change="resizeImage"/>
+        v-model.number="scale"/>
       <br>
       <label>Set line thickness</label>
       <input
         type="number"
-        v-model.number="lineThickness" v-on:change="resizeImage"/>
+        v-model.number="lineWeigth"/>
     </div>
     <div class="line-inputs">
       <div>
@@ -39,7 +30,7 @@
           @click="resetHlines()"/>
       </div>
       <div>
-        <input type="button" value="Equalize cells" @click="equalizeLines" />
+        <input type="button" value="Equalize cells" @click="$refs.sled.equalizeLines()" />
       </div>
     </div>
     <div class="cells">
@@ -48,32 +39,32 @@
         <tr>
           <th>
             Move grid X: 
-            <input type="button" value="-100" size="4" v-on:click="moveX(-100)"/>
-            <input type="button" value="-25" size="4" v-on:click="moveX(-25)"/>
-            <input type="button" value="-1" size="4" v-on:click="moveX(-1)"/>
-            <input type="button" value="+1" size="4" v-on:click="moveX(1)"/>
-            <input type="button" value="+25" size="4" v-on:click="moveX(25)"/>
-            <input type="button" value="+100" size="4" v-on:click="moveX(100)"/>
+            <input type="button" value="-100" size="4" v-on:click="$refs.sled.moveX(-100)"/>
+            <input type="button" value="-25" size="4" v-on:click="$refs.sled.moveX(-25)"/>
+            <input type="button" value="-1" size="4" v-on:click="$refs.sled.moveX(-1)"/>
+            <input type="button" value="+1" size="4" v-on:click="$refs.sled.moveX(1)"/>
+            <input type="button" value="+25" size="4" v-on:click="$refs.sled.moveX(25)"/>
+            <input type="button" value="+100" size="4" v-on:click="$refs.sled.moveX(100)"/>
             <br>
             Move grid Y:
-            <input type="button" value="-100" v-on:click="moveY(-100)"/>
-            <input type="button" value="-25" v-on:click="moveY(-25)"/>
-            <input type="button" value="-1" v-on:click="moveY(-1)"/>
-            <input type="button" value="+1" v-on:click="moveY(1)"/>
-            <input type="button" value="+25" v-on:click="moveY(25)"/>
-            <input type="button" value="+100" v-on:click="moveY(100)"/>
+            <input type="button" value="-100" v-on:click="$refs.sled.moveY(-100)"/>
+            <input type="button" value="-25" v-on:click="$refs.sled.moveY(-25)"/>
+            <input type="button" value="-1" v-on:click="$refs.sled.moveY(-1)"/>
+            <input type="button" value="+1" v-on:click="$refs.sled.moveY(1)"/>
+            <input type="button" value="+25" v-on:click="$refs.sled.moveY(25)"/>
+            <input type="button" value="+100" v-on:click="$refs.sled.moveY(100)"/>
           </th>
           <th
             v-for="(vline, index) in vLinesInOrder"
             :key="index">
-            <input type="button" value="-100" v-on:click="moveV(index, -100)"/>
-            <input type="button" value="-25" v-on:click="moveV(index, -25)"/>
-            <input type="button" value="-1" v-on:click="moveV(index, -1)"/>
+            <input type="button" value="-100" v-on:click="$refs.sled.moveV(index, -100)"/>
+            <input type="button" value="-25" v-on:click="$refs.sled.moveV(index, -25)"/>
+            <input type="button" value="-1" v-on:click="$refs.sled.moveV(index, -1)"/>
             <input type="button" value="X" v-on:click="removeColumn(index)"/>
             {{ vline }}
-            <input type="button" value="+1" v-on:click="moveV(index, 1)"/>
-            <input type="button" value="+25" v-on:click="moveV(index, 25)"/>
-            <input type="button" value="+100" v-on:click="moveV(index, 100)"/>
+            <input type="button" value="+1" v-on:click="$refs.sled.moveV(index, 1)"/>
+            <input type="button" value="+25" v-on:click="$refs.sled.moveV(index, 25)"/>
+            <input type="button" value="+100" v-on:click="$refs.sled.moveV(index, 100)"/>
           </th>
         </tr>
         </thead>
@@ -82,267 +73,109 @@
           v-for="(hline, hindex) in hLinesInOrder"
           :key="hindex">
           <td>
-            <input type="button" value="-100" v-on:click="moveH(hindex, -100)"/>
-            <input type="button" value="-25" v-on:click="moveH(hindex, -25)"/>
-            <input type="button" value="-1" v-on:click="moveH(hindex, -1)"/>
+            <input type="button" value="-100" v-on:click="$refs.sled.moveH(hindex, -100)"/>
+            <input type="button" value="-25" v-on:click="$refs.sled.moveH(hindex, -25)"/>
+            <input type="button" value="-1" v-on:click="$refs.sled.moveH(hindex, -1)"/>
             <input type="button" value="X" v-on:click="removeRow(hindex)"/>
             {{ hline }}
-            <input type="button" value="+1" v-on:click="moveH(hindex, 1)"/>
-            <input type="button" value="+25" v-on:click="moveH(hindex, 25)"/>
-            <input type="button" value="+100" v-on:click="moveH(hindex, 100)"/>
+            <input type="button" value="+1" v-on:click="$refs.sled.moveH(hindex, 1)"/>
+            <input type="button" value="+25" v-on:click="$refs.sled.moveH(hindex, 25)"/>
+            <input type="button" value="+100" v-on:click="$refs.sled.moveH(hindex, 100)"/>
           </td>
           <td
-            v-for="(vline, vindex) in vLines"
+            v-for="(vline, vindex) in vlines"
             :key="vindex">
-            <template v-if="(vindex < vLines.length - 1) && (cells[(vLines.length - 1)*hindex + vindex])">
-            {{ cells[(vLines.length - 1)*hindex + vindex] }}
+            <template v-if="(vindex < vlines.length - 1) && (cells[(vlines.length - 1)*hindex + vindex])">
+            {{ cells[(vlines.length - 1)*hindex + vindex] }}
             </template>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
-    <div>
-      <input type="button" @click="generateJSON()" value="Emit JSON"/>
-      <pre>
-        "{{ cellsJSON }}"
-      </pre>
-    </div>
-    <div id="svg_container">
-      <svg-component
-        v-if="saveImageData"
-        :image-width="width"
-        :image-height="height"
-        :image-data="saveImageData"
-        :h-lines="hLines"
-        :v-lines="vLines"
-        @dragUL="moveGrid($event)"
-        @dragLR="stretchGrid($event)"
-        :scale="scale"
-        @dragHline="moveHline($event)"
-        @dragVline="moveVline($event)"
-        :line-thickness="lineThickness"
-      />
-    </div>
+    <sled-component
+      ref="sled"
+      :vertical-lines="vlines"
+      :horizontal-lines="hlines"
+      :image-width="width"
+      :image-height="height"
+      :line-weight="lineWeigth"
+      :scale="scale"
+      :file-image="fileImage"
+      @onComputeCells="cells = $event"/>
   </div>
 </template>
 
 <script>
 
+import SledComponent from './components/sled.vue'
 import newHline from './components/newHline'
 import newVline from './components/newVline'
-import SvgComponent from './components/svgComponent'
 
 export default {
   components: {
-    SvgComponent,
+    SledComponent,
     newHline,
     newVline
   },
-  computed: {
-    vLinesInOrder () {
-      return this.vLines.sort(function (a, b) {
-        return a - b
-      })
-    },
-    hLinesInOrder () {
-      return this.hLines.sort(function (a, b) {
-        return a - b
-      })
-    }
-  },
+  name: 'sled',
   data () {
     return {
       width: 0, // horizontal extent of image in pixels
       height: 0, // vertical extent of image
-      hLines: [], // y pixel coord of line
-      vLines: [], // x pixel coord of line
-      cells: [], // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
-      lineThickness: 4,
-      saveImageData: undefined,
-      old_width: 0,
-      old_height: 0,
-      xlt: undefined,
-      scale: 8.0,
-      cellsJSON: "",
+      scale: 7.70,
+      vlines: [34, 400],
+      hlines: [100, 500],
+      lineWeigth: 4,
+      fileImage: undefined,
+      cells: []
     }
   },
-  watch: {
-    hLines: {
-      handler () {
-        this.computeCells()
-      },
-      deep: true
+  computed: {
+    vLinesInOrder () {
+      return this.vlines
     },
-    vLines: {
-      handler () {
-        this.computeCells()
-      },
-      deep: true
+    hLinesInOrder () {
+      return this.hlines
     }
-  },
-  mounted () {
-    this.computeCells()
   },
   methods: {
-    addNewHline (y) {
-      this.hLines.push(y)
-    },
-    resetHlines () {
-      this.hLines = []
-    },
-    addNewVline (x) {
-      this.vLines.push(x)
-    },
-    resetVlines () {
-      this.vLines = []
-    },
-    moveX(offset) {    // move all vertical lines by x-offset
-      for(let i=0;i<this.vLines.length;i++){
-        this.moveV(i, offset)
-      }
-    },
-    moveY(offset) {    // move all horizontal lines by y-offset
-      for(let i=0;i<this.hLines.length;i++){
-        this.moveH(i, offset)
-      }
-    },
-    moveV(index, offset) {    // move a single vertical line by x-offset
-      this.$set(this.vLines,index, this.vLines[index] + offset)
-    },
-    moveH(index, offset) {    // move a single horizontal line by y-offset
-      this.$set(this.hLines,index, this.hLines[index] + offset)
-    },
-    resizeImage () { // if image size changes, recompute lines and cells
-      if (this.old_width > 1) { // a previous presumably valid width
-        let hScale = this.width / this.old_width
-        let h = 0
-        let n = this.vLines.length
-        for (h = 0; h < n; h++) {
-          this.$set(this.vLines, h, Math.round(this.vLines[h] * hScale))
-        }
-      }
-      if (this.old_height > 1) { // a previous presumably valid height
-        let vScale = this.height / this.old_height
-        let v = 0
-        let m = this.hLines.length
-        for (v = 0; v < m; v++) {
-          this.$set(this.hLines, v, Math.round(this.hLines[v] * vScale))
-        }
-      }
-      this.old_width = this.width
-      this.old_height = this.height
-      this.computeCells()
-    },
-    removeRow (index) {
-      this.$delete(this.hLines, index)
-    },
-    removeColumn (index) {
-      this.$delete(this.vLines, index)
-    },
-    equalizeLines() {
-      if ((this.hLines.length > 1) && this.vLines.length > 1) {
-        // compute intersections
-        this.cells = []
-        let i = 0 // horizontal (column) index
-        let j = 0 // vertical (row) index
-        let ul, lr // upper left, lower right corners of cell
-        let cellIndex = 0
-        let hRows = this.hLinesInOrder.length - 1 // only enumerate non-empty cells BETWEEN lines
-        let vCols = this.vLinesInOrder.length - 1 // one less populated row/column than lines
-        let hSize = (this.hLines[hRows] - this.hLines[0]) / hRows
-        let vSize = (this.vLines[vCols] - this.vLines[0]) / vCols
-        for (j = 0; j < hRows; j++) {
-          this.$set(this.hLines, j, Math.round(this.hLines[0] + j * hSize))
-        }
-        for (i = 0; i < vCols; i++) {
-          this.$set(this.vLines, i, Math.round(this.vLines[0] + i * vSize))
-          }
-        this.computeCells()
-        }
-      },
-    computeCells () {
-      if ((this.hLines.length > 1) && this.vLines.length > 1) {
-        // compute intersections
-        this.cells = []
-        let i = 0 // horizontal (column) index
-        let j = 0 // vertical (row) index
-        let ul, lr // upper left, lower right corners of cell
-        let cellIndex = 0
-        let hRows = this.hLinesInOrder.length - 1 // only enumerate non-empty cells BETWEEN lines
-        let vCols = this.vLinesInOrder.length - 1 // one less populated row/column than lines
-        for (j = 0; j < hRows; j++) {
-          for (i = 0; i < vCols; i++) {
-            cellIndex = (vCols * j) + i
-            ul = [this.vLinesInOrder[i], this.hLinesInOrder[j]]
-            lr = [this.vLinesInOrder[i + 1], this.hLinesInOrder[j + 1]]
-            // if (lr[0] !== undefined && lr[1] !== undefined) {   // non-empty cell test
-            this.cells[cellIndex] = [ul, lr]
-            // }
-          }
-        }
-      }
-    },
-    generateJSON() {
-      this.cellsJSON = JSON.stringify(this.cells)
-    },
     getImage (event) {
       let files = event.target.files
       let that = this
       // FileReader support
       if (FileReader && files && files.length) {
         let fileReader = new FileReader()
-        fileReader.onload = function (images) {
+        fileReader.onload = (image) => {
           let newImage = new Image()
           newImage.src = fileReader.result
           newImage.onload = function () {
-            that.old_width = that.width         // shuffle the dimensions
-            that.old_height = that.height       // from the previous size
             that.width = newImage.width
             that.height = newImage.height
-            that.saveImageData = fileReader.result
-            that.resizeImage()
+            that.fileImage = fileReader.result
           }
         }
         fileReader.readAsDataURL(files[0])
       }
     },
-    stretchGrid(deltas) {   // compand the grid by the lower right corner change
-      let dx = deltas[0]
-      let dy = deltas[1]
-      let vLast = this.vLines.length - 1    // number of cells
-      let hLast = this.hLines.length - 1
-      let old_height = this.hLines[hLast] - this.hLines[0]
-      let old_width = this.vLines[vLast] - this.vLines[0]
-      let new_width = old_width + dx
-      let new_height = old_height + dy
-      let hScale = old_height / new_height
-      let vscale = old_width / new_width
-      let h = 0
-      let v = 0
-      for(h=1; h<this.vLines.length;h++) {
-        this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / hLast))
-      }
-      for(v=1; v<this.hLines.length;v++) {
-        this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / vLast))
-      }
+    addNewHline (y) {
+      this.hlines.push(y)
     },
-    moveGrid(deltas) {
-      let dx = deltas[0]
-      let dy = deltas[1]
-      this.moveX(dx)
-      this.moveY(dy)
+    resetHlines () {
+      this.hlines = []
     },
-    moveHline(deltas) {
-      let dy = deltas[1]
-      let iy = deltas[2]
-      this.moveH(iy, dy)      // effect line change through common function
+    addNewVline (x) {
+      this.vlines.push(x)
     },
-    moveVline(deltas) {
-      let dx = deltas[0]
-      let ix = deltas[2]
-      this.moveV(ix, dx)
+    resetVlines () {
+      this.vlines = []
     },
+    removeRow (index) {
+      this.$delete(this.hlines, index)
+    },
+    removeColumn (index) {
+      this.$delete(this.vlines, index)
+    }
   }
 }
 </script>
@@ -361,7 +194,7 @@ export default {
   }
   #svg_container {
     display: flex;
-    //max-width: 80%;
+    max-width: 100%;
     position: relative;
   }
   #image {
@@ -371,8 +204,6 @@ export default {
   }
   #svg_layer {
     z-index: 2;
-    //height:100%;
-    //width:100%;
     position: absolute;
   }
 </style>
