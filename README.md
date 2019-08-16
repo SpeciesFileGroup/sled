@@ -50,7 +50,7 @@ export default {
 ### Events
 
 #### onComputedCells
-Event is triggered each time when vertical and horizontal lines are added and computed to create the cells. Contains information of computed cells.
+Event is triggered each time when horizontal and vertical lines are added and computed to create the cells. Contains information of computed cells.
 
 ### Props
 

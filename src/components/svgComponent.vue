@@ -2,6 +2,7 @@
   <svg id="svg_layer"
     :width="imageWidth/scale"
     :height="imageHeight/scale"
+    style="z-index: 2; position: absolute;"
     @mouseup="dragging = false; draggingCorner = undefined; removeBubble"
     @mousemove="mouseMove">
     <image
@@ -180,19 +181,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-  #svg_container {
-    display: flex;
-    max-width: 100%;
-    position: relative;
-  }
-  #image {
-    height: 100%;
-    width: 100%;
-    position: relative;
-  }
-  #svg_layer {
-    z-index: 2;
-    position: absolute;
-  }
-</style>
