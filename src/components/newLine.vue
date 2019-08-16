@@ -11,6 +11,11 @@
       @click="addLine()">
       Add
     </button>
+    <button
+      type="button"
+      @click="reset">
+      Reset
+    </button>
   </div>
 </template>
 <script>
@@ -31,6 +36,10 @@ export default {
       if (this.value >= 0) {
         this.$emit('newLine', this.value)
       }
+    },
+    reset () {
+      this.value = undefined
+      this.$emit('reset')
     }
   }
 }

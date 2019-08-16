@@ -1,24 +1,22 @@
 <template>
   <div id="sled_test">
     <h1>SLED test page</h1>
-    <fieldset>
-      <legend>Image</legend>
-    <input type="file" v-on:change="getImage"/>
-    <div class="image-inputs">
-      <br>
-      <label>Width</label>
-      <input
-        type="number"
-        disabled="true"
-        v-model.number="width"/>
-      <br>
-      <label>Height</label>
-      <input
-        type="number"
-        disabled="true"
-        v-model.number="height"/>
-            </div>
-    </fieldset>
+
+      <input type="file" v-on:change="getImage"/>
+      <div class="image-inputs">
+        <br>
+        <label>Width</label>
+        <input
+          type="number"
+          disabled="true"
+          v-model.number="width"/>
+        <br>
+        <label>Height</label>
+        <input
+          type="number"
+          disabled="true"
+          v-model.number="height"/>
+      </div>
       <br>
       <label>Set image divisor</label>
       <input
@@ -34,22 +32,14 @@
       <div>
         <new-line
           label="Add new vertical line"
+          @reset="resetVlines"
           @newLine="addNewVline"/>
-        <button
-          type="button"
-          @click="resetVlines()">
-          Reset
-        </button>
       </div>
       <div>
         <new-line
           label="Add new horizontal line"
+          @reset="resetHlines"
           @newLine="addNewHline"/>
-        <button
-          type="button"
-          @click="resetHlines()">
-          Reset
-        </button>
       </div>
       <div>
         <input type="button" value="Equalize cells" @click="$refs.sled.equalizeLines()" />
