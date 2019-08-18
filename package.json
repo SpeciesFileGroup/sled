@@ -1,5 +1,5 @@
 {
-  "name": "@sfg/sled",
+  "name": "@sfgrp/sled",
   "description": "UI for image segmentation of slide collections",
   "version": "0.1.0",
   "private": false,
