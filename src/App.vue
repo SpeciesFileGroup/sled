@@ -141,8 +141,8 @@ export default {
       width: 0, // horizontal extent of image in pixels
       height: 0, // vertical extent of image
       scale: 1,
-      vlines: [61, 2044, 3919],
-      hlines: [174, 803, 1432, 2067, 2709],
+      vlines: [],
+      hlines: [],
       lineWeigth: 4,
       fileImage: undefined,
       autosize: true,
