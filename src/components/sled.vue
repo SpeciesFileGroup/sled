@@ -141,10 +141,10 @@ export default {
       }
     },
     moveV (index, offset) { // move a single vertical line by x-offset
-      this.$set(this.vLines, index, this.vLines[index] + offset)
+      this.$set(this.vLines, index, Math.round(this.vLines[index] + offset))
     },
     moveH (index, offset) { // move a single horizontal line by y-offset
-      this.$set(this.hLines, index, this.hLines[index] + offset)
+      this.$set(this.hLines, index, Math.round(this.hLines[index] + offset))
     },
     resizeImage () { // if image size changes, recompute lines and cells
       if (this.old_width > 1) { // a previous presumably valid width
