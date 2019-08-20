@@ -5,6 +5,14 @@
   "private": false,
   "main": "./dist/sled.common.js",
   "keywords": ["species file group", "sled"],
+  "homepage": "https://github.com/SpeciesFileGroup/sled",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpeciesFileGroup/sled.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SpeciesFileGroup/sled/issues"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

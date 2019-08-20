@@ -219,10 +219,10 @@ export default {
       let h = 0
       let v = 0
       for (h = 1; h < this.vLines.length; h++) {
-        this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / hLast))
+        this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / vLast))
       }
       for (v = 1; v < this.hLines.length; v++) {
-        this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / vLast))
+        this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / hLast))
       }
     },
     moveGrid (deltas) {

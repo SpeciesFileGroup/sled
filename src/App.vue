@@ -18,6 +18,13 @@
           v-model.number="height"/>
       </div>
       <br>
+      <label>
+        Autosize
+        <input 
+          v-model="autosize"
+          type="checkbox">
+      </label>
+      <br>
       <label>Set image divisor</label>
       <input
         type="number"
@@ -134,10 +141,11 @@ export default {
       width: 0, // horizontal extent of image in pixels
       height: 0, // vertical extent of image
       scale: 1,
-      vlines: [],
-      hlines: [],
+      vlines: [61, 2044, 3919],
+      hlines: [174, 803, 1432, 2067, 2709],
       lineWeigth: 4,
       fileImage: undefined,
+      autosize: true,
       cells: []
     }
   },
@@ -149,10 +157,14 @@ export default {
       return this.hlines
     },
     scaleForScreen () {
-      let scaleHeight = window.outerHeight < this.height ? this.height / window.outerHeight : 1
-      let scaleWidth = window.outerWidth < this.width ? this.width / window.outerWidth : 1
+      if (this.autosize) {
+        let scaleHeight = window.outerHeight < this.height ? this.height / window.outerHeight : 1
+        let scaleWidth = window.outerWidth < this.width ? this.width / window.outerWidth : 1
 
-      return scaleHeight > scaleWidth ? scaleHeight : scaleWidth
+        return scaleHeight > scaleWidth ? scaleHeight : scaleWidth
+      } else {
+        return this.scale
+      }
     }
   },
   methods: {
