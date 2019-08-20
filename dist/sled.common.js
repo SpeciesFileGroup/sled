@@ -1093,12 +1093,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2df1e24e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=713e24bf&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2df1e24e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=608c3cc3&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[(_vm.fileImage)?_c('svg-component',{attrs:{"image-width":_vm.width,"image-height":_vm.height,"image-data":_vm.fileImage,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"line-thickness":_vm.lineWeight},on:{"dragUL":function($event){return _vm.moveGrid($event)},"dragLR":function($event){return _vm.stretchGrid($event)},"dragHline":function($event){return _vm.moveHline($event)},"dragVline":function($event){return _vm.moveVline($event)}}}):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/sled.vue?vue&type=template&id=713e24bf&
+// CONCATENATED MODULE: ./src/components/sled.vue?vue&type=template&id=608c3cc3&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.sort.js
 var es6_array_sort = __webpack_require__("55dd");
@@ -1760,11 +1760,11 @@ var svgComponent_component = normalizeComponent(
     },
     moveV: function moveV(index, offset) {
       // move a single vertical line by x-offset
-      this.$set(this.vLines, index, this.vLines[index] + offset);
+      this.$set(this.vLines, index, Math.round(this.vLines[index] + offset));
     },
     moveH: function moveH(index, offset) {
       // move a single horizontal line by y-offset
-      this.$set(this.hLines, index, this.hLines[index] + offset);
+      this.$set(this.hLines, index, Math.round(this.hLines[index] + offset));
     },
     resizeImage: function resizeImage() {
       // if image size changes, recompute lines and cells
@@ -1861,11 +1861,11 @@ var svgComponent_component = normalizeComponent(
       var v = 0;
 
       for (h = 1; h < this.vLines.length; h++) {
-        this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / hLast));
+        this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / vLast));
       }
 
       for (v = 1; v < this.hLines.length; v++) {
-        this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / vLast));
+        this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / hLast));
       }
     },
     moveGrid: function moveGrid(deltas) {
