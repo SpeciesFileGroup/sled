@@ -6,6 +6,7 @@
   "main": "./dist/sled.common.js",
   "keywords": ["species file group", "sled"],
   "homepage": "https://github.com/SpeciesFileGroup/sled",
+  "license": "NCSA",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SpeciesFileGroup/sled.git"
