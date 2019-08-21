@@ -1,7 +1,7 @@
 {
   "name": "@sfgrp/sled",
   "description": "UI for image segmentation of slide collections",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "main": "./dist/sled.common.js",
   "keywords": ["species file group", "sled"],
