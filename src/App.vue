@@ -118,7 +118,7 @@
       :horizontal-lines="hlines"
       :image-width="width"
       :image-height="height"
-      :line-weight="lineWeigth"
+      :line-weight="lineWeight"
       :scale="scaleForScreen"
       :file-image="fileImage"
       @onComputeCells="cells = $event"/>
