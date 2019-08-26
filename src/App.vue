@@ -20,7 +20,7 @@
       <br>
       <label>
         Autosize
-        <input 
+        <input
           v-model="autosize"
           type="checkbox">
       </label>
