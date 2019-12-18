@@ -33,7 +33,7 @@
       <label>Set line thickness</label>
       <input
         type="number"
-        v-model.number="lineWeigth"/>
+        v-model.number="lineWeight"/>
 
     <div class="line-inputs">
       <div>
