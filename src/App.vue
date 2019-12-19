@@ -143,7 +143,7 @@ export default {
       scale: 1,
       vlines: [],
       hlines: [],
-      lineWeigth: 4,
+      lineWeight: 4,
       fileImage: undefined,
       autosize: true,
       cells: []
