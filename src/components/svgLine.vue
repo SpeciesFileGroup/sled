@@ -58,7 +58,7 @@ export default {
   },
   computed: {
     style () {
-      return `stroke:rgb(255,0,0);stroke-width:${this.lineThickness}`
+      return `stroke:rgb(255,0,0);stroke-width:${this.lineThickness};stroke-linecap:round`
     }
   }
 }
