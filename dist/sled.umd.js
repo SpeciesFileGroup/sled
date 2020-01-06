@@ -1102,7 +1102,7 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2df1e24e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=608c3cc3&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"40af3c2b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=608c3cc3&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[(_vm.fileImage)?_c('svg-component',{attrs:{"image-width":_vm.width,"image-height":_vm.height,"image-data":_vm.fileImage,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"line-thickness":_vm.lineWeight},on:{"dragUL":function($event){return _vm.moveGrid($event)},"dragLR":function($event){return _vm.stretchGrid($event)},"dragHline":function($event){return _vm.moveHline($event)},"dragVline":function($event){return _vm.moveVline($event)}}}):_vm._e()],1)}
 var staticRenderFns = []
 
@@ -1115,7 +1115,7 @@ var es6_array_sort = __webpack_require__("55dd");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
 var es6_number_constructor = __webpack_require__("c5f6");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2df1e24e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgComponent.vue?vue&type=template&id=9bc51f4c&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"40af3c2b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgComponent.vue?vue&type=template&id=9bc51f4c&
 var svgComponentvue_type_template_id_9bc51f4c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{staticStyle:{"z-index":"2","position":"absolute"},attrs:{"id":"svg_layer","width":_vm.imageWidth/_vm.scale,"height":_vm.imageHeight/_vm.scale},on:{"mouseup":function($event){_vm.dragging = false; _vm.draggingCorner = undefined; _vm.removeBubble},"mousemove":_vm.mouseMove}},[_c('image',{attrs:{"xmlns":"http://www.w3.org/2000/svg","xmlns:xlink":"http://www.w3.org/1999/xlink","width":_vm.imageWidth/_vm.scale,"height":_vm.imageHeight/_vm.scale,"xlink:href":_vm.imageData}}),((_vm.hLines.length > 1) && (_vm.vLines.length > 1))?[_vm._l((_vm.hLines),function(item,index){return _c('svg-line',{key:_vm.generateRandomKey(index),attrs:{"x1":_vm.vLines[0],"y1":_vm.hLines[index],"x2":_vm.vLines[_vm.vLines.length - 1],"y2":_vm.hLines[index],"scale":_vm.scale,"line-thickness":_vm.lineThickness,"index":index,"dragging":_vm.dragging},on:{"hBubble":function($event){return _vm.showHbubble($event)},"vBubble":function($event){return _vm.showVbubble($event)},"removeBubble":_vm.removeBubble}})}),_vm._l((_vm.vLines),function(item,index){return _c('svg-line',{key:_vm.generateRandomKey(index),attrs:{"x1":_vm.vLines[index],"y1":_vm.hLines[0],"x2":_vm.vLines[index],"y2":_vm.hLines[_vm.hLines.length - 1],"scale":_vm.scale,"line-thickness":_vm.lineThickness,"index":index,"dragging":_vm.dragging},on:{"hBubble":function($event){return _vm.showHbubble($event)},"vBubble":function($event){return _vm.showVbubble($event)},"removeBubble":_vm.removeBubble}})}),_c('svg-circle',{attrs:{"ix":0,"iy":0,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"stroke-color":"red"},on:{"dragging":function($event){_vm.dragging = true; _vm.draggingCorner = 'dragUL'; _vm.dragIndex = $event}}}),_c('svg-circle',{attrs:{"ix":_vm.vLines.length - 1,"iy":_vm.hLines.length - 1,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"stroke-color":"red"},on:{"dragging":function($event){_vm.dragging = true; _vm.draggingCorner = 'dragLR'; _vm.dragIndex = $event}}}),(_vm.hBubble[2]>=0)?_c('svg-circle',{attrs:{"ix":-1,"iy":_vm.hBubble[2],"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale},on:{"dragging":function($event){_vm.dragging = true; _vm.dragIndex = $event},"mousemove":function($event){_vm.deltas = $event}}}):_vm._e(),(_vm.vBubble[2]>=0)?_c('svg-circle',{attrs:{"ix":_vm.vBubble[2],"iy":-1,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale},on:{"dragging":function($event){_vm.dragging = true; _vm.dragIndex = $event},"mousemove":function($event){_vm.deltas = $event}}}):_vm._e()]:_vm._e()],2)}
 var svgComponentvue_type_template_id_9bc51f4c_staticRenderFns = []
 
@@ -1125,12 +1125,12 @@ var svgComponentvue_type_template_id_9bc51f4c_staticRenderFns = []
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.to-string.js
 var es6_regexp_to_string = __webpack_require__("6b54");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2df1e24e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgLine.vue?vue&type=template&id=d75bc274&
-var svgLinevue_type_template_id_d75bc274_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('line',{style:(_vm.style),attrs:{"x1":_vm.x1 / _vm.scale,"y1":_vm.y1 / _vm.scale,"x2":_vm.x2 / _vm.scale,"y2":_vm.y2 / _vm.scale,"index":_vm.index},on:{"mouseover":_vm.showBubble,"mouseout":_vm.removeBubble}})}
-var svgLinevue_type_template_id_d75bc274_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"40af3c2b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgLine.vue?vue&type=template&id=3f57de68&
+var svgLinevue_type_template_id_3f57de68_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('line',{style:(_vm.style),attrs:{"x1":_vm.x1 / _vm.scale,"y1":_vm.y1 / _vm.scale,"x2":_vm.x2 / _vm.scale,"y2":_vm.y2 / _vm.scale,"index":_vm.index},on:{"mouseover":_vm.showBubble,"mouseout":_vm.removeBubble}})}
+var svgLinevue_type_template_id_3f57de68_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/svgLine.vue?vue&type=template&id=d75bc274&
+// CONCATENATED MODULE: ./src/components/svgLine.vue?vue&type=template&id=3f57de68&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgLine.vue?vue&type=script&lang=js&
 
@@ -1195,7 +1195,7 @@ var svgLinevue_type_template_id_d75bc274_staticRenderFns = []
   },
   computed: {
     style: function style() {
-      return "stroke:rgb(255,0,0);stroke-width:".concat(this.lineThickness);
+      return "stroke:rgb(255,0,0);stroke-width:".concat(this.lineThickness, ";stroke-linecap:round");
     }
   }
 });
@@ -1306,8 +1306,8 @@ function normalizeComponent (
 
 var component = normalizeComponent(
   components_svgLinevue_type_script_lang_js_,
-  svgLinevue_type_template_id_d75bc274_render,
-  svgLinevue_type_template_id_d75bc274_staticRenderFns,
+  svgLinevue_type_template_id_3f57de68_render,
+  svgLinevue_type_template_id_3f57de68_staticRenderFns,
   false,
   null,
   null,
@@ -1316,7 +1316,7 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var svgLine = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2df1e24e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgCircle.vue?vue&type=template&id=b3fa1d48&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"40af3c2b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgCircle.vue?vue&type=template&id=b3fa1d48&
 var svgCirclevue_type_template_id_b3fa1d48_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('circle',{style:(_vm.style),attrs:{"cx":_vm.vBubble,"cy":_vm.hBubble,"r":10},on:{"mousedown":_vm.sendIndex}})}
 var svgCirclevue_type_template_id_b3fa1d48_staticRenderFns = []
 
