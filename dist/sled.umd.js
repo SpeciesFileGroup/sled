@@ -1102,12 +1102,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"40af3c2b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=608c3cc3&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[(_vm.fileImage)?_c('svg-component',{attrs:{"image-width":_vm.width,"image-height":_vm.height,"image-data":_vm.fileImage,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"line-thickness":_vm.lineWeight},on:{"dragUL":function($event){return _vm.moveGrid($event)},"dragLR":function($event){return _vm.stretchGrid($event)},"dragHline":function($event){return _vm.moveHline($event)},"dragVline":function($event){return _vm.moveVline($event)}}}):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=052eeb50&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticStyle:{"position":"relative"}},[(_vm.fileImage)?_c('svg-component',{attrs:{"image-width":_vm.width,"image-height":_vm.height,"image-data":_vm.fileImage,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"line-thickness":_vm.lineWeight},on:{"dragUL":function($event){return _vm.moveGrid($event)},"dragLR":function($event){return _vm.stretchGrid($event)},"dragHline":function($event){return _vm.moveHline($event)},"dragVline":function($event){return _vm.moveVline($event)}}}):_vm._e(),_vm._l((_vm.cells),function(cell,index){return _c('cell-component',{key:index,attrs:{"metadata":_vm.metadataAssignment,"cell":cell},on:{"onChange":function($event){return _vm.updateCell(index, $event)}}})})],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/sled.vue?vue&type=template&id=608c3cc3&
+// CONCATENATED MODULE: ./src/components/sled.vue?vue&type=template&id=052eeb50&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.sort.js
 var es6_array_sort = __webpack_require__("55dd");
@@ -1115,25 +1115,32 @@ var es6_array_sort = __webpack_require__("55dd");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
 var es6_number_constructor = __webpack_require__("c5f6");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"40af3c2b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgComponent.vue?vue&type=template&id=9bc51f4c&
-var svgComponentvue_type_template_id_9bc51f4c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{staticStyle:{"z-index":"2","position":"absolute"},attrs:{"id":"svg_layer","width":_vm.imageWidth/_vm.scale,"height":_vm.imageHeight/_vm.scale},on:{"mouseup":function($event){_vm.dragging = false; _vm.draggingCorner = undefined; _vm.removeBubble},"mousemove":_vm.mouseMove}},[_c('image',{attrs:{"xmlns":"http://www.w3.org/2000/svg","xmlns:xlink":"http://www.w3.org/1999/xlink","width":_vm.imageWidth/_vm.scale,"height":_vm.imageHeight/_vm.scale,"xlink:href":_vm.imageData}}),((_vm.hLines.length > 1) && (_vm.vLines.length > 1))?[_vm._l((_vm.hLines),function(item,index){return _c('svg-line',{key:_vm.generateRandomKey(index),attrs:{"x1":_vm.vLines[0],"y1":_vm.hLines[index],"x2":_vm.vLines[_vm.vLines.length - 1],"y2":_vm.hLines[index],"scale":_vm.scale,"line-thickness":_vm.lineThickness,"index":index,"dragging":_vm.dragging},on:{"hBubble":function($event){return _vm.showHbubble($event)},"vBubble":function($event){return _vm.showVbubble($event)},"removeBubble":_vm.removeBubble}})}),_vm._l((_vm.vLines),function(item,index){return _c('svg-line',{key:_vm.generateRandomKey(index),attrs:{"x1":_vm.vLines[index],"y1":_vm.hLines[0],"x2":_vm.vLines[index],"y2":_vm.hLines[_vm.hLines.length - 1],"scale":_vm.scale,"line-thickness":_vm.lineThickness,"index":index,"dragging":_vm.dragging},on:{"hBubble":function($event){return _vm.showHbubble($event)},"vBubble":function($event){return _vm.showVbubble($event)},"removeBubble":_vm.removeBubble}})}),_c('svg-circle',{attrs:{"ix":0,"iy":0,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"stroke-color":"red"},on:{"dragging":function($event){_vm.dragging = true; _vm.draggingCorner = 'dragUL'; _vm.dragIndex = $event}}}),_c('svg-circle',{attrs:{"ix":_vm.vLines.length - 1,"iy":_vm.hLines.length - 1,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"stroke-color":"red"},on:{"dragging":function($event){_vm.dragging = true; _vm.draggingCorner = 'dragLR'; _vm.dragIndex = $event}}}),(_vm.hBubble[2]>=0)?_c('svg-circle',{attrs:{"ix":-1,"iy":_vm.hBubble[2],"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale},on:{"dragging":function($event){_vm.dragging = true; _vm.dragIndex = $event},"mousemove":function($event){_vm.deltas = $event}}}):_vm._e(),(_vm.vBubble[2]>=0)?_c('svg-circle',{attrs:{"ix":_vm.vBubble[2],"iy":-1,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale},on:{"dragging":function($event){_vm.dragging = true; _vm.dragIndex = $event},"mousemove":function($event){_vm.deltas = $event}}}):_vm._e()]:_vm._e()],2)}
-var svgComponentvue_type_template_id_9bc51f4c_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgComponent.vue?vue&type=template&id=a3354cf0&
+var svgComponentvue_type_template_id_a3354cf0_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{staticStyle:{"z-index":"2","position":"absolute"},attrs:{"id":"svg_layer","width":_vm.imageWidth/_vm.scale,"height":_vm.imageHeight/_vm.scale}},[_c('image',{attrs:{"xmlns":"http://www.w3.org/2000/svg","xmlns:xlink":"http://www.w3.org/1999/xlink","width":_vm.imageWidth/_vm.scale,"height":_vm.imageHeight/_vm.scale,"xlink:href":_vm.imageData}}),((_vm.hLines.length > 1) && (_vm.vLines.length > 1))?[_vm._l((_vm.hLines),function(item,index){return _c('svg-line',{key:_vm.generateRandomKey(index),attrs:{"x1":_vm.vLines[0],"y1":_vm.hLines[index],"x2":_vm.vLines[_vm.vLines.length - 1],"y2":_vm.hLines[index],"scale":_vm.scale,"line-thickness":_vm.lineThickness},on:{"dragging":function($event){_vm.dragging = true;  _vm.dragIndex = [-1, index]}}})}),_vm._l((_vm.vLines),function(item,index){return _c('svg-line',{key:_vm.generateRandomKey(index),attrs:{"x1":_vm.vLines[index],"y1":_vm.hLines[0],"x2":_vm.vLines[index],"y2":_vm.hLines[_vm.hLines.length - 1],"scale":_vm.scale,"line-thickness":_vm.lineThickness,"index":index,"dragging":_vm.dragging},on:{"dragging":function($event){_vm.dragging = true; _vm.dragIndex = [index, -1]},"mousemove":function($event){_vm.deltas = $event}}})}),_c('svg-circle',{staticStyle:{"cursor":"move"},attrs:{"ix":0,"iy":0,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"stroke-color":"red"},on:{"dragging":function($event){_vm.dragging = true; _vm.draggingCorner = 'dragUL'; _vm.dragIndex = $event}}}),_c('svg-circle',{staticStyle:{"cursor":"nwse-resize"},attrs:{"ix":_vm.vLines.length - 1,"iy":_vm.hLines.length - 1,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"stroke-color":"red"},on:{"dragging":function($event){_vm.dragging = true; _vm.draggingCorner = 'dragLR'; _vm.dragIndex = $event}}})]:_vm._e()],2)}
+var svgComponentvue_type_template_id_a3354cf0_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/svgComponent.vue?vue&type=template&id=9bc51f4c&
+// CONCATENATED MODULE: ./src/components/svgComponent.vue?vue&type=template&id=a3354cf0&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.to-string.js
 var es6_regexp_to_string = __webpack_require__("6b54");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"40af3c2b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgLine.vue?vue&type=template&id=3f57de68&
-var svgLinevue_type_template_id_3f57de68_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('line',{style:(_vm.style),attrs:{"x1":_vm.x1 / _vm.scale,"y1":_vm.y1 / _vm.scale,"x2":_vm.x2 / _vm.scale,"y2":_vm.y2 / _vm.scale,"index":_vm.index},on:{"mouseover":_vm.showBubble,"mouseout":_vm.removeBubble}})}
-var svgLinevue_type_template_id_3f57de68_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgLine.vue?vue&type=template&id=47ea38f7&
+var svgLinevue_type_template_id_47ea38f7_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('line',{class:{ 'line-horizontal': _vm.isHorizontal, 'line-vertical': !_vm.isHorizontal },style:(_vm.style),attrs:{"x1":_vm.x1 / _vm.scale,"y1":_vm.y1 / _vm.scale,"x2":_vm.x2 / _vm.scale,"y2":_vm.y2 / _vm.scale},on:{"mousedown":_vm.sendIndex}})}
+var svgLinevue_type_template_id_47ea38f7_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/svgLine.vue?vue&type=template&id=3f57de68&
+// CONCATENATED MODULE: ./src/components/svgLine.vue?vue&type=template&id=47ea38f7&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgLine.vue?vue&type=script&lang=js&
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1160,42 +1167,22 @@ var svgLinevue_type_template_id_3f57de68_staticRenderFns = []
       type: [Number, String],
       required: true
     },
-    index: {
-      type: [Number, String],
-      required: true
-    },
-    dragging: {
-      type: Boolean,
-      required: true
-    },
     lineThickness: {
       type: [Number, String]
     }
   },
-  // on mouseover, signal to add a bubble ?
-  methods: {
-    showBubble: function showBubble() {
-      if (this.x1 === this.x2) {
-        this.$emit('vBubble', [this.x2, 0.7 * (this.y2 - this.y1), this.index]);
-      }
-
-      if (this.y1 === this.y2) {
-        this.$emit('hBubble', [0.7 * (this.x2 - this.x1), this.y2, this.index]);
-      }
+  computed: {
+    isHorizontal: function isHorizontal() {
+      return this.y1 === this.y2;
     },
-    removeBubble: function removeBubble() {
-      var that = this;
-      setTimeout(function () {
-        if (that.dragging) {
-          that.$emit('removeBubble');
-        } // should be !this.dragging to remove bubble
-
-      }, 3000);
+    style: function style() {
+      return "stroke:rgb(255,0,0);stroke-width:".concat(this.lineThickness, ";stroke-linecap:round;cursor:").concat(this.isHorizontal ? 'ns-resize' : 'ew-resize');
     }
   },
-  computed: {
-    style: function style() {
-      return "stroke:rgb(255,0,0);stroke-width:".concat(this.lineThickness, ";stroke-linecap:round");
+  // on mouseover, signal to add a bubble ?
+  methods: {
+    sendIndex: function sendIndex() {
+      this.$emit('dragging');
     }
   }
 });
@@ -1306,8 +1293,8 @@ function normalizeComponent (
 
 var component = normalizeComponent(
   components_svgLinevue_type_script_lang_js_,
-  svgLinevue_type_template_id_3f57de68_render,
-  svgLinevue_type_template_id_3f57de68_staticRenderFns,
+  svgLinevue_type_template_id_47ea38f7_render,
+  svgLinevue_type_template_id_47ea38f7_staticRenderFns,
   false,
   null,
   null,
@@ -1316,12 +1303,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var svgLine = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"40af3c2b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgCircle.vue?vue&type=template&id=b3fa1d48&
-var svgCirclevue_type_template_id_b3fa1d48_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('circle',{style:(_vm.style),attrs:{"cx":_vm.vBubble,"cy":_vm.hBubble,"r":10},on:{"mousedown":_vm.sendIndex}})}
-var svgCirclevue_type_template_id_b3fa1d48_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgCircle.vue?vue&type=template&id=32ec7363&
+var svgCirclevue_type_template_id_32ec7363_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('circle',{style:(_vm.style),attrs:{"cx":_vm.vBubble,"cy":_vm.hBubble,"r":10},on:{"mousedown":_vm.sendIndex}})}
+var svgCirclevue_type_template_id_32ec7363_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/svgCircle.vue?vue&type=template&id=b3fa1d48&
+// CONCATENATED MODULE: ./src/components/svgCircle.vue?vue&type=template&id=32ec7363&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgCircle.vue?vue&type=script&lang=js&
 
@@ -1381,7 +1368,7 @@ var svgCirclevue_type_template_id_b3fa1d48_staticRenderFns = []
       }
     },
     style: function style() {
-      return 'stroke:' + this.strokeColor + ';stroke-width:2;stroke-opacity=0.7;fill-opacity:0';
+      return "stroke:".concat(this.strokeColor, ";stroke-width:2;stroke-opacity=0.7;fill-opacity:0;z-index:3");
     }
   }
 });
@@ -1397,8 +1384,8 @@ var svgCirclevue_type_template_id_b3fa1d48_staticRenderFns = []
 
 var svgCircle_component = normalizeComponent(
   components_svgCirclevue_type_script_lang_js_,
-  svgCirclevue_type_template_id_b3fa1d48_render,
-  svgCirclevue_type_template_id_b3fa1d48_staticRenderFns,
+  svgCirclevue_type_template_id_32ec7363_render,
+  svgCirclevue_type_template_id_32ec7363_staticRenderFns,
   false,
   null,
   null,
@@ -1410,29 +1397,6 @@ var svgCircle_component = normalizeComponent(
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/svgComponent.vue?vue&type=script&lang=js&
 
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -1541,6 +1505,17 @@ var svgCircle_component = normalizeComponent(
       draggingCorner: undefined
     };
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    window.addEventListener('mouseup', function (e) {
+      _this.dragging = false;
+      _this.draggingCorner = undefined;
+    });
+    window.addEventListener('mousemove', function (e) {
+      _this.mouseMove(e);
+    });
+  },
   methods: {
     generateRandomKey: function generateRandomKey() {
       var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -1564,8 +1539,8 @@ var svgCircle_component = normalizeComponent(
     },
     mouseMove: function mouseMove(event) {
       if (this.dragging) {
-        var dx = event.layerX * this.scale - this.vLines[this.dragIndex[0]];
-        var dy = event.layerY * this.scale - this.hLines[this.dragIndex[1]];
+        var dx = event.clientX - (this.$el.getBoundingClientRect().left + document.body.scrollLeft) * this.scale - this.vLines[this.dragIndex[0]];
+        var dy = event.clientY - (this.$el.getBoundingClientRect().top + document.body.scrollTop) * this.scale - this.hLines[this.dragIndex[1]];
 
         if (this.draggingCorner) {
           this.$emit(this.draggingCorner, [dx, dy]);
@@ -1579,20 +1554,6 @@ var svgCircle_component = normalizeComponent(
           }
         }
       }
-    },
-    showHbubble: function showHbubble(location) {
-      this.hBubble = location; // set the drag bubble for this line
-
-      this.vBubble = [0, 0, -1];
-    },
-    showVbubble: function showVbubble(location) {
-      this.vBubble = location;
-      this.hBubble = [0, 0, -1]; // clear the other axis bubble
-    },
-    removeBubble: function removeBubble() {
-      // clear both axes' bubbles
-      this.vBubble = [0, 0, -1];
-      this.hBubble = [0, 0, -1];
     }
   }
 });
@@ -1608,8 +1569,8 @@ var svgCircle_component = normalizeComponent(
 
 var svgComponent_component = normalizeComponent(
   components_svgComponentvue_type_script_lang_js_,
-  svgComponentvue_type_template_id_9bc51f4c_render,
-  svgComponentvue_type_template_id_9bc51f4c_staticRenderFns,
+  svgComponentvue_type_template_id_a3354cf0_render,
+  svgComponentvue_type_template_id_a3354cf0_staticRenderFns,
   false,
   null,
   null,
@@ -1618,6 +1579,114 @@ var svgComponent_component = normalizeComponent(
 )
 
 /* harmony default export */ var svgComponent = (svgComponent_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/cell.vue?vue&type=template&id=96e852e0&
+var cellvue_type_template_id_96e852e0_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{style:(_vm.style)},[(!_vm.checked)?_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.cell.metadata),expression:"cell.metadata"}],staticClass:"cell-select",staticStyle:{"position":"absolute","top":"50%","left":"50%","transform":"translate(-50%, -50%)"},on:{"change":[function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.$set(_vm.cell, "metadata", $event.target.multiple ? $$selectedVal : $$selectedVal[0])},function($event){return _vm.$emit('onChange', _vm.cell)}]}},[_c('option',{domProps:{"value":undefined}},[_vm._v("\n      Select metadata\n    ")]),_vm._l((_vm.metadata),function(value,key){return _c('option',{key:key,domProps:{"value":key}},[_vm._v("\n      "+_vm._s(value)+"\n    ")])})],2):_vm._e(),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.checked),expression:"checked"}],staticClass:"cell-checkbox",staticStyle:{"position":"absolute","right":"10px","bottom":"10px"},attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.checked)?_vm._i(_vm.checked,null)>-1:(_vm.checked)},on:{"change":[function($event){var $$a=_vm.checked,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.checked=$$a.concat([$$v]))}else{$$i>-1&&(_vm.checked=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.checked=$$c}},_vm.setCheckbox]}})])}
+var cellvue_type_template_id_96e852e0_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/cell.vue?vue&type=template&id=96e852e0&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/cell.vue?vue&type=script&lang=js&
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var cellvue_type_script_lang_js_ = ({
+  props: {
+    cell: {
+      type: Object,
+      required: true
+    },
+    metadata: {
+      type: Object,
+      default: undefined
+    },
+    scale: {
+      type: Number,
+      default: 1
+    }
+  },
+  computed: {
+    style: function style() {
+      return {
+        position: 'absolute',
+        top: "".concat(this.cell.cornerUpper.y / this.scale + this.margin, "px"),
+        left: "".concat(this.cell.cornerUpper.x / this.scale + this.margin, "px"),
+        width: "".concat(this.cell.cornerLower.x / this.scale - this.cell.cornerUpper.x / this.scale - this.margin * 2, "px"),
+        height: "".concat(this.cell.cornerLower.y / this.scale - this.cell.cornerUpper.y / this.scale - this.margin * 2, "px"),
+        'z-index': 2
+      };
+    }
+  },
+  data: function data() {
+    return {
+      margin: 5,
+      checked: true
+    };
+  },
+  watch: {
+    checked: function checked(newVal) {
+      if (newVal) {
+        this.cell.metadata = undefined;
+      }
+    }
+  },
+  methods: {
+    setCheckbox: function setCheckbox() {
+      if (this.checked) {
+        this.cell.metadata = undefined;
+      }
+
+      this.$emit('onChange', this.cell);
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/cell.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_cellvue_type_script_lang_js_ = (cellvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/cell.vue
+
+
+
+
+
+/* normalize component */
+
+var cell_component = normalizeComponent(
+  components_cellvue_type_script_lang_js_,
+  cellvue_type_template_id_96e852e0_render,
+  cellvue_type_template_id_96e852e0_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var cell = (cell_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=script&lang=js&
 
 
@@ -1640,13 +1709,27 @@ var svgComponent_component = normalizeComponent(
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ var sledvue_type_script_lang_js_ = ({
   name: 'vue-sled',
   components: {
-    SvgComponent: svgComponent
+    SvgComponent: svgComponent,
+    CellComponent: cell
   },
   props: {
+    metadataAssignment: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    },
     imageWidth: {
       type: Number,
       required: true
@@ -1755,6 +1838,10 @@ var svgComponent_component = normalizeComponent(
     this.computeCells();
   },
   methods: {
+    updateCell: function updateCell(index, cell) {
+      this.$set(this.cells, index, cell);
+      this.$emit('onComputeCells', this.cells);
+    },
     moveX: function moveX(offset) {
       // move all vertical lines by x-offset
       for (var i = 0; i < this.vLines.length; i++) {
@@ -1832,7 +1919,7 @@ var svgComponent_component = normalizeComponent(
     computeCells: function computeCells() {
       if (this.hLines.length > 1 && this.vLines.length > 1) {
         // compute intersections
-        this.cells = [];
+        // this.cells = []
         var i = 0; // horizontal (column) index
 
         var j = 0; // vertical (row) index
@@ -1847,9 +1934,21 @@ var svgComponent_component = normalizeComponent(
         for (j = 0; j < hRows; j++) {
           for (i = 0; i < vCols; i++) {
             cellIndex = vCols * j + i;
-            ul = [this.vLinesInOrder[i], this.hLinesInOrder[j]];
-            lr = [this.vLinesInOrder[i + 1], this.hLinesInOrder[j + 1]];
-            this.cells[cellIndex] = [ul, lr];
+            ul = {
+              x: this.vLinesInOrder[i],
+              y: this.hLinesInOrder[j]
+            };
+            lr = {
+              x: this.vLinesInOrder[i + 1],
+              y: this.hLinesInOrder[j + 1]
+            };
+            this.$set(this.cells, cellIndex, {
+              index: cellIndex,
+              cornerUpper: ul,
+              cornerLower: lr,
+              metadata: this.cells[cellIndex] ? this.cells[cellIndex].metadata : undefined,
+              checked: this.cells[cellIndex] ? this.cells[cellIndex].checked : true
+            });
           }
         }
 

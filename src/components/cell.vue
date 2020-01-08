@@ -4,6 +4,7 @@
       class="cell-select"
       v-if="!checked"
       v-model="cell.metadata"
+      style="position: absolute; top:50%; left: 50%; transform: translate(-50%, -50%)"
       @change="$emit('onChange', cell)">
       <option :value="undefined">
         Select metadata
@@ -19,6 +20,7 @@
       v-model="checked"
       @change="setCheckbox"
       class="cell-checkbox"
+      style="position: absolute; right: 10px; bottom: 10px;"
       type="checkbox">
   </div>
 </template>
@@ -74,18 +76,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .cell-checkbox {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-  }
-
-  .cell-select {
-    position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%, -50%)
-  }
-</style>

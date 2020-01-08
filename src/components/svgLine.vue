@@ -41,7 +41,7 @@ export default {
       return this.y1 === this.y2
     },
     style () {
-      return `stroke:rgb(255,0,0);stroke-width:${this.lineThickness};stroke-linecap:round`
+      return `stroke:rgb(255,0,0);stroke-width:${this.lineThickness};stroke-linecap:round;cursor:${this.isHorizontal ? 'ns-resize' : 'ew-resize'}`
     }
   },
   // on mouseover, signal to add a bubble ?
@@ -52,12 +52,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-  .line-horizontal {
-    cursor: ns-resize
-  }
-
-  .line-vertical {
-    cursor: ew-resize
-  }
-</style>

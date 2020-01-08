@@ -1,5 +1,5 @@
 <template>
-  <div class="sled-component">
+  <div style="position: relative;">
     <svg-component
       v-if="fileImage"
       :image-width="width"
@@ -267,8 +267,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-  .sled-component {
-    position: relative;
-  }
-</style>
