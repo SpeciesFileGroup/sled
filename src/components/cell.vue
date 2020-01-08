@@ -47,8 +47,8 @@ export default {
         position: 'absolute',
         top: `${(this.cell.cornerUpper.y / this.scale) + this.margin}px`,
         left: `${(this.cell.cornerUpper.x / this.scale) + this.margin}px`,
-        width: `${(this.cell.cornerLower.x / this.scale) - (this.cell.cornerUpper.x / this.scale) - this.margin * 2}px`,
-        height: `${(this.cell.cornerLower.y / this.scale) - (this.cell.cornerUpper.y / this.scale) - this.margin * 2}px`,
+        width: `${((this.cell.cornerLower.x - this.cell.cornerUpper.x) / this.scale) - this.margin * 2}px`,
+        height: `${((this.cell.cornerLower.y - this.cell.cornerUpper.y) / this.scale) - this.margin * 2}px`,
         'z-index': 2
       }
     }

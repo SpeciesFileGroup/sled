@@ -18,6 +18,7 @@
       v-for="(cell, index) in cells"
       :key="index"
       :metadata="metadataAssignment"
+      :scale="scale"
       :cell="cell"
       @onChange="updateCell(index, $event)"/>
   </div>

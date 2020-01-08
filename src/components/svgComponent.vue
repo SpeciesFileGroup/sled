@@ -140,8 +140,8 @@ export default {
     mouseMove (event) {
       if (this.dragging) {
 
-        let dx = event.clientX - (this.$el.getBoundingClientRect().left + document.body.scrollLeft) * this.scale - this.vLines[this.dragIndex[0]]
-        let dy = event.clientY - (this.$el.getBoundingClientRect().top + document.body.scrollTop) * this.scale - this.hLines[this.dragIndex[1]]
+        let dx = (event.clientX - (this.$el.getBoundingClientRect().left + document.body.scrollLeft)) - (this.vLines[this.dragIndex[0]]/this.scale)
+        let dy = (event.clientY - (this.$el.getBoundingClientRect().top + document.body.scrollTop)) - (this.hLines[this.dragIndex[1]]/this.scale)
 
         if (this.draggingCorner) {
           this.$emit(this.draggingCorner, [dx, dy])
