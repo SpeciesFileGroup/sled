@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sled-component">
     <svg-component
       v-if="fileImage"
       :image-width="width"
@@ -14,19 +14,31 @@
       @dragHline="moveHline($event)"
       @dragVline="moveVline($event)"
     />
+    <cell-component
+      v-for="(cell, index) in cells"
+      :key="index"
+      :metadata="metadataAssignment"
+      :cell="cell"
+      @onChange="updateCell(index, $event)"/>
   </div>
 </template>
 
 <script>
 
 import SvgComponent from './svgComponent'
+import CellComponent from './cell'
 
 export default {
   name: 'vue-sled',
   components: {
-    SvgComponent
+    SvgComponent,
+    CellComponent
   },
   props: {
+    metadataAssignment: {
+      type: Object,
+      default: () => { return {} }
+    },
     imageWidth: {
       type: Number,
       required: true
@@ -130,6 +142,10 @@ export default {
     this.computeCells()
   },
   methods: {
+    updateCell (index, cell) {
+      this.$set(this.cells, index, cell)
+      this.$emit('onComputeCells', this.cells)
+    },
     moveX (offset) { // move all vertical lines by x-offset
       for (let i = 0; i < this.vLines.length; i++) {
         this.moveV(i, offset)
@@ -189,7 +205,7 @@ export default {
     computeCells () {
       if ((this.hLines.length > 1) && this.vLines.length > 1) {
         // compute intersections
-        this.cells = []
+        // this.cells = []
         let i = 0 // horizontal (column) index
         let j = 0 // vertical (row) index
         let ul, lr // upper left, lower right corners of cell
@@ -199,10 +215,17 @@ export default {
         for (j = 0; j < hRows; j++) {
           for (i = 0; i < vCols; i++) {
             cellIndex = (vCols * j) + i
-            ul = [this.vLinesInOrder[i], this.hLinesInOrder[j]]
-            lr = [this.vLinesInOrder[i + 1], this.hLinesInOrder[j + 1]]
 
-            this.cells[cellIndex] = [ul, lr]
+            ul = { x: this.vLinesInOrder[i], y: this.hLinesInOrder[j] }
+            lr = { x: this.vLinesInOrder[i + 1], y: this.hLinesInOrder[j + 1] }
+
+            this.$set(this.cells, cellIndex, {
+              index: cellIndex,
+              cornerUpper: ul,
+              cornerLower: lr,
+              metadata: this.cells[cellIndex] ? this.cells[cellIndex].metadata : undefined,
+              checked: this.cells[cellIndex] ? this.cells[cellIndex].checked : true
+            })
           }
         }
         this.$emit('onComputeCells', this.cells)
@@ -244,3 +267,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .sled-component {
+    position: relative;
+  }
+</style>

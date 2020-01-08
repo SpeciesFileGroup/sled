@@ -55,7 +55,7 @@ export default {
       }
     },
     style () {
-      return 'stroke:' + this.strokeColor + ';stroke-width:2;stroke-opacity=0.7;fill-opacity:0'
+      return `stroke:${this.strokeColor};stroke-width:2;stroke-opacity=0.7;fill-opacity:0;z-index:3`
     }
   }
 }

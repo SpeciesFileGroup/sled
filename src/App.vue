@@ -121,6 +121,7 @@
       :line-weight="lineWeight"
       :scale="scaleForScreen"
       :file-image="fileImage"
+      :metadata-assignment="metadata"
       @onComputeCells="cells = $event"/>
   </div>
 </template>
@@ -146,7 +147,11 @@ export default {
       lineWeight: 4,
       fileImage: undefined,
       autosize: true,
-      cells: []
+      cells: [],
+      metadata: {
+        foo: 'Test',
+        bar: 'Another test'
+      }
     }
   },
   computed: {

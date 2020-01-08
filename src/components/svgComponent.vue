@@ -2,9 +2,7 @@
   <svg id="svg_layer"
     :width="imageWidth/scale"
     :height="imageHeight/scale"
-    style="z-index: 2; position: absolute;"
-    @mouseup="dragging = false; draggingCorner = undefined; removeBubble"
-    @mousemove="mouseMove">
+    style="z-index: 2; position: absolute;">
     <image
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -21,11 +19,7 @@
         :y2="hLines[index]"
         :scale="scale"
         :line-thickness="lineThickness"
-        :index="index"
-        :dragging="dragging"
-        @hBubble="showHbubble($event)"
-        @vBubble="showVbubble($event)"
-        @removeBubble="removeBubble"
+        @dragging="dragging = true;  dragIndex = [-1, index]"
       />
       <svg-line
         v-for="(item, index) in vLines"
@@ -38,9 +32,8 @@
         :line-thickness="lineThickness"
         :index="index"
         :dragging="dragging"
-        @hBubble="showHbubble($event)"
-        @vBubble="showVbubble($event)"
-        @removeBubble="removeBubble"
+        @dragging="dragging = true; dragIndex = [index, -1]"
+        @mousemove="deltas = $event"
       />
       <svg-circle
         :ix="0"
@@ -49,6 +42,7 @@
         :v-lines="vLines"
         :scale="scale"
         stroke-color="red"
+        style="cursor: move"
         @dragging="dragging = true; draggingCorner = 'dragUL'; dragIndex = $event"
       />
       <svg-circle
@@ -58,25 +52,8 @@
         :v-lines="vLines"
         :scale="scale"
         stroke-color="red"
+        style="cursor: nwse-resize"
         @dragging="dragging = true; draggingCorner = 'dragLR'; dragIndex = $event"
-      />
-      <svg-circle v-if="hBubble[2]>=0"
-        :ix="-1"
-        :iy="hBubble[2]"
-        :h-lines="hLines"
-        :v-lines="vLines"
-        :scale="scale"
-        @dragging="dragging = true; dragIndex = $event"
-        @mousemove="deltas = $event"
-      />
-      <svg-circle v-if="vBubble[2]>=0"
-        :ix="vBubble[2]"
-        :iy="-1"
-        :h-lines="hLines"
-        :v-lines="vLines"
-        :scale="scale"
-        @dragging="dragging = true; dragIndex = $event"
-        @mousemove="deltas = $event"
       />
     </template>
   </svg>
@@ -131,6 +108,15 @@ export default {
       draggingCorner: undefined
     }
   },
+  mounted () {
+    window.addEventListener('mouseup', e => {
+      this.dragging = false; 
+      this.draggingCorner = undefined; 
+    })
+    window.addEventListener('mousemove', e => {
+      this.mouseMove(e)
+    })
+  },
   methods: {
     generateRandomKey (index = 0) {
       return Math.random().toString(16).substr(2, 8) + index
@@ -153,8 +139,10 @@ export default {
     },
     mouseMove (event) {
       if (this.dragging) {
-        let dx = event.layerX * this.scale - this.vLines[this.dragIndex[0]]
-        let dy = event.layerY * this.scale - this.hLines[this.dragIndex[1]]
+
+        let dx = event.clientX - (this.$el.getBoundingClientRect().left + document.body.scrollLeft) * this.scale - this.vLines[this.dragIndex[0]]
+        let dy = event.clientY - (this.$el.getBoundingClientRect().top + document.body.scrollTop) * this.scale - this.hLines[this.dragIndex[1]]
+
         if (this.draggingCorner) {
           this.$emit(this.draggingCorner, [dx, dy])
         } else { // dragging either vertical or horzontal line
@@ -165,18 +153,6 @@ export default {
           }
         }
       }
-    },
-    showHbubble (location) {
-      this.hBubble = location // set the drag bubble for this line
-      this.vBubble = [0, 0, -1]
-    },
-    showVbubble (location) {
-      this.vBubble = location
-      this.hBubble = [0, 0, -1] // clear the other axis bubble
-    },
-    removeBubble () { // clear both axes' bubbles
-      this.vBubble = [0, 0, -1]
-      this.hBubble = [0, 0, -1]
     }
   }
 }
