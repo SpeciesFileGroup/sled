@@ -158,9 +158,13 @@ export default {
       }
     },
     moveV (index, offset) { // move a single vertical line by x-offset
-      this.$set(this.vLines, index, Math.round(this.vLines[index] + offset))
+      let value = Math.round(this.vLines[index] + offset)
+      if (value < 0 || value > this.imageWidth) return
+      this.$set(this.vLines, index, value)
     },
     moveH (index, offset) { // move a single horizontal line by y-offset
+      let value = Math.round(this.hLines[index] + offset)
+      if (value < 0 || value > this.imageHeight) return
       this.$set(this.hLines, index, Math.round(this.hLines[index] + offset))
     },
     resizeImage () { // if image size changes, recompute lines and cells
@@ -243,10 +247,16 @@ export default {
       let h = 0
       let v = 0
       for (h = 1; h < this.vLines.length; h++) {
-        this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / vLast))
+        let value = Math.round(this.vLines[h] + h * dx / vLast)
+        if (value > 0 && value < this.imageWidth) {
+          this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / vLast))
+        }
       }
       for (v = 1; v < this.hLines.length; v++) {
-        this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / hLast))
+        let value = Math.round(this.hLines[v] + v * dy / hLast)
+        if (value > 0 && value < this.imageHeight) {
+          this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / hLast))
+        }
       }
     },
     moveGrid (deltas) {

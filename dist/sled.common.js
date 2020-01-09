@@ -1093,12 +1093,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=14f2e342&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=5c64a565&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticStyle:{"position":"relative"}},[(_vm.fileImage)?_c('svg-component',{attrs:{"image-width":_vm.width,"image-height":_vm.height,"image-data":_vm.fileImage,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"line-thickness":_vm.lineWeight},on:{"dragUL":function($event){return _vm.moveGrid($event)},"dragLR":function($event){return _vm.stretchGrid($event)},"dragHline":function($event){return _vm.moveHline($event)},"dragVline":function($event){return _vm.moveVline($event)}}}):_vm._e(),_vm._l((_vm.cells),function(cell,index){return _c('cell-component',{key:index,attrs:{"metadata":_vm.metadataAssignment,"scale":_vm.scale,"cell":cell},on:{"onChange":function($event){return _vm.updateCell(index, $event)}}})})],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/sled.vue?vue&type=template&id=14f2e342&
+// CONCATENATED MODULE: ./src/components/sled.vue?vue&type=template&id=5c64a565&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.sort.js
 var es6_array_sort = __webpack_require__("55dd");
@@ -1848,10 +1848,14 @@ var cell_component = normalizeComponent(
     },
     moveV: function moveV(index, offset) {
       // move a single vertical line by x-offset
-      this.$set(this.vLines, index, Math.round(this.vLines[index] + offset));
+      var value = Math.round(this.vLines[index] + offset);
+      if (value < 0 || value > this.imageWidth) return;
+      this.$set(this.vLines, index, value);
     },
     moveH: function moveH(index, offset) {
       // move a single horizontal line by y-offset
+      var value = Math.round(this.hLines[index] + offset);
+      if (value < 0 || value > this.imageHeight) return;
       this.$set(this.hLines, index, Math.round(this.hLines[index] + offset));
     },
     resizeImage: function resizeImage() {
@@ -1961,11 +1965,19 @@ var cell_component = normalizeComponent(
       var v = 0;
 
       for (h = 1; h < this.vLines.length; h++) {
-        this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / vLast));
+        var value = Math.round(this.vLines[h] + h * dx / vLast);
+
+        if (value > 0 && value < this.imageWidth) {
+          this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / vLast));
+        }
       }
 
       for (v = 1; v < this.hLines.length; v++) {
-        this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / hLast));
+        var _value = Math.round(this.hLines[v] + v * dy / hLast);
+
+        if (_value > 0 && _value < this.imageHeight) {
+          this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / hLast));
+        }
       }
     },
     moveGrid: function moveGrid(deltas) {
