@@ -1,5 +1,9 @@
 <template>
-  <div style="position: relative;">
+  <div 
+    :style="{ 
+      display: 'block',
+      position: 'relative', 
+      height: `${height}px` }">
     <svg-component
       v-if="fileImage"
       :image-width="width"
@@ -59,13 +63,13 @@ export default {
       type: Array,
       required: true
     },
-    scale: {
-      type: Number,
-      default: 8.0
-    },
     lineWeight: {
       type: [Number, String],
       default: 4
+    },
+    autosize: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -88,7 +92,9 @@ export default {
       vLines: [], // x pixel coord of line
       cells: [], // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
       old_width: 0,
-      old_height: 0
+      old_height: 0,
+      observeContainer: undefined,
+      scale: 1
     }
   },
   watch: {
@@ -137,10 +143,28 @@ export default {
       this.width = this.width
       this.height = this.height
       this.resizeImage()
+    },
+    autosize: { 
+      handler (newVal) {
+        if(newVal) {
+          this.observeContainer = new ResizeObserver(this.resizeSled)
+          this.observeContainer.observe(this.$el)
+        } else {
+          this.observeContainer.disconnect()
+        }
+        this.scale = this.scaleForScreen()
+      }
     }
   },
   mounted () {
     this.computeCells()
+    if(this.autosize) {
+      this.observeContainer = new ResizeObserver(this.resizeSled)
+      this.observeContainer.observe(this.$el)
+    }
+  },
+  destroyed () {
+    this.observeContainer.disconnect()
   },
   methods: {
     updateCell (index, cell) {
@@ -274,6 +298,18 @@ export default {
       let dx = deltas[0]
       let ix = deltas[2]
       this.moveV(ix, dx)
+    },
+    scaleForScreen () {
+      if (this.autosize) {
+        let scaleHeight = this.$el.getBoundingClientRect().height < this.height ? this.height / this.$el.getBoundingClientRect().height : 1
+        let scaleWidth = this.$el.getBoundingClientRect().width < this.width ? this.width / this.$el.getBoundingClientRect().width : 1
+        return scaleHeight > scaleWidth ? scaleHeight : scaleWidth
+      } else {
+        return 1
+      }
+    },
+    resizeSled (mutationsList, observer) {
+      this.scale = this.scaleForScreen()
     }
   }
 }

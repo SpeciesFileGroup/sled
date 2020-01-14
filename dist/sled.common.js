@@ -1093,12 +1093,15 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=5c64a565&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticStyle:{"position":"relative"}},[(_vm.fileImage)?_c('svg-component',{attrs:{"image-width":_vm.width,"image-height":_vm.height,"image-data":_vm.fileImage,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"line-thickness":_vm.lineWeight},on:{"dragUL":function($event){return _vm.moveGrid($event)},"dragLR":function($event){return _vm.stretchGrid($event)},"dragHline":function($event){return _vm.moveHline($event)},"dragVline":function($event){return _vm.moveVline($event)}}}):_vm._e(),_vm._l((_vm.cells),function(cell,index){return _c('cell-component',{key:index,attrs:{"metadata":_vm.metadataAssignment,"scale":_vm.scale,"cell":cell},on:{"onChange":function($event){return _vm.updateCell(index, $event)}}})})],2)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=79ea4e69&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{style:({ 
+    display: 'block',
+    position: 'relative', 
+    height: (_vm.height + "px") })},[(_vm.fileImage)?_c('svg-component',{attrs:{"image-width":_vm.width,"image-height":_vm.height,"image-data":_vm.fileImage,"h-lines":_vm.hLines,"v-lines":_vm.vLines,"scale":_vm.scale,"line-thickness":_vm.lineWeight},on:{"dragUL":function($event){return _vm.moveGrid($event)},"dragLR":function($event){return _vm.stretchGrid($event)},"dragHline":function($event){return _vm.moveHline($event)},"dragVline":function($event){return _vm.moveVline($event)}}}):_vm._e(),_vm._l((_vm.cells),function(cell,index){return _c('cell-component',{key:index,attrs:{"metadata":_vm.metadataAssignment,"scale":_vm.scale,"cell":cell},on:{"onChange":function($event){return _vm.updateCell(index, $event)}}})})],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/sled.vue?vue&type=template&id=5c64a565&
+// CONCATENATED MODULE: ./src/components/sled.vue?vue&type=template&id=79ea4e69&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.sort.js
 var es6_array_sort = __webpack_require__("55dd");
@@ -1707,6 +1710,10 @@ var cell_component = normalizeComponent(
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ var sledvue_type_script_lang_js_ = ({
@@ -1741,13 +1748,13 @@ var cell_component = normalizeComponent(
       type: Array,
       required: true
     },
-    scale: {
-      type: Number,
-      default: 8.0
-    },
     lineWeight: {
       type: [Number, String],
       default: 4
+    },
+    autosize: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -1775,7 +1782,9 @@ var cell_component = normalizeComponent(
       cells: [],
       // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
       old_width: 0,
-      old_height: 0
+      old_height: 0,
+      observeContainer: undefined,
+      scale: 1
     };
   },
   watch: {
@@ -1824,10 +1833,30 @@ var cell_component = normalizeComponent(
       this.width = this.width;
       this.height = this.height;
       this.resizeImage();
+    },
+    autosize: {
+      handler: function handler(newVal) {
+        if (newVal) {
+          this.observeContainer = new ResizeObserver(this.resizeSled);
+          this.observeContainer.observe(this.$el);
+        } else {
+          this.observeContainer.disconnect();
+        }
+
+        this.scale = this.scaleForScreen();
+      }
     }
   },
   mounted: function mounted() {
     this.computeCells();
+
+    if (this.autosize) {
+      this.observeContainer = new ResizeObserver(this.resizeSled);
+      this.observeContainer.observe(this.$el);
+    }
+  },
+  destroyed: function destroyed() {
+    this.observeContainer.disconnect();
   },
   methods: {
     updateCell: function updateCell(index, cell) {
@@ -1995,6 +2024,18 @@ var cell_component = normalizeComponent(
       var dx = deltas[0];
       var ix = deltas[2];
       this.moveV(ix, dx);
+    },
+    scaleForScreen: function scaleForScreen() {
+      if (this.autosize) {
+        var scaleHeight = this.$el.getBoundingClientRect().height < this.height ? this.height / this.$el.getBoundingClientRect().height : 1;
+        var scaleWidth = this.$el.getBoundingClientRect().width < this.width ? this.width / this.$el.getBoundingClientRect().width : 1;
+        return scaleHeight > scaleWidth ? scaleHeight : scaleWidth;
+      } else {
+        return 1;
+      }
+    },
+    resizeSled: function resizeSled(mutationsList, observer) {
+      this.scale = this.scaleForScreen();
     }
   }
 });

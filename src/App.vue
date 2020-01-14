@@ -112,17 +112,20 @@
         </tbody>
       </table>
     </div>
+    <div class="test">
     <sled-component
+      class="test"
       ref="sled"
       :vertical-lines="vlines"
       :horizontal-lines="hlines"
       :image-width="width"
       :image-height="height"
       :line-weight="lineWeight"
-      :scale="scaleForScreen"
+      :autosize="autosize"
       :file-image="fileImage"
       :metadata-assignment="metadata"
       @onComputeCells="cells = $event"/>
+    </div>
   </div>
 </template>
 
@@ -160,16 +163,6 @@ export default {
     },
     hLinesInOrder () {
       return this.hlines
-    },
-    scaleForScreen () {
-      if (this.autosize) {
-        let scaleHeight = window.outerHeight < this.height ? this.height / window.outerHeight : 1
-        let scaleWidth = window.outerWidth < this.width ? this.width / window.outerWidth : 1
-
-        return scaleHeight > scaleWidth ? scaleHeight : scaleWidth
-      } else {
-        return this.scale
-      }
     }
   },
   methods: {
