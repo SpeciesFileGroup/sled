@@ -144,9 +144,9 @@ export default {
       this.height = this.height
       this.resizeImage()
     },
-    autosize: { 
+    autosize: {
       handler (newVal) {
-        if(newVal) {
+        if (newVal) {
           this.observeContainer = new ResizeObserver(this.resizeSled)
           this.observeContainer.observe(this.$el)
         } else {
@@ -158,7 +158,7 @@ export default {
   },
   mounted () {
     this.computeCells()
-    if(this.autosize) {
+    if (this.autosize) {
       this.observeContainer = new ResizeObserver(this.resizeSled)
       this.observeContainer.observe(this.$el)
     }
@@ -250,14 +250,17 @@ export default {
 
             this.$set(this.cells, cellIndex, {
               index: cellIndex,
-              cornerUpper: ul,
-              cornerLower: lr,
-              metadata: this.cells[cellIndex] ? this.cells[cellIndex].metadata : undefined,
+              upperCorner: ul,
+              lowerCorner: lr,
+              row: j,
+              column: i,
+              metadata: this.cells[cellIndex] ? this.cells[cellIndex].metadata : null,
               checked: this.cells[cellIndex] ? this.cells[cellIndex].checked : true
             })
           }
         }
-        this.$emit('onComputeCells', this.cells)
+        console.log(JSON.stringify(this.cells.map(item => { delete item.checked; return item })))
+        this.$emit('onComputeCells', this.cells.map(item => { delete item.checked; return item }))
       }
     },
     generateJSON () {

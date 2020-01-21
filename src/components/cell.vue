@@ -6,7 +6,7 @@
       v-model="cell.metadata"
       style="position: absolute; top:50%; left: 50%; transform: translate(-50%, -50%)"
       @change="$emit('onChange', cell)">
-      <option :value="undefined">
+      <option :value="null">
         Select metadata
       </option>
       <option
@@ -45,10 +45,10 @@ export default {
     style () {
       return {
         position: 'absolute',
-        top: `${(this.cell.cornerUpper.y / this.scale) + this.margin}px`,
-        left: `${(this.cell.cornerUpper.x / this.scale) + this.margin}px`,
-        width: `${((this.cell.cornerLower.x - this.cell.cornerUpper.x) / this.scale) - this.margin * 2}px`,
-        height: `${((this.cell.cornerLower.y - this.cell.cornerUpper.y) / this.scale) - this.margin * 2}px`,
+        top: `${(this.cell.upperCorner.y / this.scale) + this.margin}px`,
+        left: `${(this.cell.upperCorner.x / this.scale) + this.margin}px`,
+        width: `${((this.cell.lowerCorner.x - this.cell.upperCorner.x) / this.scale) - this.margin * 2}px`,
+        height: `${((this.cell.lowerCorner.y - this.cell.upperCorner.y) / this.scale) - this.margin * 2}px`,
         'z-index': 2
       }
     }
@@ -62,14 +62,14 @@ export default {
   watch: {
     checked(newVal) {
       if(newVal) {
-        this.cell.metadata = undefined
+        this.cell.metadata = null
       }
     }
   },
   methods: {
     setCheckbox () {
       if(this.checked) {
-        this.cell.metadata = undefined
+        this.cell.metadata = null
       }
       this.$emit('onChange', this.cell)
     }
