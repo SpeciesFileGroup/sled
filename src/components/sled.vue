@@ -313,6 +313,7 @@ export default {
     },
     resizeSled (mutationsList, observer) {
       this.scale = this.scaleForScreen()
+      this.computeCells()
     }
   }
 }
