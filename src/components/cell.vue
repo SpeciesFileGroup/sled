@@ -19,6 +19,7 @@
     <input
       v-model="checked"
       @change="setCheckbox"
+      :disabled="locked"
       class="cell-checkbox"
       style="position: absolute; right: 10px; bottom: 10px;"
       type="checkbox">
@@ -39,6 +40,10 @@ export default {
     scale: {
       type: Number,
       default: 1
+    },
+    locked: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

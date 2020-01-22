@@ -21,6 +21,7 @@
     <cell-component
       v-for="(cell, index) in cells"
       :key="index"
+      :locked="locked"
       :metadata="metadataAssignment"
       :scale="scale"
       :cell="cell"
@@ -70,6 +71,10 @@ export default {
     autosize: {
       type: Boolean,
       default: true
+    },
+    locked: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -311,10 +316,18 @@ export default {
       }
     },
     resizeSled (mutationsList, observer) {
+      let element = this.$el.getBoundingClientRect()
+      
       this.scale = this.scaleForScreen()
       this.$emit('resize', {
-        width: this.$el.getBoundingClientRect().width,
-        height: this.$el.getBoundingClientRect().height,
+        x: element.x,
+        y: element.y,
+        top: element.top,
+        left: element.left,
+        right: element.right,
+        bottom: element.bottom,
+        width: element.width,
+        height: element.height,
         scale: this.scale
       })
     }
