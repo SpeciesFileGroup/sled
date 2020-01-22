@@ -259,7 +259,6 @@ export default {
             })
           }
         }
-        console.log(JSON.stringify(this.cells.map(item => { delete item.checked; return item })))
         this.$emit('onComputeCells', this.cells.map(item => { delete item.checked; return item }))
       }
     },
@@ -314,6 +313,11 @@ export default {
     resizeSled (mutationsList, observer) {
       this.scale = this.scaleForScreen()
       this.computeCells()
+      this.$emit('resize', {
+        width: this.$el.getBoundingClientRect().width,
+        height: this.$el.getBoundingClientRect().height,
+        scale: this.scale
+      })
     }
   }
 }
