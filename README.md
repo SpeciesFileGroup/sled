@@ -52,6 +52,24 @@ export default {
 #### onComputedCells
 Event is triggered each time when horizontal and vertical lines are added and computed to create the cells. Contains information of computed cells.
 
+```json
+{
+  "index":2,
+  "upperCorner":{"x":3689.25, "y":0},
+  "lowerCorner":{"x":4919, "y":1700.75},
+  "row": 0,
+  "column": 2
+}
+```
+
+Also tracks a metadata label. 
+
+```
+{ 
+ "metadata": 'some label',
+}
+```
+
 ### Props
 
 #### fileImage
