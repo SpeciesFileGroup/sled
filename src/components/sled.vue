@@ -260,6 +260,7 @@ export default {
               row: j,
               column: i,
               metadata: this.cells[cellIndex] ? this.cells[cellIndex].metadata : null,
+              textfield: this.cells[cellIndex] ? this.cells[cellIndex].textfield : undefined,
               checked: this.cells[cellIndex] ? this.cells[cellIndex].checked : true
             })
           }
@@ -317,7 +318,7 @@ export default {
     },
     resizeSled (mutationsList, observer) {
       let element = this.$el.getBoundingClientRect()
-      
+
       this.scale = this.scaleForScreen()
       this.$emit('resize', {
         x: element.x,

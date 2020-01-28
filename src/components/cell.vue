@@ -1,5 +1,10 @@
 <template>
   <div :style="style">
+    <span
+      class="cell-textfield"
+      v-if="cell['textfield']"
+      style="position: absolute; top:4px%; background-color: #FFF; border-radius: 3px; padding: 4px; opacity: 0.9"
+      v-html="cell.textfield"/>
     <select
       class="cell-select"
       v-if="!checked"
