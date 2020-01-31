@@ -243,7 +243,7 @@ export default {
         let i = 0 // horizontal (column) index
         let j = 0 // vertical (row) index
         let ul, lr // upper left, lower right corners of cell
-        let cellIndex = 0
+        let cellIndex = -1
         let hRows = this.hLinesInOrder.length - 1 // only enumerate non-empty cells BETWEEN lines
         let vCols = this.vLinesInOrder.length - 1 // one less populated row/column than lines
         for (j = 0; j < hRows; j++) {
@@ -265,8 +265,7 @@ export default {
             })
           }
         }
-
-        this.cells = cellIndex == 0 ? [] : this.cells.slice(0, cellIndex+1)
+        this.cells = cellIndex === -1 ? [] : this.cells.slice(0, cellIndex + 1)
         this.$emit('onComputeCells', this.cells.map(item => { delete item.checked; return item }))
       }
     },

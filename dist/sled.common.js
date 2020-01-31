@@ -1093,7 +1093,7 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=1d427f5e&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/sled.vue?vue&type=template&id=50a41a3c&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{style:({ 
     display: 'block',
     position: 'relative', 
@@ -1101,7 +1101,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/sled.vue?vue&type=template&id=1d427f5e&
+// CONCATENATED MODULE: ./src/components/sled.vue?vue&type=template&id=50a41a3c&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.sort.js
 var es6_array_sort = __webpack_require__("55dd");
@@ -1966,7 +1966,7 @@ var cell_component = normalizeComponent(
 
         var ul, lr; // upper left, lower right corners of cell
 
-        var cellIndex = 0;
+        var cellIndex = -1;
         var hRows = this.hLinesInOrder.length - 1; // only enumerate non-empty cells BETWEEN lines
 
         var vCols = this.vLinesInOrder.length - 1; // one less populated row/column than lines
@@ -1995,7 +1995,7 @@ var cell_component = normalizeComponent(
           }
         }
 
-        this.cells = cellIndex == 0 ? [] : this.cells.slice(0, cellIndex + 1);
+        this.cells = cellIndex === -1 ? [] : this.cells.slice(0, cellIndex + 1);
         this.$emit('onComputeCells', this.cells.map(function (item) {
           delete item.checked;
           return item;
