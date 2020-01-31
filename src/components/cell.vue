@@ -11,7 +11,7 @@
       v-model="cell.metadata"
       style="position: absolute; top:50%; left: 50%; transform: translate(-50%, -50%)"
       @change="$emit('onChange', cell)">
-      <option :value="null">
+      <option value="none">
         None
       </option>
       <option
@@ -23,7 +23,6 @@
     </select>
     <input
       v-model="checked"
-      @change="setCheckbox"
       :disabled="locked"
       class="cell-checkbox"
       style="position: absolute; right: 10px; bottom: 10px;"
@@ -71,16 +70,7 @@ export default {
   },
   watch: {
     checked(newVal) {
-      if(newVal) {
-        this.cell.metadata = null
-      }
-    }
-  },
-  methods: {
-    setCheckbox () {
-      if(this.checked) {
-        this.cell.metadata = null
-      }
+      this.cell.metadata = newVal ? null : 'none'
       this.$emit('onChange', this.cell)
     }
   }
