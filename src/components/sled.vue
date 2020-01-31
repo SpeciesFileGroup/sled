@@ -237,7 +237,7 @@ export default {
       }
     },
     computeCells () {
-      if ((this.hLines.length > 1) && this.vLines.length > 1) {
+      if ((this.hLines.length > 0) && this.vLines.length > 0) {
         // compute intersections
         // this.cells = []
         let i = 0 // horizontal (column) index
@@ -265,6 +265,8 @@ export default {
             })
           }
         }
+
+        this.cells = cellIndex == 0 ? [] : this.cells.slice(0, cellIndex+1)
         this.$emit('onComputeCells', this.cells.map(item => { delete item.checked; return item }))
       }
     },

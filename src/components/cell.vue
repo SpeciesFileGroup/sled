@@ -12,7 +12,7 @@
       style="position: absolute; top:50%; left: 50%; transform: translate(-50%, -50%)"
       @change="$emit('onChange', cell)">
       <option :value="null">
-        Select metadata
+        None
       </option>
       <option
         v-for="(value, key) in metadata"
