@@ -74,10 +74,13 @@ export default {
       this.cell.metadata = newVal ? null : 'none'
       this.$emit('onChange', this.cell)
     },
-    cell (newVal, oldVal) {
-      if (newVal.metadata !== oldVal.metadata && newVal.metadata !== null) {
-        this.checked = true
-      }
+    cell: {
+      handler (newVal, oldVal) {
+        if (newVal.metadata !== oldVal.metadata && newVal.metadata !== null) {
+          this.checked = false
+        }
+      },
+      deep: true
     }
   }
 }

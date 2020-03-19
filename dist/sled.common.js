@@ -1573,12 +1573,12 @@ var svgComponent_component = normalizeComponent(
 )
 
 /* harmony default export */ var svgComponent = (svgComponent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/cell.vue?vue&type=template&id=e4432466&
-var cellvue_type_template_id_e4432466_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{style:(_vm.style)},[(_vm.cell['textfield'])?_c('span',{staticClass:"cell-textfield",staticStyle:{"position":"absolute","top":"4px%","background-color":"#FFF","border-radius":"3px","padding":"4px","opacity":"0.9"},domProps:{"innerHTML":_vm._s(_vm.cell.textfield)}}):_vm._e(),(!_vm.checked)?_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.cell.metadata),expression:"cell.metadata"}],staticClass:"cell-select",staticStyle:{"position":"absolute","top":"50%","left":"50%","transform":"translate(-50%, -50%)"},attrs:{"disabled":_vm.locked},on:{"change":[function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.$set(_vm.cell, "metadata", $event.target.multiple ? $$selectedVal : $$selectedVal[0])},function($event){return _vm.$emit('onChange', _vm.cell)}]}},[_c('option',{attrs:{"value":"none"}},[_vm._v("\n      None\n    ")]),_vm._l((_vm.metadata),function(value,key){return _c('option',{key:key,domProps:{"value":key}},[_vm._v("\n      "+_vm._s(value)+"\n    ")])})],2):_vm._e(),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.checked),expression:"checked"}],staticClass:"cell-checkbox",staticStyle:{"position":"absolute","right":"10px","bottom":"10px"},attrs:{"disabled":_vm.locked,"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.checked)?_vm._i(_vm.checked,null)>-1:(_vm.checked)},on:{"change":function($event){var $$a=_vm.checked,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.checked=$$a.concat([$$v]))}else{$$i>-1&&(_vm.checked=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.checked=$$c}}}})])}
-var cellvue_type_template_id_e4432466_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"135f0336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/cell.vue?vue&type=template&id=efc166d0&
+var cellvue_type_template_id_efc166d0_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{style:(_vm.style)},[(_vm.cell['textfield'])?_c('span',{staticClass:"cell-textfield",staticStyle:{"position":"absolute","top":"4px%","background-color":"#FFF","border-radius":"3px","padding":"4px","opacity":"0.9"},domProps:{"innerHTML":_vm._s(_vm.cell.textfield)}}):_vm._e(),(!_vm.checked)?_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.cell.metadata),expression:"cell.metadata"}],staticClass:"cell-select",staticStyle:{"position":"absolute","top":"50%","left":"50%","transform":"translate(-50%, -50%)"},attrs:{"disabled":_vm.locked},on:{"change":[function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.$set(_vm.cell, "metadata", $event.target.multiple ? $$selectedVal : $$selectedVal[0])},function($event){return _vm.$emit('onChange', _vm.cell)}]}},[_c('option',{attrs:{"value":"none"}},[_vm._v("\n      None\n    ")]),_vm._l((_vm.metadata),function(value,key){return _c('option',{key:key,domProps:{"value":key}},[_vm._v("\n      "+_vm._s(value)+"\n    ")])})],2):_vm._e(),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.checked),expression:"checked"}],staticClass:"cell-checkbox",staticStyle:{"position":"absolute","right":"10px","bottom":"10px"},attrs:{"disabled":_vm.locked,"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.checked)?_vm._i(_vm.checked,null)>-1:(_vm.checked)},on:{"change":function($event){var $$a=_vm.checked,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.checked=$$a.concat([$$v]))}else{$$i>-1&&(_vm.checked=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.checked=$$c}}}})])}
+var cellvue_type_template_id_efc166d0_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/cell.vue?vue&type=template&id=e4432466&
+// CONCATENATED MODULE: ./src/components/cell.vue?vue&type=template&id=efc166d0&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/cell.vue?vue&type=script&lang=js&
 
@@ -1657,10 +1657,13 @@ var cellvue_type_template_id_e4432466_staticRenderFns = []
       this.cell.metadata = newVal ? null : 'none';
       this.$emit('onChange', this.cell);
     },
-    cell: function cell(newVal, oldVal) {
-      if (newVal.metadata !== oldVal.metadata && newVal.metadata !== null) {
-        this.checked = true;
-      }
+    cell: {
+      handler: function handler(newVal, oldVal) {
+        if (newVal.metadata !== oldVal.metadata && newVal.metadata !== null) {
+          this.checked = false;
+        }
+      },
+      deep: true
     }
   }
 });
@@ -1676,8 +1679,8 @@ var cellvue_type_template_id_e4432466_staticRenderFns = []
 
 var cell_component = normalizeComponent(
   components_cellvue_type_script_lang_js_,
-  cellvue_type_template_id_e4432466_render,
-  cellvue_type_template_id_e4432466_staticRenderFns,
+  cellvue_type_template_id_efc166d0_render,
+  cellvue_type_template_id_efc166d0_staticRenderFns,
   false,
   null,
   null,
