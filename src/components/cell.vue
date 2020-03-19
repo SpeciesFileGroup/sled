@@ -9,6 +9,7 @@
       class="cell-select"
       v-if="!checked"
       v-model="cell.metadata"
+      :disabled="locked"
       style="position: absolute; top:50%; left: 50%; transform: translate(-50%, -50%)"
       @change="$emit('onChange', cell)">
       <option value="none">
@@ -69,9 +70,14 @@ export default {
     }
   },
   watch: {
-    checked(newVal) {
+    checked (newVal) {
       this.cell.metadata = newVal ? null : 'none'
       this.$emit('onChange', this.cell)
+    },
+    cell (newVal, oldVal) {
+      if (newVal.metadata !== oldVal.metadata && newVal.metadata !== null) {
+        this.checked = true
+      }
     }
   }
 }
