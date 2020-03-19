@@ -71,12 +71,12 @@ export default {
   },
   watch: {
     checked (newVal) {
-      this.cell.metadata = newVal ? null : 'none'
+      this.cell.metadata = newVal ? null : this.cell.metadata != null ? this.cell.metadata : 'none'
       this.$emit('onChange', this.cell)
     },
     cell: {
-      handler (newVal, oldVal) {
-        if (newVal.metadata !== oldVal.metadata && newVal.metadata !== null) {
+      handler (newVal) {
+        if (newVal.metadata !== null) {
           this.checked = false
         }
       },
