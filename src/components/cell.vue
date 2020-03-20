@@ -23,8 +23,9 @@
       </option>
     </select>
     <input
-      v-model="checked"
+      :value="checked"
       :disabled="locked"
+      @click="setChecked"
       class="cell-checkbox"
       style="position: absolute; right: 10px; bottom: 10px;"
       type="checkbox">
@@ -70,10 +71,6 @@ export default {
     }
   },
   watch: {
-    checked (newVal) {
-      this.cell.metadata = newVal ? null : this.cell.metadata != null ? this.cell.metadata : 'none'
-      this.$emit('onChange', this.cell)
-    },
     cell: {
       handler (newVal) {
         if (newVal.metadata !== null) {
@@ -81,6 +78,13 @@ export default {
         }
       },
       deep: true
+    }
+  },
+  methods: {
+    setChecked () {
+      this.checked = !this.checked
+      this.cell.metadata = this.checked ? null : this.cell.metadata != null ? this.cell.metadata : 'none'
+      this.$emit('onChange', this.cell)
     }
   }
 }
