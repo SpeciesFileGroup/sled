@@ -1,8 +1,8 @@
 <template>
-  <div 
-    :style="{ 
+  <div
+    :style="{
       display: 'block',
-      position: 'relative', 
+      position: 'relative',
       height: `${height}px` }">
     <svg-component
       v-if="fileImage"
@@ -79,11 +79,13 @@ export default {
   },
   computed: {
     vLinesInOrder () {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       return this.vLines.sort(function (a, b) {
         return a - b
       })
     },
     hLinesInOrder () {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       return this.hLines.sort(function (a, b) {
         return a - b
       })
@@ -145,8 +147,6 @@ export default {
     fileImage (newVal) {
       this.old_width = this.width
       this.old_height = this.height
-      this.width = this.width
-      this.height = this.height
       this.resizeImage()
     },
     autosize: {
@@ -187,28 +187,28 @@ export default {
       }
     },
     moveV (index, offset) { // move a single vertical line by x-offset
-      let value = Math.round(this.vLines[index] + offset)
+      const value = Math.round(this.vLines[index] + offset)
       if (value < 0 || value > this.imageWidth) return
       this.$set(this.vLines, index, value)
     },
     moveH (index, offset) { // move a single horizontal line by y-offset
-      let value = Math.round(this.hLines[index] + offset)
+      const value = Math.round(this.hLines[index] + offset)
       if (value < 0 || value > this.imageHeight) return
       this.$set(this.hLines, index, Math.round(this.hLines[index] + offset))
     },
     resizeImage () { // if image size changes, recompute lines and cells
       if (this.old_width > 1) { // a previous presumably valid width
-        let hScale = this.width / this.old_width
+        const hScale = this.width / this.old_width
         let h = 0
-        let n = this.vLines.length
+        const n = this.vLines.length
         for (h = 0; h < n; h++) {
           this.$set(this.vLines, h, Math.round(this.vLines[h] * hScale))
         }
       }
       if (this.old_height > 1) { // a previous presumably valid height
-        let vScale = this.height / this.old_height
+        const vScale = this.height / this.old_height
         let v = 0
-        let m = this.hLines.length
+        const m = this.hLines.length
         for (v = 0; v < m; v++) {
           this.$set(this.hLines, v, Math.round(this.hLines[v] * vScale))
         }
@@ -223,10 +223,10 @@ export default {
         this.cells = []
         let i = 0 // horizontal (column) index
         let j = 0 // vertical (row) index
-        let hRows = this.hLinesInOrder.length - 1 // only enumerate non-empty cells BETWEEN lines
-        let vCols = this.vLinesInOrder.length - 1 // one less populated row/column than lines
-        let hSize = (this.hLines[hRows] - this.hLines[0]) / hRows
-        let vSize = (this.vLines[vCols] - this.vLines[0]) / vCols
+        const hRows = this.hLinesInOrder.length - 1 // only enumerate non-empty cells BETWEEN lines
+        const vCols = this.vLinesInOrder.length - 1 // one less populated row/column than lines
+        const hSize = (this.hLines[hRows] - this.hLines[0]) / hRows
+        const vSize = (this.vLines[vCols] - this.vLines[0]) / vCols
         for (j = 0; j < hRows; j++) {
           this.$set(this.hLines, j, Math.round(this.hLines[0] + j * hSize))
         }
@@ -244,8 +244,8 @@ export default {
         let j = 0 // vertical (row) index
         let ul, lr // upper left, lower right corners of cell
         let cellIndex = -1
-        let hRows = this.hLinesInOrder.length - 1 // only enumerate non-empty cells BETWEEN lines
-        let vCols = this.vLinesInOrder.length - 1 // one less populated row/column than lines
+        const hRows = this.hLinesInOrder.length - 1 // only enumerate non-empty cells BETWEEN lines
+        const vCols = this.vLinesInOrder.length - 1 // one less populated row/column than lines
         for (j = 0; j < hRows; j++) {
           for (i = 0; i < vCols; i++) {
             cellIndex = (vCols * j) + i
@@ -273,52 +273,52 @@ export default {
       return JSON.stringify(this.cells)
     },
     stretchGrid (deltas) { // compand the grid by the lower right corner change
-      let dx = deltas[0]
-      let dy = deltas[1]
-      let vLast = this.vLines.length - 1 // number of cells
-      let hLast = this.hLines.length - 1
+      const dx = deltas[0]
+      const dy = deltas[1]
+      const vLast = this.vLines.length - 1 // number of cells
+      const hLast = this.hLines.length - 1
       let h = 0
       let v = 0
       for (h = 1; h < this.vLines.length; h++) {
-        let value = Math.round(this.vLines[h] + h * dx / vLast)
+        const value = Math.round(this.vLines[h] + h * dx / vLast)
         if (value > 0 && value < this.imageWidth) {
           this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / vLast))
         }
       }
       for (v = 1; v < this.hLines.length; v++) {
-        let value = Math.round(this.hLines[v] + v * dy / hLast)
+        const value = Math.round(this.hLines[v] + v * dy / hLast)
         if (value > 0 && value < this.imageHeight) {
           this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / hLast))
         }
       }
     },
     moveGrid (deltas) {
-      let dx = deltas[0]
-      let dy = deltas[1]
+      const dx = deltas[0]
+      const dy = deltas[1]
       this.moveX(dx)
       this.moveY(dy)
     },
     moveHline (deltas) {
-      let dy = deltas[1]
-      let iy = deltas[2]
+      const dy = deltas[1]
+      const iy = deltas[2]
       this.moveH(iy, dy) // effect line change through common function
     },
     moveVline (deltas) {
-      let dx = deltas[0]
-      let ix = deltas[2]
+      const dx = deltas[0]
+      const ix = deltas[2]
       this.moveV(ix, dx)
     },
     scaleForScreen () {
       if (this.autosize) {
-        let scaleHeight = this.$el.getBoundingClientRect().height < this.height ? this.height / this.$el.getBoundingClientRect().height : 1
-        let scaleWidth = this.$el.getBoundingClientRect().width < this.width ? this.width / this.$el.getBoundingClientRect().width : 1
+        const scaleHeight = this.$el.getBoundingClientRect().height < this.height ? this.height / this.$el.getBoundingClientRect().height : 1
+        const scaleWidth = this.$el.getBoundingClientRect().width < this.width ? this.width / this.$el.getBoundingClientRect().width : 1
         return scaleHeight > scaleWidth ? scaleHeight : scaleWidth
       } else {
         return 1
       }
     },
     resizeSled (mutationsList, observer) {
-      let element = this.$el.getBoundingClientRect()
+      const element = this.$el.getBoundingClientRect()
 
       this.scale = this.scaleForScreen()
       this.$emit('resize', {

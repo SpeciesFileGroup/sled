@@ -110,8 +110,8 @@ export default {
   },
   mounted () {
     window.addEventListener('mouseup', e => {
-      this.dragging = false; 
-      this.draggingCorner = undefined; 
+      this.dragging = false
+      this.draggingCorner = undefined
     })
     window.addEventListener('mousemove', e => {
       this.mouseMove(e)
@@ -128,20 +128,19 @@ export default {
       this.$emit('circleLR', true)
     },
     dragUL (deltas) {
-      let dx = event.layerX * this.scale - this.vLines[deltas[0]]
-      let dy = event.layerY * this.scale - this.hLines[deltas[1]]
+      const dx = event.layerX * this.scale - this.vLines[deltas[0]]
+      const dy = event.layerY * this.scale - this.hLines[deltas[1]]
       this.$emit('dragUL', [dx, dy])
     },
     dragLR (deltas) {
-      let dx = event.layerX * this.scale - this.vLines[deltas[0]]
-      let dy = event.layerY * this.scale - this.hLines[deltas[1]]
+      const dx = event.layerX * this.scale - this.vLines[deltas[0]]
+      const dy = event.layerY * this.scale - this.hLines[deltas[1]]
       this.$emit('dragLR', [dx, dy])
     },
     mouseMove (event) {
       if (this.dragging) {
-
-        let dx = (event.clientX - (this.$el.getBoundingClientRect().left + document.body.scrollLeft)) - (this.vLines[this.dragIndex[0]]/this.scale)
-        let dy = (event.clientY - (this.$el.getBoundingClientRect().top + document.body.scrollTop)) - (this.hLines[this.dragIndex[1]]/this.scale)
+        const dx = (event.clientX - (this.$el.getBoundingClientRect().left + document.body.scrollLeft)) - (this.vLines[this.dragIndex[0]] / this.scale)
+        const dy = (event.clientY - (this.$el.getBoundingClientRect().top + document.body.scrollTop)) - (this.hLines[this.dragIndex[1]] / this.scale)
 
         if (this.draggingCorner) {
           this.$emit(this.draggingCorner, [dx, dy])
