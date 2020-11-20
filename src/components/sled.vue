@@ -168,13 +168,13 @@ export default {
       this.observeContainer.observe(this.$el)
     }
   },
-  destroyed () {
+  unmounted () {
     this.observeContainer.disconnect()
   },
   methods: {
     updateCell (index, cell) {
-      this.$set(this.cells, index, cell)
-      this.$emit('onComputeCells', this.cells)
+      this.cells[index] = cell
+      this.$emit('on-compute-cells', this.cells)
     },
     moveX (offset) { // move all vertical lines by x-offset
       for (let i = 0; i < this.vLines.length; i++) {
@@ -189,12 +189,12 @@ export default {
     moveV (index, offset) { // move a single vertical line by x-offset
       const value = Math.round(this.vLines[index] + offset)
       if (value < 0 || value > this.imageWidth) return
-      this.$set(this.vLines, index, value)
+      this.vLines[index] = value
     },
     moveH (index, offset) { // move a single horizontal line by y-offset
       const value = Math.round(this.hLines[index] + offset)
       if (value < 0 || value > this.imageHeight) return
-      this.$set(this.hLines, index, Math.round(this.hLines[index] + offset))
+      this.hLines[index] = Math.round(this.hLines[index] + offset)
     },
     resizeImage () { // if image size changes, recompute lines and cells
       if (this.old_width > 1) { // a previous presumably valid width
@@ -202,7 +202,7 @@ export default {
         let h = 0
         const n = this.vLines.length
         for (h = 0; h < n; h++) {
-          this.$set(this.vLines, h, Math.round(this.vLines[h] * hScale))
+          this.vLines[h] = Math.round(this.vLines[h] * hScale)
         }
       }
       if (this.old_height > 1) { // a previous presumably valid height
@@ -210,7 +210,7 @@ export default {
         let v = 0
         const m = this.hLines.length
         for (v = 0; v < m; v++) {
-          this.$set(this.hLines, v, Math.round(this.hLines[v] * vScale))
+          this.hLines[v] = Math.round(this.hLines[v] * vScale)
         }
       }
       this.old_width = this.width
@@ -228,10 +228,10 @@ export default {
         const hSize = (this.hLines[hRows] - this.hLines[0]) / hRows
         const vSize = (this.vLines[vCols] - this.vLines[0]) / vCols
         for (j = 0; j < hRows; j++) {
-          this.$set(this.hLines, j, Math.round(this.hLines[0] + j * hSize))
+          this.hLines[j] = Math.round(this.hLines[0] + j * hSize)
         }
         for (i = 0; i < vCols; i++) {
-          this.$set(this.vLines, i, Math.round(this.vLines[0] + i * vSize))
+          this.vLines[i] = Math.round(this.vLines[0] + i * vSize)
         }
         this.computeCells()
       }
@@ -253,7 +253,7 @@ export default {
             ul = { x: this.vLinesInOrder[i], y: this.hLinesInOrder[j] }
             lr = { x: this.vLinesInOrder[i + 1], y: this.hLinesInOrder[j + 1] }
 
-            this.$set(this.cells, cellIndex, {
+            this.cells[cellIndex] = {
               index: cellIndex,
               upperCorner: ul,
               lowerCorner: lr,
@@ -262,11 +262,11 @@ export default {
               metadata: this.cells[cellIndex] ? this.cells[cellIndex].metadata : null,
               textfield: this.cells[cellIndex] ? this.cells[cellIndex].textfield : undefined,
               checked: this.cells[cellIndex] ? this.cells[cellIndex].checked : true
-            })
+            }
           }
         }
         this.cells = cellIndex === -1 ? [] : this.cells.slice(0, cellIndex + 1)
-        this.$emit('onComputeCells', this.cells.map(item => { delete item.checked; return item }))
+        this.$emit('on-compute-cells', this.cells.map(item => { delete item.checked; return item }))
       }
     },
     generateJSON () {
@@ -282,13 +282,13 @@ export default {
       for (h = 1; h < this.vLines.length; h++) {
         const value = Math.round(this.vLines[h] + h * dx / vLast)
         if (value > 0 && value < this.imageWidth) {
-          this.$set(this.vLines, h, Math.round(this.vLines[h] + h * dx / vLast))
+          this.vLines[h] = Math.round(this.vLines[h] + h * dx / vLast)
         }
       }
       for (v = 1; v < this.hLines.length; v++) {
         const value = Math.round(this.hLines[v] + v * dy / hLast)
         if (value > 0 && value < this.imageHeight) {
-          this.$set(this.hLines, v, Math.round(this.hLines[v] + v * dy / hLast))
+          this.hLines[v] = Math.round(this.hLines[v] + v * dy / hLast)
         }
       }
     },

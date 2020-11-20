@@ -167,13 +167,13 @@ export default {
   },
   methods: {
     getImage (event) {
-      let files = event.target.files
-      let that = this
+      const files = event.target.files
+      const that = this
       // FileReader support
       if (FileReader && files && files.length) {
-        let fileReader = new FileReader()
+        const fileReader = new FileReader()
         fileReader.onload = (image) => {
-          let newImage = new Image()
+          const newImage = new Image()
           newImage.src = fileReader.result
           newImage.onload = function () {
             that.width = newImage.width

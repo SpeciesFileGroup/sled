@@ -8,10 +8,10 @@
     <select
       class="cell-select"
       v-if="!checked"
-      v-model="cell.metadata"
+      :value="cell.metadata"
       :disabled="locked"
       style="position: absolute; top:50%; left: 50%; transform: translate(-50%, -50%)"
-      @change="$emit('onChange', cell)">
+      @change="setMetadata">
       <option value="none">
         None
       </option>
@@ -83,8 +83,14 @@ export default {
   methods: {
     setChecked () {
       this.checked = !this.checked
-      this.cell.metadata = this.checked ? null : this.cell.metadata != null ? this.cell.metadata : 'none'
-      this.$emit('onChange', this.cell)
+      const cell = this.cell
+      cell.metadata = this.checked ? null : this.cell.metadata != null ? this.cell.metadata : 'none'
+      this.$emit('on-change', cell)
+    },
+    setMetadata (event) {
+      const cell = this.cell
+      cell.metadata = event.target.value
+      this.$emit('on-change', cell)
     }
   }
 }
