@@ -16,35 +16,44 @@ export default {
       type: [Number, String],
       required: true
     },
+
     x2: {
       type: [Number, String],
       required: true
     },
+
     y1: {
       type: [Number, String],
       required: true
     },
+
     y2: {
       type: [Number, String],
       required: true
     },
+
     scale: {
       type: [Number, String],
       required: true
     },
+
     lineThickness: {
       type: [Number, String]
     }
   },
+
+  emits: ['dragging'],
+
   computed: {
     isHorizontal () {
       return this.y1 === this.y2
     },
+
     style () {
       return `stroke:rgb(255,0,0);stroke-width:${this.lineThickness};stroke-linecap:round;cursor:${this.isHorizontal ? 'ns-resize' : 'ew-resize'}`
     }
   },
-  // on mouseover, signal to add a bubble ?
+
   methods: {
     sendIndex () {
       this.$emit('dragging')

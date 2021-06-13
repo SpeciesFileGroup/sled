@@ -135,11 +135,13 @@ import SledComponent from './components/sled.vue'
 import NewLine from './components/newLine'
 
 export default {
+  name: 'sled',
+
   components: {
     SledComponent,
     NewLine
   },
-  name: 'sled',
+
   data () {
     return {
       width: 0, // horizontal extent of image in pixels
@@ -167,38 +169,44 @@ export default {
   },
   methods: {
     getImage (event) {
-      let files = event.target.files
-      let that = this
+      const files = event.target.files
+
       // FileReader support
       if (FileReader && files && files.length) {
-        let fileReader = new FileReader()
-        fileReader.onload = (image) => {
-          let newImage = new Image()
+        const fileReader = new FileReader()
+        fileReader.onload = () => {
+          const newImage = new Image()
           newImage.src = fileReader.result
-          newImage.onload = function () {
-            that.width = newImage.width
-            that.height = newImage.height
-            that.fileImage = fileReader.result
+          newImage.onload = () => {
+            this.width = newImage.width
+            this.height = newImage.height
+            this.fileImage = fileReader.result
           }
         }
         fileReader.readAsDataURL(files[0])
       }
     },
+
     addNewHline (y) {
       this.hlines.push(y)
     },
+
     resetHlines () {
       this.hlines = []
     },
+
     addNewVline (x) {
       this.vlines.push(x)
     },
+
     resetVlines () {
       this.vlines = []
     },
+
     removeRow (index) {
       this.$delete(this.hlines, index)
     },
+
     removeColumn (index) {
       this.$delete(this.vlines, index)
     }

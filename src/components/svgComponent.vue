@@ -69,35 +69,52 @@ export default {
     SvgLine,
     SvgCircle
   },
+
   props: {
     imageData: {
       type: String,
       required: true
     },
+
     imageWidth: {
       type: Number,
       required: true
     },
+
     imageHeight: {
       type: Number,
       required: true
     },
+
     scale: {
       type: Number,
       default: 1
     },
+
     hLines: {
       type: Array,
       required: true
     },
+
     vLines: {
       type: Array,
       required: true
     },
+
     lineThickness: {
       type: Number
     }
   },
+
+  emits: [
+    'circleUL',
+    'circleLR',
+    'dragUL',
+    'dragLR',
+    'dragVline',
+    'dragHline'
+  ],
+
   data () {
     return {
       hBubble: [0, 0, -1],
@@ -108,6 +125,7 @@ export default {
       draggingCorner: undefined
     }
   },
+
   mounted () {
     window.addEventListener('mouseup', e => {
       this.dragging = false
@@ -117,26 +135,32 @@ export default {
       this.mouseMove(e)
     })
   },
+
   methods: {
     generateRandomKey (index = 0) {
       return Math.random().toString(16).substr(2, 8) + index
     },
+
     sendEventUL () {
       this.$emit('circleUL', true)
     },
+
     sendEventLR () {
       this.$emit('circleLR', true)
     },
+
     dragUL (deltas) {
       const dx = event.layerX * this.scale - this.vLines[deltas[0]]
       const dy = event.layerY * this.scale - this.hLines[deltas[1]]
       this.$emit('dragUL', [dx, dy])
     },
+
     dragLR (deltas) {
       const dx = event.layerX * this.scale - this.vLines[deltas[0]]
       const dy = event.layerY * this.scale - this.hLines[deltas[1]]
       this.$emit('dragLR', [dx, dy])
     },
+
     mouseMove (event) {
       if (this.dragging) {
         const dx = (event.clientX - (this.$el.getBoundingClientRect().left + document.body.scrollLeft)) - (this.vLines[this.dragIndex[0]] / this.scale)

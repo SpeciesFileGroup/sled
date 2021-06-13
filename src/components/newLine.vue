@@ -26,6 +26,12 @@ export default {
       required: true
     }
   },
+
+  emits: [
+    'newLine',
+    'reset'
+  ],
+
   data () {
     return {
       value: undefined
@@ -37,6 +43,7 @@ export default {
         this.$emit('newLine', this.value)
       }
     },
+
     reset () {
       this.value = undefined
       this.$emit('reset')

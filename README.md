@@ -20,7 +20,7 @@ With NPM
 npm install @sfg/sled
 ```
 
-## For Vue.js 2.0
+## For Vue.js 3
 
 ### Import component
 

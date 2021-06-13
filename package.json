@@ -1,29 +1,16 @@
 {
   "name": "@sfgrp/sled",
-  "description": "UI for image segmentation of slide collections",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "private": false,
-  "main": "./dist/sled.common.js",
-  "keywords": [
-    "species file group",
-    "sled"
-  ],
-  "homepage": "https://github.com/SpeciesFileGroup/sled",
-  "license": "NCSA",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SpeciesFileGroup/sled.git"
-  },
-  "bugs": {
-    "url": "https://github.com/SpeciesFileGroup/sled/issues"
-  },
+  "description": "UI for image segmentation of slide collections",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:library": "vue-cli-service build --target lib --name sled src/components/sled.vue",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "build:library": "vue-cli-service build --target lib --name sled src/components/sled.vue"
   },
+  "main": "./dist/sled.common.js",
   "files": [
     "dist/*",
     "src/*",
@@ -33,15 +20,16 @@
   ],
   "dependencies": {
     "core-js": "^3.6.5",
-    "vue": "^2.6.12"
+    "vue": "^3.1.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-unit-mocha": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-plugin-babel": "~4.5.13",
+    "@vue/cli-plugin-eslint": "~4.5.13",
+    "@vue/cli-plugin-unit-mocha": "~4.5.13",
+    "@vue/cli-service": "~4.5.13",
+    "@vue/compiler-sfc": "^3.0.0-beta.1",
     "@vue/eslint-config-standard": "^5.1.2",
-    "@vue/test-utils": "^1.0.3",
+    "@vue/test-utils": "^2.0.0-alpha.1",
     "babel-eslint": "^10.1.0",
     "chai": "^4.1.2",
     "eslint": "^6.7.2",
@@ -49,9 +37,21 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint-plugin-vue": "^7.0.0-alpha.0",
     "sass": "^1.26.5",
-    "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
+    "sass-loader": "^8.0.2"
+  },
+  "bugs": {
+    "url": "https://github.com/SpeciesFileGroup/sled/issues"
+  },
+  "homepage": "https://github.com/SpeciesFileGroup/sled",
+  "keywords": [
+    "species file group",
+    "sled"
+  ],
+  "license": "NCSA",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpeciesFileGroup/sled.git"
   }
 }

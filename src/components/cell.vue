@@ -33,25 +33,35 @@
 </template>
 
 <script>
+
 export default {
   props: {
-    cell: {
+    modelValue: {
       type: Object,
       required: true
     },
+
     metadata: {
       type: Object,
       default: undefined
     },
+
     scale: {
       type: Number,
       default: 1
     },
+
     locked: {
       type: Boolean,
       default: false
     }
   },
+
+  emits: [
+    'update:modelValue',
+    'onChange'
+  ],
+
   computed: {
     style () {
       return {
@@ -62,14 +72,25 @@ export default {
         height: `${((this.cell.lowerCorner.y - this.cell.upperCorner.y) / this.scale) - this.margin * 2}px`,
         'z-index': 2
       }
+    },
+
+    cell: {
+      get () {
+        return this.modelValue
+      },
+      set (value) {
+        this.$emit('update:modelValue', value)
+      }
     }
   },
+
   data () {
     return {
       margin: 5,
       checked: true
     }
   },
+
   watch: {
     cell: {
       handler (newVal) {
@@ -80,6 +101,7 @@ export default {
       deep: true
     }
   },
+
   methods: {
     setChecked () {
       this.checked = !this.checked
