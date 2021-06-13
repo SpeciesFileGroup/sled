@@ -1,6 +1,6 @@
 {
   "name": "@sfgrp/sled",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "UI for image segmentation of slide collections",
   "scripts": {
