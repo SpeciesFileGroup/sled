@@ -98,17 +98,6 @@ export default {
     return {
       margin: 5
     }
-  },
-
-  watch: {
-    cell: {
-      handler (newVal) {
-        if (newVal.metadata !== null) {
-          this.checked = false
-        }
-      },
-      deep: true
-    }
   }
 }
 </script>
