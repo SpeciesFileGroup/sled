@@ -6,8 +6,8 @@
       style="position: absolute; top:4px%; background-color: #FFF; border-radius: 3px; padding: 4px; opacity: 0.9"
       v-html="cell.textfield"/>
     <select
-      class="cell-select"
       v-if="!checked"
+      class="cell-select"
       v-model="cell.metadata"
       :disabled="locked"
       style="position: absolute; top:50%; left: 50%; transform: translate(-50%, -50%)"
@@ -23,9 +23,8 @@
       </option>
     </select>
     <input
-      :value="checked"
+      v-model="checked"
       :disabled="locked"
-      @click="setChecked"
       class="cell-checkbox"
       style="position: absolute; right: 10px; bottom: 10px;"
       type="checkbox">
@@ -81,13 +80,23 @@ export default {
       set (value) {
         this.$emit('update:modelValue', value)
       }
+    },
+
+    checked: {
+      get () {
+        return !this.cell.metadata
+      },
+      set (isCheck) {
+        this.cell.metadata = isCheck
+          ? null
+          : this.cell.metadata || 'none'
+      }
     }
   },
 
   data () {
     return {
-      margin: 5,
-      checked: true
+      margin: 5
     }
   },
 
@@ -99,14 +108,6 @@ export default {
         }
       },
       deep: true
-    }
-  },
-
-  methods: {
-    setChecked () {
-      this.checked = !this.checked
-      this.cell.metadata = this.checked ? null : this.cell.metadata != null ? this.cell.metadata : 'none'
-      this.$emit('onChange', this.cell)
     }
   }
 }
