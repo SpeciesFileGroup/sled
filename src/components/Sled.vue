@@ -7,7 +7,7 @@
       height: `${height}px`
     }"
   >
-    <svg-component
+    <SvgComponent
       v-if="fileImage"
       :image-width="width"
       :image-height="height"
@@ -21,7 +21,7 @@
       @dragHline="moveHline"
       @dragVline="moveVline"
     />
-    <cell-component
+    <CellComponent
       v-for="(cell, index) in cells"
       :key="index"
       :locked="locked"
@@ -35,8 +35,8 @@
 
 <script setup>
 import { computed, ref, watch, onMounted, onBeforeUnmount } from 'vue'
-import SvgComponent from './svgComponent.vue'
-import CellComponent from './cell.vue'
+import SvgComponent from './Svg/SvgComponent.vue'
+import CellComponent from './Cell.vue'
 
 defineOptions({
   name: 'Sled'
@@ -62,16 +62,6 @@ const props = defineProps({
     type: String
   },
 
-  verticalLines: {
-    type: Array,
-    required: true
-  },
-
-  horizontalLines: {
-    type: Array,
-    required: true
-  },
-
   lineWeight: {
     type: [Number, String],
     default: 4
@@ -88,32 +78,40 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['onComputeCells', 'resize'])
+const vLines = defineModel('verticalLines', {
+  type: Array,
+  required: true
+})
 
-const vLinesInOrder = computed(() => vLines.value.sort((a, b) => a - b))
-const hLinesInOrder = computed(() => hLines.value.sort((a, b) => a - b))
-const rows = computed(() => hLines.value.length - 1)
-const columns = computed(() => vLines.value.length - 1)
+const hLines = defineModel('horizontalLines', {
+  type: Array,
+  required: true
+})
+
+const emit = defineEmits(['onComputeCells', 'resize'])
 
 const width = ref(0) // horizontal extent of image in pixels
 const height = ref(0) // vertical extent of image
-const hLines = ref([]) // y pixel coord of line
-const vLines = ref([]) // x pixel coord of line
 const cells = ref([]) // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
-const old_width = ref(0)
-const old_height = ref(0)
+const oldWidth = ref(0)
+const oldHeight = ref(0)
 const observeContainer = ref(undefined)
 const scale = ref(1)
 const rootRef = ref(null)
 
+const rows = computed(() => hLines.value.length - 1)
+const columns = computed(() => vLines.value.length - 1)
+
+watch([() => hLines.value.length, () => vLines.value.length], () => {
+  sortLines()
+})
+
 watch(
   [hLines, vLines],
-  (newVal) => {
+  () => {
     computeCells()
   },
-  {
-    deep: true
-  }
+  { deep: true }
 )
 
 watch(
@@ -135,30 +133,10 @@ watch(
 )
 
 watch(
-  () => props.verticalLines,
-  (newVal) => {
-    vLines.value = newVal
-  },
-  {
-    immediate: true
-  }
-)
-
-watch(
-  () => props.horizontalLines,
-  (newVal) => {
-    hLines.value = newVal
-  },
-  {
-    immediate: true
-  }
-)
-
-watch(
   () => props.fileImage,
   (newVal) => {
-    old_width.value = width.value
-    old_height.value = height.value
+    oldWidth.value = width.value
+    oldHeight.value = height.value
     resizeImage()
   }
 )
@@ -193,17 +171,29 @@ function updateCell(index, cell) {
   emit('onComputeCells', cells.value)
 }
 
+function isFirstLineOutsideCorner(lines, offset) {
+  const [first] = lines
+
+  return first + offset < 0
+}
+
 function moveX(offset) {
-  // move all vertical lines by x-offset
-  for (let i = 0; i < vLines.value.length; i++) {
-    moveV(i, offset)
+  if (!isFirstLineOutsideCorner(vLines.value, offset)) {
+    for (let i = 0; i < vLines.value.length; i++) {
+      moveV(i, offset)
+    }
+
+    sortLines()
   }
 }
 
 function moveY(offset) {
-  // move all horizontal lines by y-offset
-  for (let i = 0; i < hLines.value.length; i++) {
-    moveH(i, offset)
+  if (!isFirstLineOutsideCorner(hLines.value, offset)) {
+    for (let i = 0; i < hLines.value.length; i++) {
+      moveH(i, offset)
+    }
+
+    sortLines()
   }
 }
 
@@ -212,6 +202,8 @@ function moveV(index, offset) {
   const value = Math.round(vLines.value[index] + offset)
   if (value < 0 || value > props.imageWidth) return
   vLines.value[index] = value
+
+  sortLines()
 }
 
 function moveH(index, offset) {
@@ -219,13 +211,15 @@ function moveH(index, offset) {
   const value = Math.round(hLines.value[index] + offset)
   if (value < 0 || value > props.imageHeight) return
   hLines.value[index] = value
+
+  sortLines()
 }
 
 function resizeImage() {
   // if image size changes, recompute lines and cells
-  if (old_width.value > 1) {
+  if (oldWidth.value > 1) {
     // a previous presumably valid width
-    const hScale = width.value / old_width.value
+    const hScale = width.value / oldWidth.value
     const n = vLines.value.length
     let h = 0
 
@@ -233,9 +227,9 @@ function resizeImage() {
       vLines.value[h] = Math.round(vLines.value[h] * hScale)
     }
   }
-  if (old_height.value > 1) {
+  if (oldHeight.value > 1) {
     // a previous presumably valid height
-    const vScale = height.value / old_height.value
+    const vScale = height.value / oldHeight.value
     const m = hLines.value.length
     let v = 0
 
@@ -243,8 +237,8 @@ function resizeImage() {
       hLines.value[v] = Math.round(hLines.value[v] * vScale)
     }
   }
-  old_width.value = width.value
-  old_height.value = height.value
+  oldWidth.value = width.value
+  oldHeight.value = height.value
   computeCells()
 }
 
@@ -276,8 +270,8 @@ function computeCells() {
       for (let i = 0; i < columns.value; i++) {
         cellIndex = columns.value * j + i
 
-        ul = { x: vLinesInOrder.value[i], y: hLinesInOrder.value[j] }
-        lr = { x: vLinesInOrder.value[i + 1], y: hLinesInOrder.value[j + 1] }
+        ul = { x: vLines.value[i], y: hLines.value[j] }
+        lr = { x: vLines.value[i + 1], y: hLines.value[j + 1] }
 
         const { metadata = null, textfield } = cells.value[cellIndex] || {}
 
@@ -301,6 +295,11 @@ function computeCells() {
 
 function generateJSON() {
   return JSON.stringify(cells.value)
+}
+
+function sortLines() {
+  vLines.value = vLines.value.toSorted((a, b) => a - b)
+  hLines.value = hLines.value.toSorted((a, b) => a - b)
 }
 
 function stretchGrid(deltas) {
@@ -327,6 +326,8 @@ function stretchGrid(deltas) {
       hLines.value[v] = Math.round(hLines.value[v] + (v * dy) / rows.value)
     }
   }
+
+  sortLines()
 }
 
 function moveGrid(deltas) {

@@ -248,8 +248,8 @@
       <SledComponent
         class="test"
         ref="sledRef"
-        :vertical-lines="vLines"
-        :horizontal-lines="hLines"
+        v-model:vertical-lines="vLines"
+        v-model:horizontal-lines="hLines"
         :image-width="width"
         :image-height="height"
         :line-weight="lineWeight"
@@ -264,15 +264,15 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import SledComponent from './components/sled.vue'
-import NewLine from './components/newLine.vue'
+import SledComponent from '../components/Sled.vue'
+import NewLine from './NewLine.vue'
 
 const sledRef = ref()
 const width = ref(0)
 const height = ref(0)
 const scale = ref(1)
 const vLines = ref([0, 100, 200])
-const hLines = ref([0, 100, 200])
+const hLines = ref([0, 150, 250])
 const lineWeight = ref(4)
 const autosize = ref(true)
 const cells = ref([])

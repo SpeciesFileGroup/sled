@@ -86,8 +86,8 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import SvgLine from './svgLine.vue'
-import SvgCircle from './svgCircle.vue'
+import SvgLine from './SvgLine.vue'
+import SvgCircle from './SvgCircle.vue'
 
 const props = defineProps({
   imageData: {
@@ -152,9 +152,8 @@ function generateRandomKey(index = 0) {
 }
 
 function mouseMove({ clientX, clientY }) {
-  const rect = rootRef.value?.getBoundingClientRect()
-
   if (dragging.value) {
+    const rect = rootRef.value?.getBoundingClientRect()
     const [x, y] = dragIndex.value
     const dx =
       clientX - rect.left - props.vLines[dragIndex.value[0]] / props.scale

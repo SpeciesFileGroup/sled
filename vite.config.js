@@ -1,11 +1,11 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import path from "node:path";
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import path from 'node:path'
 
 export default defineConfig({
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src")
+      '@': path.resolve(__dirname, './src')
     }
   },
 
@@ -13,18 +13,17 @@ export default defineConfig({
 
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/lib/main.js"),
-      name: "encase",
-      fileName: "encase"
+      entry: path.resolve(__dirname, 'lib/main.js'),
+      name: 'sled',
+      fileName: 'sled'
     },
     rollupOptions: {
-      external: ["vue", "three"],
+      external: ['vue'],
       output: {
         globals: {
-          vue: "Vue",
-          three: "Three"
+          vue: 'Vue'
         }
       }
     }
   }
-});
+})
