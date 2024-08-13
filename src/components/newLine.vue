@@ -4,50 +4,47 @@
       {{ label }}
     </label>
     <input
-      v-model.number="value"
-      type="number" />
+      type="number"
+      v-model.number="inputValue"
+      @keypress.enter="addLine"
+    />
     <button
       type="button"
-      @click="addLine()">
+      @click="addLine()"
+    >
       Add
     </button>
     <button
       type="button"
-      @click="reset">
+      @click="reset"
+    >
       Reset
     </button>
   </div>
 </template>
-<script>
-export default {
-  props: {
-    label: {
-      type: String,
-      required: true
-    }
-  },
 
-  emits: [
-    'newLine',
-    'reset'
-  ],
+<script setup>
+import { ref } from 'vue'
 
-  data () {
-    return {
-      value: undefined
-    }
-  },
-  methods: {
-    addLine () {
-      if (this.value >= 0) {
-        this.$emit('newLine', this.value)
-      }
-    },
-
-    reset () {
-      this.value = undefined
-      this.$emit('reset')
-    }
+const props = defineProps({
+  label: {
+    type: String,
+    required: true
   }
+})
+
+const emit = defineEmits(['newLine', 'reset'])
+
+const inputValue = ref()
+
+function addLine() {
+  if (inputValue.value >= 0) {
+    emit('newLine', inputValue.value)
+  }
+}
+
+function reset() {
+  inputValue.value = undefined
+  emit('reset')
 }
 </script>

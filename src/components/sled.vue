@@ -1,9 +1,10 @@
 <template>
   <div
+    ref="rootRef"
     :style="{
       display: 'block',
       position: 'relative',
-      height: `${height}px`,
+      height: `${height}px`
     }"
   >
     <svg-component
@@ -15,10 +16,10 @@
       :v-lines="vLines"
       :scale="scale"
       :line-thickness="lineWeight"
-      @dragUL="moveGrid($event)"
-      @dragLR="stretchGrid($event)"
-      @dragHline="moveHline($event)"
-      @dragVline="moveVline($event)"
+      @dragUL="moveGrid"
+      @dragLR="stretchGrid"
+      @dragHline="moveHline"
+      @dragVline="moveVline"
     />
     <cell-component
       v-for="(cell, index) in cells"
@@ -32,376 +33,350 @@
   </div>
 </template>
 
-<script>
-import SvgComponent from "./svgComponent.vue";
-import CellComponent from "./cell.vue";
+<script setup>
+import { computed, ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import SvgComponent from './svgComponent.vue'
+import CellComponent from './cell.vue'
 
-export default {
-  name: "vue-sled",
+defineOptions({
+  name: 'Sled'
+})
 
-  components: {
-    SvgComponent,
-    CellComponent,
+const props = defineProps({
+  metadataAssignment: {
+    type: Object,
+    default: () => ({})
   },
 
-  props: {
-    metadataAssignment: {
-      type: Object,
-      default: () => ({}),
-    },
-
-    imageWidth: {
-      type: Number,
-      required: true,
-    },
-
-    imageHeight: {
-      type: Number,
-      required: true,
-    },
-
-    fileImage: {
-      type: String,
-    },
-
-    verticalLines: {
-      type: Array,
-      required: true,
-    },
-
-    horizontalLines: {
-      type: Array,
-      required: true,
-    },
-
-    lineWeight: {
-      type: [Number, String],
-      default: 4,
-    },
-
-    autosize: {
-      type: Boolean,
-      default: true,
-    },
-
-    locked: {
-      type: Boolean,
-      default: false,
-    },
+  imageWidth: {
+    type: Number,
+    required: true
   },
 
-  emits: ["onComputeCells", "resize"],
-
-  computed: {
-    vLinesInOrder() {
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      return this.vLines.sort((a, b) => a - b);
-    },
-    hLinesInOrder() {
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      return this.hLines.sort((a, b) => a - b);
-    },
+  imageHeight: {
+    type: Number,
+    required: true
   },
 
-  data() {
-    return {
-      width: 0, // horizontal extent of image in pixels
-      height: 0, // vertical extent of image
-      hLines: [], // y pixel coord of line
-      vLines: [], // x pixel coord of line
-      cells: [], // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
-      old_width: 0,
-      old_height: 0,
-      observeContainer: undefined,
-      scale: 1,
-    };
+  fileImage: {
+    type: String
   },
 
-  watch: {
-    hLines: {
-      handler(newVal) {
-        this.hLines = newVal;
-        this.computeCells();
-      },
-      deep: true,
-    },
-
-    vLines: {
-      handler(newVal) {
-        this.computeCells();
-      },
-      deep: true,
-    },
-
-    imageHeight: {
-      handler(newVal) {
-        this.height = newVal;
-        this.resizeImage();
-      },
-      immediate: true,
-    },
-
-    imageWidth: {
-      handler(newVal) {
-        this.width = newVal;
-        this.resizeImage();
-      },
-      immediate: true,
-    },
-
-    verticalLines: {
-      handler(newVal) {
-        this.vLines = newVal;
-      },
-      immediate: true,
-    },
-
-    horizontalLines: {
-      handler(newVal) {
-        this.hLines = newVal;
-      },
-      immediate: true,
-    },
-
-    fileImage(newVal) {
-      this.old_width = this.width;
-      this.old_height = this.height;
-      this.resizeImage();
-    },
-
-    autosize: {
-      handler(newVal) {
-        if (newVal) {
-          this.observeContainer = new ResizeObserver(this.resizeSled);
-          this.observeContainer.observe(this.$el);
-        } else {
-          this.observeContainer.disconnect();
-        }
-        this.scale = this.scaleForScreen();
-      },
-    },
+  verticalLines: {
+    type: Array,
+    required: true
   },
 
-  mounted() {
-    this.computeCells();
-    if (this.autosize) {
-      this.observeContainer = new ResizeObserver(this.resizeSled);
-      this.observeContainer.observe(this.$el);
+  horizontalLines: {
+    type: Array,
+    required: true
+  },
+
+  lineWeight: {
+    type: [Number, String],
+    default: 4
+  },
+
+  autosize: {
+    type: Boolean,
+    default: true
+  },
+
+  locked: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const emit = defineEmits(['onComputeCells', 'resize'])
+
+const vLinesInOrder = computed(() => vLines.value.sort((a, b) => a - b))
+const hLinesInOrder = computed(() => hLines.value.sort((a, b) => a - b))
+const rows = computed(() => hLines.value.length - 1)
+const columns = computed(() => vLines.value.length - 1)
+
+const width = ref(0) // horizontal extent of image in pixels
+const height = ref(0) // vertical extent of image
+const hLines = ref([]) // y pixel coord of line
+const vLines = ref([]) // x pixel coord of line
+const cells = ref([]) // pixel coord of upper left, lower right - derived, e.g.[[0, 0], [100, 150]]
+const old_width = ref(0)
+const old_height = ref(0)
+const observeContainer = ref(undefined)
+const scale = ref(1)
+const rootRef = ref(null)
+
+watch(
+  [hLines, vLines],
+  (newVal) => {
+    computeCells()
+  },
+  {
+    deep: true
+  }
+)
+
+watch(
+  () => props.imageHeight,
+  (newVal) => {
+    height.value = newVal
+    resizeImage()
+  },
+  { immediate: true }
+)
+
+watch(
+  () => props.imageWidth,
+  (newVal) => {
+    width.value = newVal
+    resizeImage()
+  },
+  { immediate: true }
+)
+
+watch(
+  () => props.verticalLines,
+  (newVal) => {
+    vLines.value = newVal
+  },
+  {
+    immediate: true
+  }
+)
+
+watch(
+  () => props.horizontalLines,
+  (newVal) => {
+    hLines.value = newVal
+  },
+  {
+    immediate: true
+  }
+)
+
+watch(
+  () => props.fileImage,
+  (newVal) => {
+    old_width.value = width.value
+    old_height.value = height.value
+    resizeImage()
+  }
+)
+
+watch(
+  () => props.autosize,
+  (newVal) => {
+    if (newVal) {
+      observeContainer.value = new ResizeObserver(resizeSled)
+      observeContainer.value.observe(rootRef.value)
+    } else {
+      observeContainer.value.disconnect()
     }
-  },
+    scale.value = scaleForScreen()
+  }
+)
 
-  unmounted() {
-    this.observeContainer.disconnect();
-  },
+onMounted(() => {
+  computeCells()
+  if (props.autosize) {
+    observeContainer.value = new ResizeObserver(resizeSled)
+    observeContainer.value.observe(rootRef.value)
+  }
+})
 
-  methods: {
-    updateCell(index, cell) {
-      this.cells[index] = cell;
-      this.$emit("onComputeCells", this.cells);
-    },
+onBeforeUnmount(() => {
+  observeContainer.value.disconnect()
+})
 
-    moveX(offset) {
-      // move all vertical lines by x-offset
-      for (let i = 0; i < this.vLines.length; i++) {
-        this.moveV(i, offset);
-      }
-    },
+function updateCell(index, cell) {
+  cells.value[index] = cell
+  emit('onComputeCells', cells.value)
+}
 
-    moveY(offset) {
-      // move all horizontal lines by y-offset
-      for (let i = 0; i < this.hLines.length; i++) {
-        this.moveH(i, offset);
-      }
-    },
+function moveX(offset) {
+  // move all vertical lines by x-offset
+  for (let i = 0; i < vLines.value.length; i++) {
+    moveV(i, offset)
+  }
+}
 
-    moveV(index, offset) {
-      // move a single vertical line by x-offset
-      const value = Math.round(this.vLines[index] + offset);
-      if (value < 0 || value > this.imageWidth) return;
-      this.vLines[index] = value;
-    },
+function moveY(offset) {
+  // move all horizontal lines by y-offset
+  for (let i = 0; i < hLines.value.length; i++) {
+    moveH(i, offset)
+  }
+}
 
-    moveH(index, offset) {
-      // move a single horizontal line by y-offset
-      const value = Math.round(this.hLines[index] + offset);
-      if (value < 0 || value > this.imageHeight) return;
-      this.hLines[index] = Math.round(this.hLines[index] + offset);
-    },
+function moveV(index, offset) {
+  // move a single vertical line by x-offset
+  const value = Math.round(vLines.value[index] + offset)
+  if (value < 0 || value > props.imageWidth) return
+  vLines.value[index] = value
+}
 
-    resizeImage() {
-      // if image size changes, recompute lines and cells
-      if (this.old_width > 1) {
-        // a previous presumably valid width
-        const hScale = this.width / this.old_width;
-        const n = this.vLines.length;
-        let h = 0;
+function moveH(index, offset) {
+  // move a single horizontal line by y-offset
+  const value = Math.round(hLines.value[index] + offset)
+  if (value < 0 || value > props.imageHeight) return
+  hLines.value[index] = value
+}
 
-        for (h = 0; h < n; h++) {
-          this.vLines[h] = Math.round(this.vLines[h] * hScale);
+function resizeImage() {
+  // if image size changes, recompute lines and cells
+  if (old_width.value > 1) {
+    // a previous presumably valid width
+    const hScale = width.value / old_width.value
+    const n = vLines.value.length
+    let h = 0
+
+    for (h = 0; h < n; h++) {
+      vLines.value[h] = Math.round(vLines.value[h] * hScale)
+    }
+  }
+  if (old_height.value > 1) {
+    // a previous presumably valid height
+    const vScale = height.value / old_height.value
+    const m = hLines.value.length
+    let v = 0
+
+    for (v = 0; v < m; v++) {
+      hLines.value[v] = Math.round(hLines.value[v] * vScale)
+    }
+  }
+  old_width.value = width.value
+  old_height.value = height.value
+  computeCells()
+}
+
+function equalizeLines() {
+  if (hLines.value.length > 1 && vLines.value.length > 1) {
+    // compute intersections
+    cells.value = []
+    const hSize = (hLines.value[rows.value] - hLines.value[0]) / rows.value
+    const vSize =
+      (vLines.value[columns.value] - vLines.value[0]) / columns.value
+
+    for (let j = 0; j < rows.value; j++) {
+      hLines.value[j] = Math.round(hLines.value[0] + j * hSize)
+    }
+    for (let i = 0; i < columns.value; i++) {
+      vLines.value[i] = Math.round(vLines.value[0] + i * vSize)
+    }
+
+    computeCells()
+  }
+}
+
+function computeCells() {
+  if (hLines.value.length > 0 && vLines.value.length > 0) {
+    let ul, lr // upper left, lower right corners of cell
+    let cellIndex = -1
+
+    for (let j = 0; j < rows.value; j++) {
+      for (let i = 0; i < columns.value; i++) {
+        cellIndex = columns.value * j + i
+
+        ul = { x: vLinesInOrder.value[i], y: hLinesInOrder.value[j] }
+        lr = { x: vLinesInOrder.value[i + 1], y: hLinesInOrder.value[j + 1] }
+
+        const { metadata = null, textfield } = cells.value[cellIndex] || {}
+
+        cells.value[cellIndex] = {
+          index: cellIndex,
+          upperCorner: ul,
+          lowerCorner: lr,
+          row: j,
+          column: i,
+          metadata,
+          textfield
         }
       }
-      if (this.old_height > 1) {
-        // a previous presumably valid height
-        const vScale = this.height / this.old_height;
-        const m = this.hLines.length;
-        let v = 0;
+    }
 
-        for (v = 0; v < m; v++) {
-          this.hLines[v] = Math.round(this.hLines[v] * vScale);
-        }
-      }
-      this.old_width = this.width;
-      this.old_height = this.height;
-      this.computeCells();
-    },
+    cells.value = cellIndex === -1 ? [] : cells.value.slice(0, cellIndex + 1)
 
-    equalizeLines() {
-      if (this.hLines.length > 1 && this.vLines.length > 1) {
-        // compute intersections
-        this.cells = [];
-        let i = 0; // horizontal (column) index
-        let j = 0; // vertical (row) index
-        const hRows = this.hLinesInOrder.length - 1; // only enumerate non-empty cells BETWEEN lines
-        const vCols = this.vLinesInOrder.length - 1; // one less populated row/column than lines
-        const hSize = (this.hLines[hRows] - this.hLines[0]) / hRows;
-        const vSize = (this.vLines[vCols] - this.vLines[0]) / vCols;
-        for (j = 0; j < hRows; j++) {
-          this.hLines[j] = Math.round(this.hLines[0] + j * hSize);
-        }
-        for (i = 0; i < vCols; i++) {
-          this.vLines[i] = Math.round(this.vLines[0] + i * vSize);
-        }
-        this.computeCells();
-      }
-    },
+    emit('onComputeCells', cells.value)
+  }
+}
 
-    computeCells() {
-      if (this.hLines.length > 0 && this.vLines.length > 0) {
-        // compute intersections
-        // this.cells = []
-        let i = 0; // horizontal (column) index
-        let j = 0; // vertical (row) index
-        let ul, lr; // upper left, lower right corners of cell
-        let cellIndex = -1;
-        const hRows = this.hLinesInOrder.length - 1; // only enumerate non-empty cells BETWEEN lines
-        const vCols = this.vLinesInOrder.length - 1; // one less populated row/column than lines
-        for (j = 0; j < hRows; j++) {
-          for (i = 0; i < vCols; i++) {
-            cellIndex = vCols * j + i;
+function generateJSON() {
+  return JSON.stringify(cells.value)
+}
 
-            ul = { x: this.vLinesInOrder[i], y: this.hLinesInOrder[j] };
-            lr = { x: this.vLinesInOrder[i + 1], y: this.hLinesInOrder[j + 1] };
+function stretchGrid(deltas) {
+  const [dx, dy] = deltas
+  const lastVLine = vLines.value.at(-1)
+  const lastHLine = hLines.value.at(-1)
 
-            this.cells[cellIndex] = {
-              index: cellIndex,
-              upperCorner: ul,
-              lowerCorner: lr,
-              row: j,
-              column: i,
-              metadata: this.cells[cellIndex]
-                ? this.cells[cellIndex].metadata
-                : null,
-              textfield: this.cells[cellIndex]
-                ? this.cells[cellIndex].textfield
-                : undefined,
-              checked: this.cells[cellIndex]
-                ? this.cells[cellIndex].checked
-                : true,
-            };
-          }
-        }
-        this.cells = cellIndex === -1 ? [] : this.cells.slice(0, cellIndex + 1);
-        this.$emit(
-          "onComputeCells",
-          this.cells.map((item) => {
-            delete item.checked;
-            return item;
-          })
-        );
-      }
-    },
+  if (lastVLine + dx > props.imageWidth || lastHLine + dy > props.imageHeight) {
+    return
+  }
 
-    generateJSON() {
-      return JSON.stringify(this.cells);
-    },
+  for (let h = 1; h < vLines.value.length; h++) {
+    const value = Math.round(vLines.value[h] + (h * dx) / columns.value)
 
-    stretchGrid(deltas) {
-      // compand the grid by the lower right corner change
-      const dx = deltas[0];
-      const dy = deltas[1];
-      const vLast = this.vLines.length - 1; // number of cells
-      const hLast = this.hLines.length - 1;
-      let h = 0;
-      let v = 0;
+    if (value > 0 && value <= props.imageWidth) {
+      vLines.value[h] = Math.round(vLines.value[h] + (h * dx) / columns.value)
+    }
+  }
 
-      for (h = 1; h < this.vLines.length; h++) {
-        const value = Math.round(this.vLines[h] + (h * dx) / vLast);
-        if (value > 0 && value < this.imageWidth) {
-          this.vLines[h] = Math.round(this.vLines[h] + (h * dx) / vLast);
-        }
-      }
-      for (v = 1; v < this.hLines.length; v++) {
-        const value = Math.round(this.hLines[v] + (v * dy) / hLast);
-        if (value > 0 && value < this.imageHeight) {
-          this.hLines[v] = Math.round(this.hLines[v] + (v * dy) / hLast);
-        }
-      }
-    },
+  for (let v = 1; v < hLines.value.length; v++) {
+    const value = Math.round(hLines.value[v] + (v * dy) / rows.value)
 
-    moveGrid(deltas) {
-      const dx = deltas[0];
-      const dy = deltas[1];
+    if (value > 0 && value <= props.imageHeight) {
+      hLines.value[v] = Math.round(hLines.value[v] + (v * dy) / rows.value)
+    }
+  }
+}
 
-      this.moveX(dx);
-      this.moveY(dy);
-    },
+function moveGrid(deltas) {
+  const [dx, dy] = deltas
 
-    moveHline(deltas) {
-      const dy = deltas[1];
-      const iy = deltas[2];
+  moveX(dx)
+  moveY(dy)
+}
 
-      this.moveH(iy, dy); // effect line change through common function
-    },
+function moveHline(deltas) {
+  const dy = deltas[1]
+  const iy = deltas[2]
 
-    moveVline(deltas) {
-      const dx = deltas[0];
-      const ix = deltas[2];
+  moveH(iy, dy) // effect line change through common function
+}
 
-      this.moveV(ix, dx);
-    },
+function moveVline(deltas) {
+  const dx = deltas[0]
+  const ix = deltas[2]
 
-    scaleForScreen() {
-      if (this.autosize) {
-        const scaleHeight =
-          this.$el.getBoundingClientRect().height < this.height
-            ? this.height / this.$el.getBoundingClientRect().height
-            : 1;
-        const scaleWidth =
-          this.$el.getBoundingClientRect().width < this.width
-            ? this.width / this.$el.getBoundingClientRect().width
-            : 1;
-        return scaleHeight > scaleWidth ? scaleHeight : scaleWidth;
-      } else {
-        return 1;
-      }
-    },
+  moveV(ix, dx)
+}
 
-    resizeSled(mutationsList, observer) {
-      const element = this.$el.getBoundingClientRect();
+function scaleForScreen() {
+  if (props.autosize) {
+    const rect = rootRef.value.getBoundingClientRect()
+    const scaleHeight =
+      rect.height < height.value ? height.value / rect.height : 1
+    const scaleWidth = rect.width < width.value ? width.value / rect.width : 1
+    return scaleHeight > scaleWidth ? scaleHeight : scaleWidth
+  } else {
+    return 1
+  }
+}
 
-      this.scale = this.scaleForScreen();
-      this.$emit("resize", {
-        x: element.x,
-        y: element.y,
-        top: element.top,
-        left: element.left,
-        right: element.right,
-        bottom: element.bottom,
-        width: element.width,
-        height: element.height,
-        scale: this.scale,
-      });
-    },
-  },
-};
+function resizeSled(mutationsList, observer) {
+  const rect = rootRef.value.getBoundingClientRect()
+
+  scale.value = scaleForScreen()
+  emit('resize', {
+    ...rect,
+    scale: scale.value
+  })
+}
+
+defineExpose({
+  moveX,
+  moveY,
+  moveH,
+  moveV,
+  equalizeLines
+})
 </script>

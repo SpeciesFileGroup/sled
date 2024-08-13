@@ -7,74 +7,65 @@
     @mousedown="sendIndex"
   />
 </template>
-<script>
-export default {
-  props: {
-    hLines: {
-      type: Array,
-      required: true,
-    },
-
-    vLines: {
-      type: Array,
-      required: true,
-    },
-
-    scale: {
-      type: Number,
-      default: 1,
-    },
-
-    ix: {
-      type: Number,
-      default: 0,
-    },
-
-    iy: {
-      type: Number,
-      default: 0,
-    },
-
-    strokeColor: {
-      type: String,
-      default: "black",
-    },
+<script setup>
+import { computed } from 'vue'
+const props = defineProps({
+  hLines: {
+    type: Array,
+    required: true
   },
 
-  emits: ["dragging"],
-
-  methods: {
-    sendIndex() {
-      this.$emit("dragging", [this.ix, this.iy]);
-    },
+  vLines: {
+    type: Array,
+    required: true
   },
 
-  computed: {
-    vBubble() {
-      if (this.ix < 0) {
-        return (
-          (0.7 * this.vLines[0] + 0.3 * this.vLines[this.vLines.length - 1]) /
-          this.scale
-        );
-      } else {
-        return this.vLines[this.ix] / this.scale;
-      }
-    },
-
-    hBubble() {
-      if (this.iy < 0) {
-        return (
-          (0.7 * this.hLines[0] + 0.3 * this.hLines[this.hLines.length - 1]) /
-          this.scale
-        );
-      } else {
-        return this.hLines[this.iy] / this.scale;
-      }
-    },
-
-    style() {
-      return `stroke:${this.strokeColor};stroke-width:2;stroke-opacity=0.7;fill-opacity:0;z-index:3`;
-    },
+  scale: {
+    type: Number,
+    default: 1
   },
-};
+
+  ix: {
+    type: Number,
+    default: 0
+  },
+
+  iy: {
+    type: Number,
+    default: 0
+  },
+
+  strokeColor: {
+    type: String,
+    default: 'black'
+  }
+})
+
+const emit = defineEmits(['dragging'])
+
+function sendIndex() {
+  emit('dragging', [props.ix, props.iy])
+}
+
+const vBubble = computed(() =>
+  props.ix < 0
+    ? (0.7 * props.vLines[0] + 0.3 * props.vLines[props.vLines.length - 1]) /
+      props.scale
+    : props.vLines[props.ix] / props.scale
+)
+
+const hBubble = computed(() =>
+  props.iy < 0
+    ? (0.7 * props.hLines[0] + 0.3 * props.hLines[props.hLines.length - 1]) /
+      props.scale
+    : props.hLines[props.iy] / props.scale
+)
+
+const style = computed(() => ({
+  stroke: props.strokeColor,
+  strokeWidth: 2,
+  strokeOpacity: 0.7,
+  fillOpacity: 0,
+  zIndex: 3
+}))
 </script>

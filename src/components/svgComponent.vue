@@ -1,9 +1,9 @@
 <template>
   <svg
-    id="svg_layer"
+    ref="rootRef"
     :width="imageWidth / scale"
     :height="imageHeight / scale"
-    style="z-index: 2; position: absolute"
+    :style="{ zIndex: 2, position: 'absolute' }"
   >
     <image
       xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@
       :xlink:href="imageData"
     />
     <template v-if="hLines.length > 1 && vLines.length > 1">
-      <svg-line
+      <SvgLine
         v-for="(item, index) in hLines"
         :key="generateRandomKey(index)"
         :x1="vLines[0]"
@@ -22,14 +22,14 @@
         :y2="hLines[index]"
         :scale="scale"
         :line-thickness="lineThickness"
-        @dragging="
+        @mousedown="
           () => {
             dragging = true
             dragIndex = [-1, index]
           }
         "
       />
-      <svg-line
+      <SvgLine
         v-for="(item, index) in vLines"
         :key="generateRandomKey(index)"
         :x1="vLines[index]"
@@ -40,7 +40,7 @@
         :line-thickness="lineThickness"
         :index="index"
         :dragging="dragging"
-        @dragging="
+        @mousedown="
           () => {
             dragging = true
             dragIndex = [index, -1]
@@ -48,7 +48,7 @@
         "
         @mousemove="deltas = $event"
       />
-      <svg-circle
+      <SvgCircle
         :ix="0"
         :iy="0"
         :h-lines="hLines"
@@ -57,14 +57,14 @@
         stroke-color="red"
         style="cursor: move"
         @dragging="
-          (event) => {
+          (index) => {
             dragging = true
             draggingCorner = 'dragUL'
-            dragIndex = event
+            dragIndex = index
           }
         "
       />
-      <svg-circle
+      <SvgCircle
         :ix="vLines.length - 1"
         :iy="hLines.length - 1"
         :h-lines="hLines"
@@ -73,10 +73,10 @@
         stroke-color="red"
         style="cursor: nwse-resize"
         @dragging="
-          (event) => {
+          (index) => {
             dragging = true
             draggingCorner = 'dragLR'
-            dragIndex = event
+            dragIndex = index
           }
         "
       />
@@ -84,124 +84,104 @@
   </svg>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import SvgLine from './svgLine.vue'
 import SvgCircle from './svgCircle.vue'
 
-export default {
-  components: {
-    SvgLine,
-    SvgCircle
+const props = defineProps({
+  imageData: {
+    type: String,
+    required: true
   },
 
-  props: {
-    imageData: {
-      type: String,
-      required: true
-    },
-
-    imageWidth: {
-      type: Number,
-      required: true
-    },
-
-    imageHeight: {
-      type: Number,
-      required: true
-    },
-
-    scale: {
-      type: Number,
-      default: 1
-    },
-
-    hLines: {
-      type: Array,
-      required: true
-    },
-
-    vLines: {
-      type: Array,
-      required: true
-    },
-
-    lineThickness: {
-      type: Number
-    }
+  imageWidth: {
+    type: Number,
+    required: true
   },
 
-  emits: ['circleUL', 'circleLR', 'dragUL', 'dragLR', 'dragVline', 'dragHline'],
-
-  data() {
-    return {
-      hBubble: [0, 0, -1],
-      vBubble: [0, 0, -1], // x, y, line index
-      dragging: false,
-      deltas: undefined,
-      dragIndex: [],
-      draggingCorner: undefined
-    }
+  imageHeight: {
+    type: Number,
+    required: true
   },
 
-  mounted() {
-    window.addEventListener('mouseup', (e) => {
-      this.dragging = false
-      this.draggingCorner = undefined
-    })
-    window.addEventListener('mousemove', (e) => {
-      this.mouseMove(e)
-    })
+  scale: {
+    type: Number,
+    default: 1
   },
 
-  methods: {
-    generateRandomKey(index = 0) {
-      return Math.random().toString(16).substr(2, 8) + index
-    },
+  hLines: {
+    type: Array,
+    required: true
+  },
 
-    sendEventUL() {
-      this.$emit('circleUL', true)
-    },
+  vLines: {
+    type: Array,
+    required: true
+  },
 
-    sendEventLR() {
-      this.$emit('circleLR', true)
-    },
+  lineThickness: {
+    type: Number
+  }
+})
 
-    dragUL(deltas) {
-      const dx = event.layerX * this.scale - this.vLines[deltas[0]]
-      const dy = event.layerY * this.scale - this.hLines[deltas[1]]
-      this.$emit('dragUL', [dx, dy])
-    },
+const emit = defineEmits([
+  'circleUL',
+  'circleLR',
+  'dragUL',
+  'dragLR',
+  'dragVline',
+  'dragHline'
+])
 
-    dragLR(deltas) {
-      const dx = event.layerX * this.scale - this.vLines[deltas[0]]
-      const dy = event.layerY * this.scale - this.hLines[deltas[1]]
-      this.$emit('dragLR', [dx, dy])
-    },
+const hBubble = ref([0, 0, -1])
+const vBubble = ref([0, 0, -1])
+const dragging = ref(false)
+const deltas = ref()
+const dragIndex = ref([])
+const draggingCorner = ref()
+const rootRef = ref()
 
-    mouseMove(event) {
-      if (this.dragging) {
-        const dx =
-          event.clientX -
-          (this.$el.getBoundingClientRect().left + document.body.scrollLeft) -
-          this.vLines[this.dragIndex[0]] / this.scale
-        const dy =
-          event.clientY -
-          (this.$el.getBoundingClientRect().top + document.body.scrollTop) -
-          this.hLines[this.dragIndex[1]] / this.scale
+function resetDragging() {
+  dragging.value = false
+  draggingCorner.value = undefined
+}
 
-        if (this.draggingCorner) {
-          this.$emit(this.draggingCorner, [dx, dy])
-        } else {
-          // dragging either vertical or horzontal line
-          if (this.dragIndex[0] >= 0) {
-            // so only one of the indices is semipositive
-            this.$emit('dragVline', [dx, dy, this.dragIndex[0]])
-          } else {
-            this.$emit('dragHline', [dx, dy, this.dragIndex[1]])
-          }
-        }
+function generateRandomKey(index = 0) {
+  return Math.random().toString(16).substr(2, 8) + index
+}
+
+function mouseMove({ clientX, clientY }) {
+  const rect = rootRef.value?.getBoundingClientRect()
+
+  if (dragging.value) {
+    const [x, y] = dragIndex.value
+    const dx =
+      clientX - rect.left - props.vLines[dragIndex.value[0]] / props.scale
+    const dy =
+      clientY - rect.top - props.hLines[dragIndex.value[1]] / props.scale
+
+    if (draggingCorner.value) {
+      emit(draggingCorner.value, [dx, dy])
+    } else {
+      // dragging either vertical or horzontal line
+      if (dragIndex.value[0] >= 0) {
+        // so only one of the indices is semipositive
+        emit('dragVline', [dx, dy, dragIndex.value[0]])
+      } else {
+        emit('dragHline', [dx, dy, dragIndex.value[1]])
       }
     }
   }
 }
+
+onMounted(() => {
+  window.addEventListener('mouseup', resetDragging)
+  window.addEventListener('mousemove', mouseMove)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('mouseup', resetDragging)
+  window.removeEventListener('mousemove', mouseMove)
+})
 </script>
