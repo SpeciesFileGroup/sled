@@ -6,7 +6,8 @@
     :x2="x2 / scale"
     :y2="y2 / scale"
     :style="style"
-    @mousedown="sendIndex"/>
+    @mousedown="sendIndex"
+  />
 </template>
 
 <script>
@@ -45,17 +46,21 @@ export default {
   emits: ['dragging'],
 
   computed: {
-    isHorizontal () {
+    isHorizontal() {
       return this.y1 === this.y2
     },
 
-    style () {
-      return `stroke:rgb(255,0,0);stroke-width:${this.lineThickness};stroke-linecap:round;cursor:${this.isHorizontal ? 'ns-resize' : 'ew-resize'}`
+    style() {
+      return `stroke:rgb(255,0,0);stroke-width:${
+        this.lineThickness
+      };stroke-linecap:round;cursor:${
+        this.isHorizontal ? 'ns-resize' : 'ew-resize'
+      }`
     }
   },
 
   methods: {
-    sendIndex () {
+    sendIndex() {
       this.$emit('dragging')
     }
   }

@@ -1,15 +1,18 @@
 <template>
-  <svg id="svg_layer"
-    :width="imageWidth/scale"
-    :height="imageHeight/scale"
-    style="z-index: 2; position: absolute;">
+  <svg
+    id="svg_layer"
+    :width="imageWidth / scale"
+    :height="imageHeight / scale"
+    style="z-index: 2; position: absolute"
+  >
     <image
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
-      :width="imageWidth/scale"
-      :height="imageHeight/scale"
-      :xlink:href="imageData" />
-    <template v-if="(hLines.length > 1) && (vLines.length > 1)">
+      :width="imageWidth / scale"
+      :height="imageHeight / scale"
+      :xlink:href="imageData"
+    />
+    <template v-if="hLines.length > 1 && vLines.length > 1">
       <svg-line
         v-for="(item, index) in hLines"
         :key="generateRandomKey(index)"
@@ -19,7 +22,12 @@
         :y2="hLines[index]"
         :scale="scale"
         :line-thickness="lineThickness"
-        @dragging="dragging = true;  dragIndex = [-1, index]"
+        @dragging="
+          () => {
+            dragging = true
+            dragIndex = [-1, index]
+          }
+        "
       />
       <svg-line
         v-for="(item, index) in vLines"
@@ -32,7 +40,12 @@
         :line-thickness="lineThickness"
         :index="index"
         :dragging="dragging"
-        @dragging="dragging = true; dragIndex = [index, -1]"
+        @dragging="
+          () => {
+            dragging = true
+            dragIndex = [index, -1]
+          }
+        "
         @mousemove="deltas = $event"
       />
       <svg-circle
@@ -43,7 +56,13 @@
         :scale="scale"
         stroke-color="red"
         style="cursor: move"
-        @dragging="dragging = true; draggingCorner = 'dragUL'; dragIndex = $event"
+        @dragging="
+          (event) => {
+            dragging = true
+            draggingCorner = 'dragUL'
+            dragIndex = event
+          }
+        "
       />
       <svg-circle
         :ix="vLines.length - 1"
@@ -53,16 +72,21 @@
         :scale="scale"
         stroke-color="red"
         style="cursor: nwse-resize"
-        @dragging="dragging = true; draggingCorner = 'dragLR'; dragIndex = $event"
+        @dragging="
+          (event) => {
+            dragging = true
+            draggingCorner = 'dragLR'
+            dragIndex = event
+          }
+        "
       />
     </template>
   </svg>
 </template>
 
 <script>
-
-import SvgLine from './svgLine'
-import SvgCircle from './svgCircle'
+import SvgLine from './svgLine.vue'
+import SvgCircle from './svgCircle.vue'
 
 export default {
   components: {
@@ -106,16 +130,9 @@ export default {
     }
   },
 
-  emits: [
-    'circleUL',
-    'circleLR',
-    'dragUL',
-    'dragLR',
-    'dragVline',
-    'dragHline'
-  ],
+  emits: ['circleUL', 'circleLR', 'dragUL', 'dragLR', 'dragVline', 'dragHline'],
 
-  data () {
+  data() {
     return {
       hBubble: [0, 0, -1],
       vBubble: [0, 0, -1], // x, y, line index
@@ -126,50 +143,58 @@ export default {
     }
   },
 
-  mounted () {
-    window.addEventListener('mouseup', e => {
+  mounted() {
+    window.addEventListener('mouseup', (e) => {
       this.dragging = false
       this.draggingCorner = undefined
     })
-    window.addEventListener('mousemove', e => {
+    window.addEventListener('mousemove', (e) => {
       this.mouseMove(e)
     })
   },
 
   methods: {
-    generateRandomKey (index = 0) {
+    generateRandomKey(index = 0) {
       return Math.random().toString(16).substr(2, 8) + index
     },
 
-    sendEventUL () {
+    sendEventUL() {
       this.$emit('circleUL', true)
     },
 
-    sendEventLR () {
+    sendEventLR() {
       this.$emit('circleLR', true)
     },
 
-    dragUL (deltas) {
+    dragUL(deltas) {
       const dx = event.layerX * this.scale - this.vLines[deltas[0]]
       const dy = event.layerY * this.scale - this.hLines[deltas[1]]
       this.$emit('dragUL', [dx, dy])
     },
 
-    dragLR (deltas) {
+    dragLR(deltas) {
       const dx = event.layerX * this.scale - this.vLines[deltas[0]]
       const dy = event.layerY * this.scale - this.hLines[deltas[1]]
       this.$emit('dragLR', [dx, dy])
     },
 
-    mouseMove (event) {
+    mouseMove(event) {
       if (this.dragging) {
-        const dx = (event.clientX - (this.$el.getBoundingClientRect().left + document.body.scrollLeft)) - (this.vLines[this.dragIndex[0]] / this.scale)
-        const dy = (event.clientY - (this.$el.getBoundingClientRect().top + document.body.scrollTop)) - (this.hLines[this.dragIndex[1]] / this.scale)
+        const dx =
+          event.clientX -
+          (this.$el.getBoundingClientRect().left + document.body.scrollLeft) -
+          this.vLines[this.dragIndex[0]] / this.scale
+        const dy =
+          event.clientY -
+          (this.$el.getBoundingClientRect().top + document.body.scrollTop) -
+          this.hLines[this.dragIndex[1]] / this.scale
 
         if (this.draggingCorner) {
           this.$emit(this.draggingCorner, [dx, dy])
-        } else { // dragging either vertical or horzontal line
-          if (this.dragIndex[0] >= 0) { // so only one of the indices is semipositive
+        } else {
+          // dragging either vertical or horzontal line
+          if (this.dragIndex[0] >= 0) {
+            // so only one of the indices is semipositive
             this.$emit('dragVline', [dx, dy, this.dragIndex[0]])
           } else {
             this.$emit('dragHline', [dx, dy, this.dragIndex[1]])
