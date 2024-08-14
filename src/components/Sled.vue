@@ -4,7 +4,8 @@
     :style="{
       display: 'block',
       position: 'relative',
-      height: `${height}px`
+      height: `${height}px`,
+      width: `${width}px`
     }"
   >
     <SvgComponent
@@ -102,16 +103,25 @@ const rootRef = ref(null)
 const rows = computed(() => hLines.value.length - 1)
 const columns = computed(() => vLines.value.length - 1)
 
-watch([() => hLines.value.length, () => vLines.value.length], () => {
-  sortLines()
-})
-
 watch(
   [hLines, vLines],
   () => {
+    const h = isInOrder(hLines.value)
+    const v = isInOrder(vLines.value)
+
+    if (!h.isSorted) {
+      hLines.value = h.arr
+    }
+    if (!v.isSorted) {
+      vLines.value = v.arr
+    }
+
     computeCells()
   },
-  { deep: true }
+  {
+    deep: true,
+    immediate: true
+  }
 )
 
 watch(
@@ -155,7 +165,6 @@ watch(
 )
 
 onMounted(() => {
-  computeCells()
   if (props.autosize) {
     observeContainer.value = new ResizeObserver(resizeSled)
     observeContainer.value.observe(rootRef.value)
@@ -182,8 +191,6 @@ function moveX(offset) {
     for (let i = 0; i < vLines.value.length; i++) {
       moveV(i, offset)
     }
-
-    sortLines()
   }
 }
 
@@ -192,8 +199,6 @@ function moveY(offset) {
     for (let i = 0; i < hLines.value.length; i++) {
       moveH(i, offset)
     }
-
-    sortLines()
   }
 }
 
@@ -202,8 +207,6 @@ function moveV(index, offset) {
   const value = Math.round(vLines.value[index] + offset)
   if (value < 0 || value > props.imageWidth) return
   vLines.value[index] = value
-
-  sortLines()
 }
 
 function moveH(index, offset) {
@@ -211,8 +214,15 @@ function moveH(index, offset) {
   const value = Math.round(hLines.value[index] + offset)
   if (value < 0 || value > props.imageHeight) return
   hLines.value[index] = value
+}
 
-  sortLines()
+function isInOrder(arr) {
+  const sorted = arr.toSorted((a, b) => a - b)
+
+  return {
+    isSorted: sorted.every((item, index) => arr[index] === item),
+    arr: sorted
+  }
 }
 
 function resizeImage() {
@@ -239,7 +249,6 @@ function resizeImage() {
   }
   oldWidth.value = width.value
   oldHeight.value = height.value
-  computeCells()
 }
 
 function equalizeLines() {
@@ -256,8 +265,6 @@ function equalizeLines() {
     for (let i = 0; i < columns.value; i++) {
       vLines.value[i] = Math.round(vLines.value[0] + i * vSize)
     }
-
-    computeCells()
   }
 }
 
@@ -297,11 +304,6 @@ function generateJSON() {
   return JSON.stringify(cells.value)
 }
 
-function sortLines() {
-  vLines.value = vLines.value.toSorted((a, b) => a - b)
-  hLines.value = hLines.value.toSorted((a, b) => a - b)
-}
-
 function stretchGrid(deltas) {
   const [dx, dy] = deltas
   const lastVLine = vLines.value.at(-1)
@@ -326,8 +328,6 @@ function stretchGrid(deltas) {
       hLines.value[v] = Math.round(hLines.value[v] + (v * dy) / rows.value)
     }
   }
-
-  sortLines()
 }
 
 function moveGrid(deltas) {
